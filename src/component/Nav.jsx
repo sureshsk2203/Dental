@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import BrushButton from "./BrushButton"; // toothbrush hover button (file name: BrushButton.jsx)
 import "./Nav.css";
-import "./NavPage.css"; // dark nav text on the light pages
+import "./Navpage.css"; // dark nav text on the light pages
 
 /* Every link goes to a page ("/doctors" ...) or to a section of the Home page ("/#about" ...).
    App.jsx has the routes. */
