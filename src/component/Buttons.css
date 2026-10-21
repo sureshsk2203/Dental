@@ -1,0 +1,190 @@
+/* =====================================================
+   BUTTON HOVER ANIMATIONS
+   Import this AFTER Home.css (Home.jsx already does it),
+   so these rules win over the basic hover styles.
+   Works for: .btn (primary / ghost / white), Explore Treatments,
+   nav "Book Appointment", treatment tabs, footer button
+   ===================================================== */
+
+/* ---------- shine that sweeps across on hover ---------- */
+.btn,
+.hero__cta,
+.btn-contact,
+.footer__btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn::before,
+.hero__cta::before,
+.btn-contact::before,
+.footer__btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 55%;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent, var(--sheen, rgba(255, 255, 255, 0.6)), transparent);
+  transform: translateX(-140%) skewX(-18deg);
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.btn:hover::before,
+.hero__cta:hover::before,
+.btn-contact:hover::before,
+.footer__btn:hover::before {
+  transform: translateX(280%) skewX(-18deg);
+}
+
+/* arrow keeps nudging while you hover */
+.btn:hover span {
+  animation: arrowNudge 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes arrowNudge {
+  from { transform: translateX(3px); }
+  to   { transform: translateX(9px); }
+}
+
+/* press feeling */
+.btn:active,
+.hero__cta:active,
+.btn-contact:active,
+.footer__btn:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+.btn:focus-visible,
+.hero__cta:focus-visible,
+.btn-contact:focus-visible,
+.footer__btn:focus-visible {
+  outline: 3px solid var(--pink-500, #dc6f9a);
+  outline-offset: 3px;
+}
+
+/* ---------- primary: lift + grow + glow ---------- */
+.btn--primary {
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.3), box-shadow 0.3s, filter 0.3s;
+}
+
+.btn--primary:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow:
+    0 24px 40px -12px rgba(220, 111, 154, 1),
+    0 0 0 6px rgba(236, 143, 176, 0.22);
+  filter: saturate(1.1);
+}
+
+/* ---------- ghost: pink fills in from the left ---------- */
+.btn--ghost {
+  --sheen: rgba(255, 255, 255, 0.5);
+  background:
+    linear-gradient(135deg, var(--pink-400, #ec8fb0), var(--pink-500, #dc6f9a)) left center / 0% 100% no-repeat,
+    #fff;
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.3),
+    box-shadow 0.3s,
+    background-size 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.3s,
+    border-color 0.3s;
+}
+
+.btn--ghost:hover {
+  background-size: 100% 100%;
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 20px 34px -14px rgba(220, 111, 154, 0.9);
+}
+
+/* ---------- white (on the pink band) ---------- */
+.btn--white {
+  --sheen: rgba(220, 111, 154, 0.3);
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.3), box-shadow 0.3s;
+}
+
+.btn--white:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 22px 36px -12px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- outline white ---------- */
+.btn--outline-white:hover {
+  transform: translateY(-4px) scale(1.03);
+  background: rgba(255, 255, 255, 0.22);
+  border-color: #fff;
+}
+
+/* ---------- Explore Treatments (hero) ---------- */
+.hero__cta {
+  --sheen: rgba(236, 143, 176, 0.45);
+  background:
+    linear-gradient(135deg, var(--pink-500, #dc6f9a), var(--pink-700, #a63b69)) left center / 0% 100% no-repeat,
+    linear-gradient(135deg, #ffffff, #fff0f6);
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.3),
+    box-shadow 0.3s,
+    background-size 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.3s,
+    border-color 0.3s;
+}
+
+.hero__cta:hover {
+  background-size: 100% 100%;
+  color: #fff;
+  border-color: var(--pink-500, #dc6f9a);
+  transform: translateY(-4px) scale(1.04);
+  box-shadow:
+    0 24px 40px -14px rgba(166, 59, 105, 0.85),
+    0 0 0 6px rgba(236, 143, 176, 0.25);
+}
+
+.hero__cta-arrow {
+  transition: transform 0.4s cubic-bezier(0.3, 1.6, 0.5, 1), background 0.3s, color 0.3s;
+}
+
+.hero__cta:hover .hero__cta-arrow {
+  transform: rotate(45deg) scale(1.12);
+  background: #fff;
+  color: var(--pink-600, #c4527f);
+}
+
+/* ---------- nav "Book Appointment" ---------- */
+.btn-contact {
+  --sheen: rgba(255, 255, 255, 0.4);
+}
+
+.btn-contact:hover {
+  transform: translateY(-3px) scale(1.04);
+}
+
+/* ---------- treatment tabs ---------- */
+.treat__ico {
+  transition: transform 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.treat__tabs button:hover {
+  border-color: var(--pink-300, #f4b3cd);
+  box-shadow: 0 14px 26px -16px rgba(220, 111, 154, 0.8);
+}
+
+.treat__tabs button:hover .treat__ico {
+  transform: rotate(-10deg) scale(1.15);
+}
+
+.treat__tabs button:active {
+  transform: translateX(6px) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn::before,
+  .hero__cta::before,
+  .btn-contact::before,
+  .footer__btn::before { display: none; }
+
+  .btn:hover span { animation: none; }
+}

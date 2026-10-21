@@ -1,0 +1,1594 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap");
+
+/* =========================================
+
+   NEO SMILES — CONTACT PAGE
+
+\========================================= */
+
+.ct {
+
+  --pink: #e0569f;
+
+  --purple: #9d6be0;
+
+  --ink: #211527;
+
+  --muted: #796b7b;
+
+  --gradient: linear-gradient(135deg, #e45a9f, #9d6be0);
+
+  position: relative;
+
+  isolation: isolate;
+
+  width: 100%;
+
+  min-height: 100vh;
+
+  overflow: clip;
+
+  padding: clamp(36px, 5vw, 72px) clamp(16px, 4vw, 60px) 60px;
+
+  color: var(--ink);
+
+  background: linear-gradient(180deg, #fffafd, #fdeaf3 55%, #f9e0f0);
+
+  font-family: "DM Sans", sans-serif;
+
+}
+
+.ct *,
+
+.ct *::before,
+
+.ct *::after {
+
+  box-sizing: border-box;
+
+}
+
+.ct a {
+
+  -webkit-tap-highlight-color: transparent;
+
+}
+
+/* =========================================
+
+   BACKGROUND
+
+\========================================= */
+
+.ct-orb {
+
+  position: absolute;
+
+  z-index: -1;
+
+  border-radius: 50%;
+
+  filter: blur(75px);
+
+  opacity: 0.42;
+
+  pointer-events: none;
+
+}
+
+.ct-orb--a {
+
+  width: 500px;
+
+  height: 500px;
+
+  top: -150px;
+
+  right: -130px;
+
+  background: #ffb3d9;
+
+}
+
+.ct-orb--b {
+
+  width: 440px;
+
+  height: 440px;
+
+  bottom: 15%;
+
+  left: -160px;
+
+  background: #c9a6f5;
+
+}
+
+/* =========================================
+
+   ENTRANCE ANIMATIONS
+
+\========================================= */
+
+.ct-rise {
+
+  animation: ctRise 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+
+  animation-delay: var(--d, 0s);
+
+}
+
+@keyframes ctRise {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(22px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+}
+
+/* =========================================
+
+   HERO
+
+\========================================= */
+
+.ct-hero {
+
+  position: relative;
+
+  z-index: 1;
+
+  width: 100%;
+
+  max-width: 900px;
+
+  margin: 0 auto clamp(42px, 5vw, 64px);
+
+  text-align: center;
+
+}
+
+.ct-pill {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 9px 16px;
+
+  border: 1px solid rgba(224, 86, 159, 0.2);
+
+  border-radius: 999px;
+
+  color: var(--pink);
+
+  background: rgba(255, 255, 255, 0.9);
+
+  box-shadow: 0 7px 20px -10px rgba(224, 86, 159, 0.4);
+
+  font-size: 0.72rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.15em;
+
+}
+
+.ct-dot {
+
+  width: 8px;
+
+  height: 8px;
+
+  flex: none;
+
+  border-radius: 50%;
+
+  background: #29c98a;
+
+  box-shadow: 0 0 0 4px rgba(41, 201, 138, 0.16);
+
+}
+
+.ct-title {
+
+  margin: 24px 0 16px;
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: clamp(2.5rem, 5.6vw, 4.5rem);
+
+  font-weight: 700;
+
+  line-height: 1.12;
+
+  letter-spacing: -0.035em;
+
+}
+
+.ct-title span {
+
+  color: transparent;
+
+  background: var(--gradient);
+
+  background-clip: text;
+
+  -webkit-background-clip: text;
+
+}
+
+.ct-lead {
+
+  max-width: 640px;
+
+  margin: 0 auto 28px;
+
+  color: var(--muted);
+
+  font-size: clamp(1rem, 1.5vw, 1.13rem);
+
+  line-height: 1.8;
+
+}
+
+.ct-actions {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 14px;
+
+}
+
+/* =========================================
+
+   BUTTONS
+
+\========================================= */
+
+.ct-btn {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  min-height: 48px;
+
+  padding: 14px 25px;
+
+  border: 0;
+
+  border-radius: 999px;
+
+  color: #fff;
+
+  background: var(--gradient);
+
+  box-shadow: 0 14px 28px -12px rgba(190, 70, 170, 0.55);
+
+  font-family: inherit;
+
+  font-size: 0.96rem;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+}
+
+.ct-btn:hover {
+
+  transform: translateY(-3px);
+
+  box-shadow: 0 18px 34px -12px rgba(190, 70, 170, 0.6);
+
+}
+
+.ct-btn:active {
+
+  transform: translateY(-1px);
+
+}
+
+.ct-btn--ghost {
+
+  color: var(--pink);
+
+  border: 1px solid rgba(224, 86, 159, 0.26);
+
+  background: rgba(255, 255, 255, 0.92);
+
+  box-shadow: 0 10px 24px -14px rgba(190, 70, 170, 0.4);
+
+}
+
+.ct-btn--wide {
+
+  width: 100%;
+
+  min-height: 56px;
+
+}
+
+.ct-btn--sm {
+
+  min-height: 42px;
+
+  padding: 10px 18px;
+
+  font-size: 0.85rem;
+
+  white-space: nowrap;
+
+}
+
+.ct-btn--light {
+
+  color: var(--pink);
+
+  background: #fff;
+
+}
+
+/* =========================================
+
+   CONTACT GRID
+
+\========================================= */
+
+.ct-grid {
+
+  position: relative;
+
+  z-index: 1;
+
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+
+  align-items: start;
+
+  gap: clamp(22px, 3vw, 42px);
+
+  width: 100%;
+
+  max-width: 1320px;
+
+  margin: 0 auto;
+
+}
+
+.ct-info {
+
+  display: grid;
+
+  gap: 18px;
+
+  min-width: 0;
+
+}
+
+/* Contact cards */
+
+.ct-card {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  min-width: 0;
+
+  padding: 23px 25px;
+
+  border: 1px solid rgba(255, 255, 255, 0.95);
+
+  border-radius: 27px;
+
+  color: inherit;
+
+  text-decoration: none;
+
+  background: rgba(255, 255, 255, 0.87);
+
+  box-shadow: 0 24px 48px -28px rgba(176, 70, 150, 0.42);
+
+  backdrop-filter: blur(14px);
+
+  -webkit-backdrop-filter: blur(14px);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+a.ct-card:hover {
+
+  transform: translateY(-4px);
+
+  box-shadow: 0 30px 54px -25px rgba(176, 70, 150, 0.48);
+
+}
+
+.ct-card--static {
+
+  align-items: flex-start;
+
+}
+
+.ct-ico {
+
+  display: grid;
+
+  place-items: center;
+
+  flex: none;
+
+  width: 54px;
+
+  height: 54px;
+
+  border-radius: 18px;
+
+  color: #fff;
+
+  background: var(--gradient);
+
+  box-shadow: 0 12px 24px -12px rgba(190, 70, 170, 0.65);
+
+}
+
+.ct-ico--sm {
+
+  width: 42px;
+
+  height: 42px;
+
+  border-radius: 14px;
+
+}
+
+.ct-card-body {
+
+  display: grid;
+
+  flex: 1;
+
+  min-width: 0;
+
+  gap: 4px;
+
+}
+
+.ct-card-body small {
+
+  color: var(--pink);
+
+  font-size: 0.7rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.15em;
+
+  text-transform: uppercase;
+
+}
+
+.ct-card-body strong {
+
+  overflow-wrap: anywhere;
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: 1.2rem;
+
+  line-height: 1.4;
+
+}
+
+.ct-card-body em {
+
+  color: var(--muted);
+
+  font-size: 0.87rem;
+
+  line-height: 1.5;
+
+  font-style: normal;
+
+}
+
+.ct-go {
+
+  display: grid;
+
+  place-items: center;
+
+  flex: none;
+
+  width: 40px;
+
+  height: 40px;
+
+  border-radius: 50%;
+
+  color: var(--pink);
+
+  background: rgba(224, 86, 159, 0.1);
+
+  transition: transform 0.25s ease, color 0.25s ease, background 0.25s ease;
+
+}
+
+a.ct-card:hover .ct-go {
+
+  color: #fff;
+
+  background: var(--gradient);
+
+  transform: translateX(4px);
+
+}
+
+/* Opening hours */
+
+.ct-hours {
+
+  display: grid;
+
+  gap: 10px;
+
+  margin: 7px 0 0;
+
+  padding: 0;
+
+  list-style: none;
+
+}
+
+.ct-hours li {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  justify-content: space-between;
+
+  gap: 5px 12px;
+
+  padding-bottom: 9px;
+
+  border-bottom: 1px dashed rgba(224, 86, 159, 0.24);
+
+  color: var(--muted);
+
+  font-size: 0.91rem;
+
+}
+
+.ct-hours li:last-child {
+
+  padding-bottom: 0;
+
+  border-bottom: 0;
+
+}
+
+.ct-hours b {
+
+  color: var(--ink);
+
+  font-weight: 600;
+
+}
+
+/* =========================================
+
+   APPOINTMENT FORM
+
+\========================================= */
+
+.ct-form {
+
+  position: relative;
+
+  min-width: 0;
+
+  padding: clamp(25px, 3.5vw, 42px);
+
+  border: 1px solid rgba(255, 255, 255, 0.96);
+
+  border-radius: 35px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  box-shadow: 0 40px 75px -36px rgba(176, 70, 150, 0.45);
+
+  backdrop-filter: blur(18px);
+
+  -webkit-backdrop-filter: blur(18px);
+
+}
+
+.ct-form::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  right: 35px;
+
+  left: 35px;
+
+  height: 3px;
+
+  border-radius: 0 0 8px 8px;
+
+  background: var(--gradient);
+
+}
+
+.ct-form-head h2 {
+
+  margin: 0 0 7px;
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: clamp(1.55rem, 2.6vw, 2.1rem);
+
+  line-height: 1.25;
+
+}
+
+.ct-form-head p {
+
+  margin: 0 0 27px;
+
+  color: var(--muted);
+
+  font-size: 0.95rem;
+
+  line-height: 1.65;
+
+}
+
+.ct-row {
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+
+}
+
+.ct-field {
+
+  display: grid;
+
+  gap: 9px;
+
+  min-width: 0;
+
+  margin-bottom: 19px;
+
+}
+
+.ct-field > span {
+
+  color: #8a6b84;
+
+  font-size: 0.72rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+}
+
+.ct-field input,
+
+.ct-field select,
+
+.ct-field textarea {
+
+  display: block;
+
+  width: 100%;
+
+  min-width: 0;
+
+  min-height: 52px;
+
+  padding: 14px 17px;
+
+  border: 1.5px solid #f2d8e7;
+
+  border-radius: 17px;
+
+  outline: none;
+
+  color: var(--ink);
+
+  background: #fff9fc;
+
+  font-family: inherit;
+
+  font-size: 0.96rem;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+
+}
+
+.ct-field textarea {
+
+  min-height: 112px;
+
+  resize: vertical;
+
+}
+
+.ct-field select {
+
+  padding-right: 42px;
+
+  cursor: pointer;
+
+}
+
+.ct-field input::placeholder,
+
+.ct-field textarea::placeholder {
+
+  color: #b9a5b4;
+
+}
+
+.ct-field input:focus,
+
+.ct-field select:focus,
+
+.ct-field textarea:focus {
+
+  border-color: var(--pink);
+
+  background: #fff;
+
+  box-shadow: 0 0 0 4px rgba(224, 86, 159, 0.13);
+
+}
+
+.ct-field.has-error input {
+
+  border-color: #e5484d;
+
+  box-shadow: 0 0 0 4px rgba(229, 72, 77, 0.1);
+
+}
+
+.ct-field > em {
+
+  color: #d93045;
+
+  font-size: 0.82rem;
+
+  font-style: normal;
+
+  font-weight: 600;
+
+}
+
+.ct-sent {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  margin: 15px 0 0;
+
+  color: #16895d;
+
+  font-size: 0.9rem;
+
+  font-weight: 600;
+
+}
+
+/* =========================================
+
+   MAP
+
+\========================================= */
+
+.ct-map {
+
+  position: relative;
+
+  z-index: 1;
+
+  width: 100%;
+
+  max-width: 1320px;
+
+  height: clamp(320px, 38vw, 470px);
+
+  margin: clamp(34px, 5vw, 58px) auto 0;
+
+  overflow: hidden;
+
+  border: 8px solid rgba(255, 255, 255, 0.95);
+
+  border-radius: 35px;
+
+  background: #f8edf5;
+
+  box-shadow: 0 40px 75px -38px rgba(176, 70, 150, 0.5);
+
+}
+
+.ct-map iframe {
+
+  position: relative;
+
+  z-index: 0;
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  border: 0;
+
+}
+
+.ct-map-card {
+
+  position: absolute;
+
+  z-index: 4;
+
+  bottom: 20px;
+
+  left: 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  max-width: calc(100% - 40px);
+
+  padding: 12px 14px 12px 12px;
+
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  box-shadow: 0 18px 36px -16px rgba(60, 10, 70, 0.38);
+
+  backdrop-filter: blur(12px);
+
+  -webkit-backdrop-filter: blur(12px);
+
+}
+
+.ct-map-card > div {
+
+  min-width: 0;
+
+}
+
+.ct-map-card strong {
+
+  display: block;
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: 1rem;
+
+  line-height: 1.4;
+
+}
+
+.ct-map-card small {
+
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 0.8rem;
+
+}
+
+/* =========================================
+
+   BOTTOM CTA
+
+\========================================= */
+
+.ct-cta {
+
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  flex-wrap: wrap;
+
+  gap: 24px;
+
+  width: 100%;
+
+  max-width: 1320px;
+
+  margin: clamp(30px, 4vw, 46px) auto 0;
+
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 50px);
+
+  overflow: hidden;
+
+  border-radius: 34px;
+
+  color: #fff;
+
+  background: linear-gradient(120deg, #d9468f, #a05fe0);
+
+  box-shadow: 0 38px 72px -35px rgba(160, 60, 170, 0.6);
+
+}
+
+.ct-cta::before,
+
+.ct-cta::after {
+
+  content: "";
+
+  position: absolute;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  pointer-events: none;
+
+}
+
+.ct-cta::before {
+
+  width: 270px;
+
+  height: 270px;
+
+  top: -130px;
+
+  right: -60px;
+
+}
+
+.ct-cta::after {
+
+  width: 190px;
+
+  height: 190px;
+
+  bottom: -120px;
+
+  left: 30%;
+
+}
+
+.ct-cta > div {
+
+  position: relative;
+
+  z-index: 1;
+
+}
+
+.ct-cta h3 {
+
+  margin: 0 0 7px;
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+
+  line-height: 1.25;
+
+}
+
+.ct-cta p {
+
+  margin: 0;
+
+  font-size: 0.98rem;
+
+  line-height: 1.7;
+
+  opacity: 0.94;
+
+}
+
+.ct-cta .ct-btn {
+
+  position: relative;
+
+  z-index: 1;
+
+}
+
+/* =========================================
+
+   TABLET
+
+\========================================= */
+
+@media (max-width: 960px) {
+
+  .ct-grid {
+
+    grid-template-columns: minmax(0, 1fr);
+
+    max-width: 740px;
+
+    gap: 26px;
+
+  }
+
+  .ct-map,
+
+  .ct-cta {
+
+    max-width: 740px;
+
+  }
+
+}
+
+/* =========================================
+
+   MOBILE
+
+\========================================= */
+
+@media (max-width: 560px) {
+
+  .ct {
+
+    padding: 35px 16px 45px;
+
+  }
+
+  .ct-hero {
+
+    margin-bottom: 34px;
+
+  }
+
+  .ct-pill {
+
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    font-size: 0.65rem;
+
+    letter-spacing: 0.1em;
+
+  }
+
+  .ct-title {
+
+    margin: 21px 0 15px;
+
+    font-size: clamp(2.1rem, 9.6vw, 3rem);
+
+    line-height: 1.14;
+
+    letter-spacing: -0.025em;
+
+  }
+
+  .ct-lead {
+
+    margin-bottom: 23px;
+
+    font-size: 0.96rem;
+
+    line-height: 1.7;
+
+  }
+
+  .ct-actions {
+
+    gap: 10px;
+
+  }
+
+  .ct-actions .ct-btn {
+
+    min-height: 46px;
+
+    padding: 12px 17px;
+
+    font-size: 0.88rem;
+
+  }
+
+  .ct-grid {
+
+    gap: 23px;
+
+  }
+
+  .ct-info {
+
+    gap: 14px;
+
+  }
+
+  .ct-card {
+
+    gap: 13px;
+
+    padding: 18px;
+
+    border-radius: 22px;
+
+  }
+
+  .ct-ico {
+
+    width: 47px;
+
+    height: 47px;
+
+    border-radius: 15px;
+
+  }
+
+  .ct-card-body strong {
+
+    font-size: 1.05rem;
+
+  }
+
+  .ct-card-body em {
+
+    font-size: 0.81rem;
+
+  }
+
+  .ct-go {
+
+    width: 34px;
+
+    height: 34px;
+
+  }
+
+  .ct-form {
+
+    padding: 25px 18px;
+
+    border-radius: 27px;
+
+  }
+
+  .ct-form::before {
+
+    right: 24px;
+
+    left: 24px;
+
+  }
+
+  .ct-form-head h2 {
+
+    font-size: 1.65rem;
+
+  }
+
+  .ct-form-head p {
+
+    margin-bottom: 22px;
+
+    font-size: 0.9rem;
+
+  }
+
+  .ct-row {
+
+    grid-template-columns: minmax(0, 1fr);
+
+    gap: 0;
+
+  }
+
+  .ct-field {
+
+    margin-bottom: 16px;
+
+  }
+
+  .ct-field input,
+
+  .ct-field select,
+
+  .ct-field textarea {
+
+    min-height: 49px;
+
+    padding: 13px 14px;
+
+    border-radius: 15px;
+
+    font-size: 0.94rem;
+
+  }
+
+  .ct-field textarea {
+
+    min-height: 105px;
+
+  }
+
+  .ct-btn--wide {
+
+    min-height: 52px;
+
+  }
+
+  .ct-map {
+
+    height: 350px;
+
+    margin-top: 32px;
+
+    border-width: 5px;
+
+    border-radius: 26px;
+
+  }
+
+  .ct-map-card {
+
+    right: 10px;
+
+    bottom: 10px;
+
+    left: 10px;
+
+    gap: 9px;
+
+    max-width: none;
+
+    padding: 10px;
+
+    border-radius: 18px;
+
+  }
+
+  .ct-map-card .ct-ico--sm {
+
+    width: 36px;
+
+    height: 36px;
+
+    border-radius: 12px;
+
+  }
+
+  .ct-map-card strong {
+
+    font-size: 0.83rem;
+
+  }
+
+  .ct-map-card small {
+
+    font-size: 0.7rem;
+
+  }
+
+  .ct-map-card .ct-btn {
+
+    min-height: 38px;
+
+    margin-left: auto;
+
+    padding: 8px 11px;
+
+    font-size: 0.75rem;
+
+  }
+
+  .ct-cta {
+
+    justify-content: center;
+
+    gap: 18px;
+
+    margin-top: 26px;
+
+    padding: 28px 18px;
+
+    border-radius: 26px;
+
+    text-align: center;
+
+  }
+
+  .ct-cta h3 {
+
+    font-size: 1.65rem;
+
+    line-height: 1.3;
+
+  }
+
+  .ct-cta p {
+
+    font-size: 0.91rem;
+
+    line-height: 1.65;
+
+  }
+
+}
+
+/* =========================================
+
+   SMALL MOBILE
+
+\========================================= */
+
+@media (max-width: 360px) {
+
+  .ct {
+
+    padding-right: 12px;
+
+    padding-left: 12px;
+
+  }
+
+  .ct-actions .ct-btn {
+
+    gap: 7px;
+
+    padding: 11px 12px;
+
+    font-size: 0.82rem;
+
+  }
+
+  .ct-card {
+
+    gap: 10px;
+
+    padding: 14px;
+
+  }
+
+  .ct-card-body strong {
+
+    font-size: 0.98rem;
+
+  }
+
+  .ct-map-card {
+
+    gap: 7px;
+
+    padding: 8px;
+
+  }
+
+  .ct-map-card .ct-btn {
+
+    padding: 8px 9px;
+
+  }
+
+}
+
+/* =========================================
+
+   ACCESSIBILITY
+
+\========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ct-rise {
+
+    animation: none;
+
+  }
+
+  .ct-card,
+
+  .ct-btn,
+
+  .ct-go {
+
+    transition: none;
+
+  }
+
+}
+
+/* BrushButton integration in the Contact page */
+
+.ct-actions .brush-btn,
+
+.ct-cta .brush-btn {
+
+  min-height: 56px;
+
+}
+
+.ct-form .ct-brush-submit {
+
+  width: 100%;
+
+  justify-content: center;
+
+  margin-top: 8px;
+
+  font: inherit;
+
+}
+
+.ct-map-card .ct-brush-small {
+
+  min-height: 40px;
+
+  font-size: 13px;
+
+}
+
+.ct-map-card .ct-brush-small .brush-btn__row {
+
+  gap: 8px;
+
+  padding: 7px 10px 7px 16px;
+
+}
+
+.ct-map-card .ct-brush-small .brush-btn__arrow {
+
+  width: 25px;
+
+  height: 25px;
+
+}
+
+.ct-brush-submit .brush-btn__row {
+
+  justify-content: center;
+
+}
+
+.ct-brush-submit .brush-btn__fill .brush-btn__row {
+
+  justify-content: center;
+
+}
+
+.ct-actions .brush-btn svg,
+
+.ct-cta .brush-btn svg {
+
+  flex: none;
+
+}
+
+@media (max-width: 560px) {
+
+  .ct-actions .brush-btn,
+
+  .ct-cta .brush-btn {
+
+    max-width: 100%;
+
+    white-space: normal;
+
+  }
+
+}
+
+
+/* BrushButton integration in the Contact page */
+.ct-actions .brush-btn,
+.ct-cta .brush-btn {
+  min-height: 56px;
+}
+
+.ct-form .ct-brush-submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+  font: inherit;
+}
+
+.ct-map-card .ct-brush-small {
+  min-height: 40px;
+  font-size: 13px;
+}
+
+.ct-map-card .ct-brush-small .brush-btn__row {
+  gap: 8px;
+  padding: 7px 10px 7px 16px;
+}
+
+.ct-map-card .ct-brush-small .brush-btn__arrow {
+  width: 25px;
+  height: 25px;
+}
+
+.ct-brush-submit .brush-btn__row,
+.ct-brush-submit .brush-btn__fill .brush-btn__row {
+  justify-content: center;
+}
+
+.ct-actions .brush-btn svg,
+.ct-cta .brush-btn svg {
+  flex: none;
+}
+
+@media (max-width: 560px) {
+  .ct-actions .brush-btn,
+  .ct-cta .brush-btn {
+    max-width: 100%;
+    white-space: normal;
+  }
+}

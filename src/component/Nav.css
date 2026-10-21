@@ -1,0 +1,286 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap");
+
+/* =====================================================
+   THEME  (change colours / fonts here, used by all files)
+   ===================================================== */
+:root {
+  --pink-50: #fff7fa;
+  --pink-100: #fdebf2;
+  --pink-200: #f9d3e2;
+  --pink-300: #f4b3cd;
+  --pink-400: #ec8fb0;
+  --pink-500: #dc6f9a;
+  --pink-600: #c4527f;
+  --pink-700: #a63b69; /* dark pink: nav text */
+  --pink-800: #7f2650; /* darkest pink: nav hover / logo */
+
+  --ink: #231f20;
+  --muted: #6f666b;
+  --line: #f0dfe7;
+  --white: #fff;
+  --green: #4cc98c;
+
+  --font-head: "Playfair Display", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+
+  --shadow-soft: 0 24px 60px -24px rgba(220, 111, 154, 0.45);
+  --shadow-card: 0 14px 40px -18px rgba(120, 60, 90, 0.25);
+
+  --gutter: clamp(20px, 5vw, 72px);
+  --max: 1240px;
+}
+
+/* ---------- reset (also removes the Vite template styles) ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  display: block;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: linear-gradient(180deg, #fff 0%, var(--pink-50) 100%);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-align: left;
+  display: block;
+}
+
+section[id] {
+  scroll-margin-top: 0;
+}
+
+a {
+  color: inherit;
+}
+
+/* ---------- scroll reveal (Chrome / Edge / Safari 26+, others just show it) ---------- */
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: revealUp linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+/* =====================================================
+   NAV  (dark pink text on the light hero.
+   It sits on top of the hero and scrolls away with the page.)
+   ===================================================== */
+.nav {
+  --pad: clamp(20px, 6vw, 64px);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  column-gap: 24px;
+  padding: 26px var(--pad);
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--pink-800);
+  /* page load: nav slides down from the top */
+  animation: navDown 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes navDown {
+  from { opacity: 0; transform: translateY(-100%); }
+  to   { opacity: 1; transform: none; }
+}
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--pink-800);
+  text-decoration: none;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2.6vw, 40px);
+}
+
+.nav__links a {
+  color: var(--pink-700);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.25s;
+}
+
+.nav__links a:hover,
+.nav__links a.is-active {
+  color: var(--pink-800);
+  font-weight: 600;
+}
+
+/* mobile-menu button: hidden on desktop */
+.nav__links a.brush-btn.nav__mobile-cta {
+  display: none;
+}
+
+/* ---------- desktop "Book Appointment" (BrushButton, compact) ---------- */
+.nav > .brush-btn.nav__cta {
+  justify-self: end;
+  flex: none;
+  font-size: 14.5px;
+}
+
+.nav > .brush-btn.nav__cta .brush-btn__row {
+  gap: 12px;
+  padding: 6px 6px 6px 20px;
+}
+
+.nav > .brush-btn.nav__cta .brush-btn__arrow {
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.nav > .brush-btn.nav__cta .brush-btn__brush {
+  width: 42px;
+}
+
+/* burger (mobile only) */
+.nav__burger {
+  display: none;
+  justify-self: end;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--pink-200);
+  cursor: pointer;
+}
+
+.nav__burger span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--pink-700);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.nav.is-open .nav__burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav.is-open .nav__burger span:nth-child(2) { opacity: 0; }
+.nav.is-open .nav__burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 1000px) {
+  .nav { grid-template-columns: 1fr auto; }
+  .nav > .brush-btn.nav__cta { display: none; }
+  .nav__burger { display: flex; }
+
+  /* dropdown panel */
+  .nav__links {
+    position: absolute;
+    top: 82px;
+    left: var(--pad);
+    right: var(--pad);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 22px 18px;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 20px 50px -16px rgba(120, 30, 70, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+  }
+
+  .nav.is-open .nav__links {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav__links a {
+    display: block;
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--line);
+    color: var(--pink-700);
+  }
+
+  .nav__links a:hover,
+  .nav__links a.is-active { color: var(--pink-800); }
+
+  /* BrushButton inside the mobile menu (needs higher specificity than ".nav__links a") */
+  .nav__links a.brush-btn.nav__mobile-cta {
+    display: inline-flex;
+    justify-content: center;
+    margin-top: 14px;
+    padding: 0;
+    border: 1.5px solid transparent;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .nav__links a.brush-btn.nav__mobile-cta:hover,
+  .nav__links a.brush-btn.nav__mobile-cta:focus-visible {
+    color: #fff;
+    border-color: var(--pink-300);
+  }
+
+  .nav__links a.brush-btn.nav__mobile-cta .brush-btn__row--on {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+.nav__logo {
+  gap: 12px;                  /* space between logo and name */
+}
+
+.nav__logo-img {
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;        /* use 50% for a round logo */
+  object-fit: contain;
+  flex: none;
+}
+
+@media (max-width: 1000px) {
+  .nav__logo-img { width: 38px; height: 38px; }
+}

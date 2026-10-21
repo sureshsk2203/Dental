@@ -1,0 +1,654 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,600;1,700&display=swap");
+
+/* ================= VARIABLES ================= */
+
+.hero {
+  --rose-1: #de7ba3;
+  --rose-2: #cf5c89;
+  --white: #fff;
+
+  --pad: clamp(20px, 6vw, 64px); /* left / right gutter */
+  --nav-space: 120px;            /* space kept for the nav at the top */
+}
+
+/* ================= HERO ================= */
+/* two equal columns: text on the left, tooth on the right,
+   both centred vertically so they look balanced */
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(16px, 3vw, 48px);
+  min-height: 100vh;
+  min-height: max(100vh, 640px);
+  padding: var(--nav-space) var(--pad) clamp(32px, 6vh, 64px);
+  overflow: hidden;
+  text-align: left;
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--ink, #231f20);
+  /* same background as the About photo card */
+  background:
+    radial-gradient(50% 45% at 78% 40%, rgba(255, 255, 255, 0.7), transparent 70%),
+    linear-gradient(145deg, var(--pink-100, #fdebf2), var(--pink-200, #f9d3e2));
+}
+
+.hero h1,
+.hero p {
+  font-family: inherit;
+  text-align: left;
+}
+
+/* ================= LEFT TEXT ================= */
+
+.hero__content {
+  position: relative;
+  z-index: 4;
+  max-width: 680px;
+  /* page load: text comes in from the left */
+  animation: slideFromLeft 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s both;
+}
+
+/* ---- headline: 3 type styles, glossy rose metal ---- */
+.hero {
+  --metal-top: #ec8fb0;    /* light edge  */
+  --metal-mid: #cf5c89;    /* main colour */
+  --metal-low: #9c3462;    /* shadow edge */
+}
+
+.hero .hero__title {
+  position: relative;
+  --t: clamp(44px, min(7vw, 10.5vh), 100px); /* base size, everything scales from this */
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.t-row {
+  display: block;
+  width: fit-content;
+  white-space: nowrap;
+  filter:
+    drop-shadow(0 6px 10px rgba(156, 52, 98, 0.28))
+    drop-shadow(0 0 22px rgba(236, 143, 176, 0.35));
+}
+
+.t-row--1 {
+  font-size: calc(var(--t) * 0.9);
+  font-style: normal;
+  letter-spacing: -0.01em;
+}
+
+.t-row--3 {
+  position: relative;
+  font-size: calc(var(--t) * 1.5);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+/* one letter */
+.ch {
+  display: inline-block;
+  padding: 0 0.04em 0.06em;
+  color: transparent;
+  cursor: default;
+  background-image:
+    linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.95) 50%, transparent 62%),
+    linear-gradient(180deg, var(--metal-top) 0%, var(--metal-mid) 50%, var(--metal-low) 100%);
+  background-size: 260% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  background-position: 160% 0, 0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
+  /* 1) fade + un-blur in, letter by letter   2) shine wave runs across the letters */
+  animation:
+    chIn 0.9s cubic-bezier(0.2, 0.9, 0.2, 1) backwards,
+    metalShine 5s ease-in-out infinite;
+  animation-delay:
+    calc(1.5s + var(--i) * 0.04s),
+    calc(2.9s + var(--i) * 0.07s);
+}
+
+.ch:hover {
+  transform: translateY(-8px) scale(1.06);
+}
+
+/* solid-colour letters for the small line */
+.ch--plain {
+  padding: 0;
+  color: var(--pink-700, #a63b69);
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  animation: chIn 0.9s cubic-bezier(0.2, 0.9, 0.2, 1) backwards;
+  animation-delay: calc(1.5s + var(--i) * 0.04s);
+}
+
+/* small middle line:  ——  for a lifetime of  —— */
+.t-sub {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  width: fit-content;
+  margin: clamp(8px, 1.6vh, 16px) 0 clamp(2px, 0.6vh, 8px) 0.1em;
+  font-size: calc(var(--t) * 0.36);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: var(--pink-700, #a63b69);
+}
+
+.t-sub__text {
+  display: inline-block;
+}
+
+.t-sub::before,
+.t-sub::after {
+  content: "";
+  flex: none;
+  width: 2.2em;
+  height: 2px;
+  border-radius: 2px;
+  transform-origin: left center;
+  animation: growLine 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 1.8s backwards;
+}
+
+.t-sub::before {
+  background: linear-gradient(90deg, var(--pink-400, #ec8fb0), var(--pink-600, #c4527f));
+}
+
+.t-sub::after {
+  background: linear-gradient(90deg, var(--pink-600, #c4527f), rgba(236, 143, 176, 0));
+  animation-delay: 2.4s;
+}
+
+/* ---- little tooth that rolls across, then vanishes ---- */
+.t-runner {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  top: calc(var(--t) * 0.08);
+  width: calc(var(--t) * 0.7);
+  height: calc(var(--t) * 0.84);
+  pointer-events: none;
+  animation: runAcross 1.1s cubic-bezier(0.35, 0.1, 0.45, 1) 0.2s both;
+}
+
+.t-runner__body {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: vanish 0.3s ease-in 1.25s both;
+}
+
+.t-runner__hop {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: hop 0.28s ease-out infinite alternate;
+}
+
+.t-runner__spin {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: spinRoll 1.1s linear 0.2s both;
+}
+
+.t-runner svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 6px 8px rgba(156, 52, 98, 0.35));
+}
+
+/* sparkles when the tooth vanishes */
+.t-spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--t) * 0.14);
+  height: calc(var(--t) * 0.14);
+  background: linear-gradient(135deg, #fff, var(--metal-mid));
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  opacity: 0;
+  animation: sparkOut 0.7s ease-out 1.35s both;
+}
+
+/* the smile curve under the last word */
+.t-smile {
+  display: block;
+  width: 94%;
+  height: clamp(16px, 3.2vh, 30px);
+  margin-top: -0.02em;
+  overflow: visible;
+}
+
+.t-smile path {
+  fill: none;
+  stroke: url(#smileGrad);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 330;
+  stroke-dashoffset: 330;
+  animation: drawSmile 1.1s cubic-bezier(0.5, 0, 0.2, 1) 3.3s forwards;
+}
+
+/* ---- glass card for the paragraph ---- */
+.hero__text {
+  position: relative;
+  max-width: 440px;
+  margin: clamp(16px, 3vh, 28px) 0 0;
+  padding: 18px 22px;
+  overflow: hidden;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: #4a3f45;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.35));
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 22px;
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 18px 40px -20px rgba(196, 82, 127, 0.5);
+  animation: fadeUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 2.5s backwards;
+}
+
+/* light that glides across the glass */
+.hero__text::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  background-position: 150% 0;
+  animation: glassSweep 6s ease-in-out 1.5s infinite;
+}
+
+.hero__text b {
+  font-weight: 600;
+  color: var(--pink-600, #c4527f);
+}
+
+/* ================= EXPLORE BUTTON (BrushButton) ================= */
+/* look + hover animation live in BrushButton.css, here only the position */
+
+.hero .hero__btn {
+  margin-top: clamp(22px, 4vh, 38px);
+  animation: popIn 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.4) 2.9s backwards;
+}
+
+/* the second button (after the picture) is hidden on laptop */
+.hero .hero__btn--mobile {
+  display: none;
+}
+
+/* ================= TOOTH SCENE (right) ================= */
+
+.scene {
+  position: relative;
+  z-index: 2;
+  justify-self: end;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  /* page load: image comes in from the right */
+  animation: slideFromRight 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s both;
+}
+
+.scene::before {
+  content: "";
+  position: absolute;
+  inset: -6% -4%;
+  z-index: -1;
+  background: radial-gradient(circle at 55% 55%, var(--pink-300, #f4b3cd) 0%, rgba(244, 179, 205, 0) 62%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.tooth {
+  position: relative;
+  /* limited by column width AND by the screen height, so it never overflows */
+  width: min(100%, calc((max(100vh, 640px) - var(--nav-space) - 56px) * 1.064));
+  aspect-ratio: 515 / 484;
+  animation: toothBob 6s ease-in-out infinite;
+}
+
+.tooth__img,
+.tooth__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.tooth__img {
+  filter: drop-shadow(0 24px 30px rgba(156, 52, 98, 0.28));
+}
+
+/* clipped copies: each one moves only its own tool */
+.tooth__layer {
+  pointer-events: none;
+}
+
+/* inset(top right bottom left) = the tool area of tooth.png */
+.layer--brush {
+  clip-path: inset(26.4% 58.3% 64.5% 29.1%);
+  animation: scrub 0.35s ease-in-out infinite alternate;
+}
+
+.layer--vac-top {
+  clip-path: inset(8.7% 42.1% 74.4% 44.3%);
+  animation: buzz 0.22s ease-in-out infinite alternate;
+}
+
+.layer--cloth {
+  clip-path: inset(22.3% 24.7% 71.5% 67%);
+  animation: wipe 0.45s ease-in-out infinite alternate;
+}
+
+.layer--mirror {
+  clip-path: inset(34.3% 12.2% 48.3% 77.7%);
+  transform-origin: 84% 49%;
+  animation: swing 0.8s ease-in-out infinite alternate;
+}
+
+.layer--vac-bottom {
+  clip-path: inset(59.5% 48.5% 28.1% 33.4%);
+  transform-origin: 34.6% 70%;
+  animation: sweepVac 0.7s ease-in-out infinite alternate;
+}
+
+/* ---- smooth sway for every worker ----
+   clip-path = the worker's upper body, the bottom edge (waist) fades out and is
+   the pivot, so the cut line never "tears". inset(top right bottom left) in % of tooth.png */
+.layer--w1, .layer--w2, .layer--w3, .layer--w4, .layer--w5 {
+  will-change: transform;
+  animation: sway 0.9s ease-in-out infinite alternate;
+}
+
+/* top vacuum worker */
+.layer--w1 {
+  --amp: 1.2deg;
+  clip-path: inset(1.3% 43.2% 85.8% 44.2%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 8%, transparent 14.2%);
+  mask-image: linear-gradient(to bottom, #000 8%, transparent 14.2%);
+  transform-origin: 50.5% 14.2%;
+  animation-duration: 0.85s;
+}
+
+/* top right worker with the cloth */
+.layer--w2 {
+  --amp: 1.6deg;
+  clip-path: inset(13.5% 15.3% 72.6% 67.5%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 21%, transparent 27.4%);
+  mask-image: linear-gradient(to bottom, #000 21%, transparent 27.4%);
+  transform-origin: 76% 27.4%;
+  animation-duration: 0.7s;
+  animation-delay: -0.3s;
+}
+
+/* scaffold worker with the brush */
+.layer--w3 {
+  --amp: 1.4deg;
+  clip-path: inset(22.3% 63.4% 58.7% 16.6%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 34%, transparent 41.3%);
+  mask-image: linear-gradient(to bottom, #000 34%, transparent 41.3%);
+  transform-origin: 26.6% 41.3%;
+  animation-duration: 0.6s;
+  animation-delay: -0.15s;
+}
+
+/* ladder worker with the mirror */
+.layer--w4 {
+  --amp: 1.5deg;
+  clip-path: inset(45.7% 3.6% 32% 82%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 61%, transparent 68%);
+  mask-image: linear-gradient(to bottom, #000 61%, transparent 68%);
+  transform-origin: 89.2% 68%;
+  animation-duration: 0.75s;
+  animation-delay: -0.4s;
+}
+
+/* bottom worker with the vacuum */
+.layer--w5 {
+  --amp: 1.3deg;
+  clip-path: inset(63.2% 63.4% 14.1% 19.4%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 85.9%);
+  mask-image: linear-gradient(to bottom, #000 78%, transparent 85.9%);
+  transform-origin: 28% 85.9%;
+  animation-duration: 0.65s;
+  animation-delay: -0.2s;
+}
+
+/* moving shine, masked to the shape of tooth.png */
+.tooth__shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.75) 50%,
+    transparent 62%
+  );
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  background-position: 120% 0;
+  mix-blend-mode: soft-light;
+  -webkit-mask: url("/tooth.png") center / 100% 100% no-repeat;
+  mask: url("/tooth.png") center / 100% 100% no-repeat;
+  animation: shine 4.5s ease-in-out infinite;
+}
+
+.spark {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: twinkle 0.7s ease-in-out infinite;
+}
+
+.drop {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff, rgba(255, 255, 255, 0.55));
+  opacity: 0;
+  pointer-events: none;
+  animation: drift 3s ease-in-out infinite;
+}
+
+/* ================= KEYFRAMES ================= */
+
+@keyframes slideFromLeft {
+  from { opacity: 0; transform: translateX(-120px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes slideFromRight {
+  from { opacity: 0; transform: translateX(140px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes chIn {
+  from { opacity: 0; transform: translateY(45%) rotate(6deg) scale(0.9); filter: blur(10px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+@keyframes pillIn {
+  from { opacity: 0; transform: translateX(-50px) scale(0.9); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes runAcross {
+  from { transform: translateX(-34vw); }
+  to   { transform: translateX(calc(var(--t) * 5.4)); }
+}
+
+@keyframes hop {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-32%); }
+}
+
+@keyframes spinRoll {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(720deg); }
+}
+
+@keyframes vanish {
+  0%   { transform: scale(1); opacity: 1; }
+  40%  { transform: scale(1.35); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes sparkOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateY(0) scale(0.3);
+  }
+  25% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateY(calc(var(--t) * -0.75)) scale(1);
+  }
+}
+
+@keyframes sway {
+  from { transform: rotate(calc(var(--amp, 1.3deg) * -1)) scale(1); }
+  to   { transform: rotate(var(--amp, 1.3deg)) scale(1.008); }
+}
+
+@keyframes growLine {
+  from { transform: scaleX(0); }
+  to   { transform: none; }
+}
+
+@keyframes drawSmile {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes metalShine {
+  0%   { background-position: 160% 0, 0 0; }
+  45%  { background-position: -60% 0, 0 0; }
+  100% { background-position: -60% 0, 0 0; }
+}
+
+@keyframes glassSweep {
+  0%   { background-position: 150% 0; }
+  40%  { background-position: -50% 0; }
+  100% { background-position: -50% 0; }
+}
+
+@keyframes toothBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+@keyframes scrub {
+  from { transform: translate(-3px, 0); }
+  to   { transform: translate(3px, 1px); }
+}
+
+@keyframes buzz {
+  from { transform: translate(-1px, -0.5px); }
+  to   { transform: translate(1px, 1px); }
+}
+
+@keyframes wipe {
+  from { transform: translate(-4px, 0); }
+  to   { transform: translate(4px, 1px); }
+}
+
+@keyframes swing {
+  from { transform: rotate(-4deg); }
+  to   { transform: rotate(4deg); }
+}
+
+@keyframes sweepVac {
+  from { transform: rotate(-2.5deg); }
+  to   { transform: rotate(2.5deg); }
+}
+
+@keyframes shine {
+  0%   { background-position: 120% 0; }
+  55%  { background-position: -20% 0; }
+  100% { background-position: -20% 0; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.2) rotate(0); }
+  50%      { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(45deg); }
+}
+
+@keyframes drift {
+  0%   { opacity: 0; transform: translate(0, 10px) scale(0.6); }
+  30%  { opacity: 0.95; }
+  100% { opacity: 0; transform: translate(10px, -34px) scale(1.1); }
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* tablet + phone: text on top, tooth below */
+@media (max-width: 900px) {
+  .hero {
+    --nav-space: 100px;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    min-height: auto;
+    padding-bottom: 48px;
+  }
+
+  .hero .hero__title { --t: clamp(40px, 11vw, 80px); }
+
+  .scene { justify-self: center; justify-content: center; }
+  .tooth { width: min(100%, 560px); }
+
+  /* mobile / tablet order: heading, paragraph, picture, THEN the button */
+  .hero .hero__btn--desktop { display: none; }
+
+  .hero .hero__btn--mobile {
+    display: inline-flex;
+    justify-self: center;
+    margin-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ================= LOADER / HERO ANIMATION SYNC =================
+   Add "hero--ready" to the .hero element after Loader finishes.
+   Before that, hero is hidden and animations are disabled, so they
+   begin from the start when the loader finishes.
+=================================================================== */
+.hero {
+  visibility: visible !important;
+  opacity: 1;
+}
+
+.hero__content,
+.scene {
+  opacity: 1;
+}

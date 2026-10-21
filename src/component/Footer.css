@@ -1,0 +1,272 @@
+/* =====================================================
+   FOOTER  (dark pink, same theme variables as the rest)
+   ===================================================== */
+.footer {
+  margin-top: clamp(30px, 5vw, 60px);
+  padding: clamp(50px, 7vw, 90px) var(--gutter) 0;
+  border-radius: 44px 44px 0 0;
+  font-family: var(--font-body, "DM Sans", system-ui, sans-serif);
+  color: rgba(255, 255, 255, 0.82);
+  background:
+    radial-gradient(50% 60% at 85% 0%, rgba(236, 143, 176, 0.35), transparent 70%),
+    linear-gradient(160deg, var(--pink-800, #7f2650), #55173a);
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.7fr 1.3fr 1.3fr;
+  gap: clamp(28px, 4vw, 56px);
+  max-width: var(--max, 1240px);
+  margin: 0 auto;
+}
+
+.footer h4 {
+  margin: 0 0 20px;
+  font-family: var(--font-head, "Playfair Display", Georgia, serif);
+  font-size: 20px;
+  color: #fff;
+}
+
+.footer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- brand ---------- */
+.footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff !important;
+}
+
+.footer__logo svg {
+  transition: transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.footer__logo:hover svg {
+  transform: rotate(-12deg) scale(1.15);
+}
+
+.footer__brand p {
+  max-width: 300px;
+  margin: 16px 0 26px;
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+/* ---------- buttons: BrushButton (see BrushButton.css) ----------
+   ".footer a { color: inherit }" is stronger than the button colour,
+   so the colour is set again here for the footer */
+.footer .brush-btn--light {
+  color: var(--pink-600, #c4527f);
+}
+
+/* ---------- links: underline grows from the left ---------- */
+.footer__col li + li {
+  margin-top: 12px;
+}
+
+.footer__link {
+  position: relative;
+  display: inline-block;
+  font-size: 15.5px;
+  transition: color 0.25s, transform 0.25s;
+}
+
+.footer__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--pink-300, #f4b3cd);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.footer__link:hover {
+  color: #fff;
+  transform: translateX(4px);
+}
+
+.footer__link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ---------- address / contact ---------- */
+.footer__contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.footer__contact li + li {
+  margin-top: 16px;
+}
+
+.footer__contact a {
+  font-size: 15.5px;
+  line-height: 1.6;
+  transition: color 0.25s;
+}
+
+.footer__contact a:hover {
+  color: #fff;
+}
+
+.footer address {
+  font-style: normal;
+}
+
+.footer__ico {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--pink-200, #f9d3e2);
+  transition: transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1), background 0.25s;
+}
+
+.footer__contact li:hover .footer__ico {
+  transform: rotate(-8deg) scale(1.12);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* the pin pulses so the address stands out */
+.footer__ico--pin {
+  position: relative;
+}
+
+.footer__ico--pin::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  border: 2px solid var(--pink-300, #f4b3cd);
+  opacity: 0;
+  animation: pinPulse 2.4s ease-out infinite;
+}
+
+.footer__hours p {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+.footer__hours p + p {
+  margin-top: 12px;
+}
+
+.footer__hours b {
+  display: block;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* each time slot on its own line */
+.footer__hours p > span > span {
+  display: block;
+}
+
+/* ---------- map ---------- */
+.footer__map {
+  position: relative;
+  min-height: 250px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s;
+}
+
+.footer__map:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 32px 60px -24px rgba(0, 0, 0, 0.7);
+}
+
+.footer__map iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* small brush button sitting on the map */
+.footer__map .footer__btn--map {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 2;
+  font-size: 14px;
+}
+
+.footer__map .footer__btn--map .brush-btn__row {
+  gap: 12px;
+  padding: 6px 6px 6px 18px;
+}
+
+.footer__map .footer__btn--map .brush-btn__arrow {
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+}
+
+.footer__map .footer__btn--map .brush-btn__brush {
+  width: 44px;
+}
+
+/* ---------- bottom bar ---------- */
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  max-width: var(--max, 1240px);
+  margin: clamp(40px, 6vw, 70px) auto 0;
+  padding: 22px 0 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.footer__bottom p {
+  margin: 0;
+}
+
+@keyframes pinPulse {
+  0%   { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(1.7); }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) {
+  .footer__inner { grid-template-columns: 1fr 1fr; }
+  .footer__map { grid-column: 1 / -1; min-height: 280px; }
+}
+
+@media (max-width: 640px) {
+  .footer { border-radius: 30px 30px 0 0; }
+  .footer__inner { grid-template-columns: 1fr; }
+  .footer__brand p { max-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__ico--pin::after { animation: none; }
+}

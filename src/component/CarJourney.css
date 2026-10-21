@@ -1,0 +1,259 @@
+/* =========================================
+   CAR JOURNEY
+========================================= */
+
+.ct-journey {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ct-journey-svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: visible;
+}
+
+/* Road: hidden visually, but kept in the DOM so the car can follow its geometry */
+
+.ct-road-bed,
+.ct-road-dash,
+.ct-road-trail {
+  fill: none;
+  stroke: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Exhaust smoke (drawn on a viewport-sized canvas behind the car) */
+
+.ct-smoke {
+  position: fixed;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.ct-car {
+  z-index: 3;
+}
+
+/* Car */
+
+.ct-car {
+  --h: 0deg;
+  --speed: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  will-change: transform;
+}
+
+.ct-car.is-ready {
+  opacity: 1;
+}
+
+.ct-car-rot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(var(--h));
+}
+
+.ct-car-svg {
+  position: absolute;
+  top: -15px;
+  left: -30px;
+  display: block;
+  overflow: visible;
+}
+
+/* The shadow keeps a fixed light direction while the body turns */
+
+.ct-car-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(5px, 9px);
+}
+
+.ct-car-shadow-rot {
+  position: absolute;
+  top: -10px;
+  left: -26px;
+  width: 52px;
+  height: 20px;
+  border-radius: 12px;
+  background: rgba(58, 15, 70, 0.34);
+  filter: blur(5px);
+  transform: rotate(var(--h));
+}
+
+/* Soft glow around the car, brighter when moving */
+
+.ct-car::before {
+  content: "";
+  position: absolute;
+  top: -55px;
+  left: -55px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 120, 190, 0.5),
+    rgba(190, 120, 240, 0.22) 45%,
+    transparent 70%
+  );
+  opacity: calc(0.45 + var(--speed) * 0.55);
+  pointer-events: none;
+}
+
+/* Lights respond to speed */
+
+.ct-car-beam {
+  opacity: calc(0.4 + var(--speed) * 0.6);
+  transition: opacity 0.4s ease;
+}
+
+.ct-car-tail {
+  opacity: calc(0.5 + var(--speed) * 0.5);
+}
+
+/* Destination */
+
+.ct-dest {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.ct-dest i {
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  display: none;
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(224, 86, 159, 0.6);
+  border-radius: 50%;
+  opacity: 0;
+  animation: ctPing 2.4s ease-out infinite;
+}
+
+.ct-dest i:nth-child(2) {
+  animation-delay: 1.2s;
+}
+
+.ct-dest-chip {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 18px;
+  border-radius: 20px;
+  text-align: center;
+  color: #211527;
+  background: #fff;
+  box-shadow: 0 12px 24px -10px rgba(120, 40, 140, 0.45);
+  font: 700 0.78rem "DM Sans", sans-serif;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, 6px) scale(0.9);
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+
+.ct-dest-chip b {
+  color: #16895d;
+  font-size: 0.88rem;
+}
+
+.ct-dest-chip small {
+  color: #796b7b;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* Arrival: car settles, beams dim, rings ping, chip pops in */
+
+.ct-journey.is-arrived .ct-dest i {
+  display: block;
+}
+
+.ct-journey.is-arrived .ct-dest-chip {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+.ct-journey.is-arrived .ct-car-beam {
+  opacity: 0.12;
+}
+
+.ct-journey.is-arrived .ct-car-svg {
+  animation: ctSettle 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes ctPing {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.4);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2.8);
+  }
+}
+
+@keyframes ctSettle {
+  0% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(1.14);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 560px) {
+  .ct-car-svg {
+    scale: 0.78;
+  }
+
+  .ct-car-shadow-rot {
+    scale: 0.78;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-smoke {
+    display: none;
+  }
+
+  .ct-car,
+  .ct-car-beam,
+  .ct-dest-chip {
+    transition: none;
+  }
+
+  .ct-dest i,
+  .ct-journey.is-arrived .ct-car-svg {
+    animation: none;
+  }
+}

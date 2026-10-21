@@ -1,0 +1,420 @@
+/* =====================================================
+   BRUSH BUTTON
+   hover  ->  toothbrush scrubs left to right, the button turns "clean"
+              (colour fills in behind the brush), foam bubbles pop,
+              sparkles twinkle at the end.
+   Timing is shared through the variables below.
+   ===================================================== */
+.brush-btn {
+  --pink-700: #a63b69;
+  --sweep: 0.9s;                                  /* how long the brush takes */
+  --ease: cubic-bezier(0.45, 0.05, 0.3, 1);
+  --leave: 1.9s;                                  /* how long the tooth takes to roll back (mouse leave) */
+  --ease-leave: cubic-bezier(0.55, 0, 0.35, 1);   /* soft start, soft stop */
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1.5px solid var(--pink-300, #f4b3cd);
+  border-radius: 999px;
+  font-family: var(--font-body, "DM Sans", system-ui, sans-serif);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.3), box-shadow 0.3s, border-color 0.3s;
+}
+
+.brush-btn:hover,
+.brush-btn:focus-visible {
+  transform: translateY(-3px);
+}
+
+.brush-btn:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+.brush-btn:focus-visible {
+  outline: 3px solid var(--pink-500, #dc6f9a);
+  outline-offset: 3px;
+}
+
+/* ---------- content row (same markup in the normal + the "clean" layer) ---------- */
+.brush-btn__row {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 10px 10px 26px;
+}
+
+.brush-btn__arrow {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 16px;
+}
+
+/* ---------- the "clean" layer: revealed from left to right ---------- */
+.brush-btn__fill {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path var(--leave) var(--ease-leave);   /* mouse leave: slow, smooth wash-away */
+}
+
+.brush-btn__row--on {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.brush-btn:hover .brush-btn__fill,
+.brush-btn:focus-visible .brush-btn__fill {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path var(--sweep) var(--ease);          /* hover: the quick brush sweep */
+}
+
+/* ---------- LIGHT (default): white button, fills pink ---------- */
+.brush-btn--light {
+  background: linear-gradient(135deg, #ffffff, #fff0f6);
+  color: var(--pink-600, #c4527f);
+  box-shadow: 0 16px 34px -14px rgba(196, 82, 127, 0.6);
+}
+
+.brush-btn--light:hover,
+.brush-btn--light:focus-visible {
+  border-color: var(--pink-500, #dc6f9a);
+  box-shadow:
+    0 24px 40px -14px rgba(166, 59, 105, 0.85),
+    0 0 0 6px rgba(236, 143, 176, 0.25);
+}
+
+.brush-btn--light .brush-btn__arrow {
+  background: linear-gradient(135deg, var(--pink-400, #ec8fb0), var(--pink-500, #dc6f9a));
+  color: #fff;
+}
+
+.brush-btn--light .brush-btn__fill {
+  background: linear-gradient(135deg, var(--pink-500, #dc6f9a), var(--pink-700, #a63b69));
+  color: #fff;
+}
+
+.brush-btn--light .brush-btn__row--on .brush-btn__arrow {
+  background: #fff;
+  color: var(--pink-600, #c4527f);
+}
+
+/* ---------- SOLID: pink button, fills white ---------- */
+.brush-btn--solid {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--pink-500, #dc6f9a), var(--pink-700, #a63b69));
+  color: #fff;
+  box-shadow: 0 16px 34px -14px rgba(166, 59, 105, 0.8);
+}
+
+.brush-btn--solid:hover,
+.brush-btn--solid:focus-visible {
+  border-color: var(--pink-300, #f4b3cd);
+  box-shadow:
+    0 24px 40px -14px rgba(166, 59, 105, 0.95),
+    0 0 0 6px rgba(236, 143, 176, 0.25);
+}
+
+.brush-btn--solid .brush-btn__arrow {
+  background: #fff;
+  color: var(--pink-600, #c4527f);
+}
+
+.brush-btn--solid .brush-btn__fill {
+  background: linear-gradient(135deg, #ffffff, #fff0f6);
+  color: var(--pink-600, #c4527f);
+}
+
+.brush-btn--solid .brush-btn__row--on .brush-btn__arrow {
+  background: linear-gradient(135deg, var(--pink-400, #ec8fb0), var(--pink-500, #dc6f9a));
+  color: #fff;
+}
+
+/* ---------- OUTLINE: transparent + white border (for pink bands), fills white ---------- */
+.brush-btn--outline {
+  border-color: rgba(255, 255, 255, 0.85);
+  background: transparent;
+  color: #fff;
+}
+
+.brush-btn--outline:hover,
+.brush-btn--outline:focus-visible {
+  border-color: #fff;
+  box-shadow: 0 18px 34px -14px rgba(0, 0, 0, 0.35), 0 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+.brush-btn--outline .brush-btn__arrow {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+.brush-btn--outline .brush-btn__fill {
+  background: linear-gradient(135deg, #ffffff, #fff0f6);
+  color: var(--pink-600, #c4527f);
+}
+
+.brush-btn--outline .brush-btn__row--on .brush-btn__arrow {
+  background: linear-gradient(135deg, var(--pink-400, #ec8fb0), var(--pink-500, #dc6f9a));
+  color: #fff;
+}
+
+/* ---------- icon box (treatment tabs) ---------- */
+.brush-btn__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--pink-100, #fbe4ee);
+  color: var(--pink-500, #dc6f9a);
+}
+
+.brush-btn--solid .brush-btn__icon,
+.brush-btn--light .brush-btn__row--on .brush-btn__icon {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.brush-btn--solid .brush-btn__row--on .brush-btn__icon {
+  background: var(--pink-100, #fbe4ee);
+  color: var(--pink-500, #dc6f9a);
+}
+
+/* ---------- TAB: full-width, left aligned (treatment list) ---------- */
+.brush-btn--tab {
+  display: flex;
+  width: 100%;
+  border-radius: 22px;
+  text-align: left;
+  box-shadow: none;
+}
+
+.brush-btn--tab.brush-btn--light {
+  border-color: var(--line, #f3dde6);
+  background: #fff;
+}
+
+.brush-btn--tab .brush-btn__row {
+  flex: 1;
+  gap: 14px;
+  padding: 14px 18px;
+}
+
+.brush-btn--tab .brush-btn__text {
+  font-size: 16.5px;
+  text-align: left;
+}
+
+.brush-btn--tab .brush-btn__arrow {
+  width: 30px;
+  height: 30px;
+  margin-left: auto;
+}
+
+.brush-btn--tab.brush-btn--solid {
+  box-shadow: 0 14px 28px -12px rgba(220, 111, 154, 0.9);
+}
+
+/* ---------- the toothbrush ---------- */
+.brush-btn__brush {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 4;
+  width: 54px;
+  opacity: 0;
+  pointer-events: none;
+  translate: -80% -50%;            /* bristles sit on the edge of the colour */
+}
+
+.brush-btn__brush svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  rotate: -16deg;
+  filter: drop-shadow(0 3px 3px rgba(120, 30, 70, 0.3));
+}
+
+.brush-btn:hover .brush-btn__brush,
+.brush-btn:focus-visible .brush-btn__brush {
+  animation:
+    brushSweep var(--sweep) var(--ease) forwards,
+    brushShow 1.15s linear forwards;
+}
+
+/* quick scrubbing while it moves */
+.brush-btn:hover .brush-btn__brush svg,
+.brush-btn:focus-visible .brush-btn__brush svg {
+  animation: brushScrub 0.12s ease-in-out infinite alternate;
+}
+
+/* ---------- the tooth that rolls back when the mouse leaves ----------
+   The colour washes away from right to left (same time + easing),
+   and the tooth rides on the edge of it, spinning and hopping.
+   The class "is-leaving" is added by BrushButton.jsx for ~1 second. */
+.brush-btn__tooth {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  z-index: 4;
+  width: 28px;
+  opacity: 0;
+  pointer-events: none;
+  translate: -50% -50%;
+}
+
+.brush-btn__tooth svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 3px 3px rgba(120, 30, 70, 0.35));
+}
+
+.brush-btn.is-leaving:not(:hover):not(:focus-visible) .brush-btn__tooth {
+  animation:
+    toothTravel var(--leave) var(--ease-leave) forwards,
+    toothShow calc(var(--leave) + 0.1s) linear forwards;
+}
+
+.brush-btn.is-leaving:not(:hover):not(:focus-visible) .brush-btn__tooth svg {
+  animation:
+    toothSpin var(--leave) var(--ease-leave) forwards,
+    toothHop 0.63s ease-in-out 3;
+}
+
+/* ---------- foam bubbles ---------- */
+.brush-btn__bubble {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  z-index: 3;
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff, rgba(255, 255, 255, 0.45));
+  opacity: 0;
+  pointer-events: none;
+}
+
+.brush-btn:hover .brush-btn__bubble,
+.brush-btn:focus-visible .brush-btn__bubble {
+  animation: bubbleUp 0.75s ease-out var(--d) forwards;
+}
+
+/* ---------- sparkles ---------- */
+.brush-btn__spark {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  z-index: 3;
+  width: var(--s);
+  height: var(--s);
+  background: #fff;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.brush-btn:hover .brush-btn__spark,
+.brush-btn:focus-visible .brush-btn__spark {
+  animation: sparkPop 0.7s ease-in-out var(--d) forwards;
+}
+
+/* ================= KEYFRAMES ================= */
+@keyframes brushSweep {
+  from { left: 0%; }
+  to   { left: 100%; }
+}
+
+@keyframes brushShow {
+  0%   { opacity: 0; }
+  8%   { opacity: 1; }
+  82%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes brushScrub {
+  from { transform: translateY(-2px) rotate(-7deg); }
+  to   { transform: translateY(2px) rotate(7deg); }
+}
+
+@keyframes bubbleUp {
+  0%   { opacity: 0; transform: translateY(6px) scale(0.4); }
+  30%  { opacity: 0.95; }
+  100% { opacity: 0; transform: translateY(-16px) scale(1.25); }
+}
+
+@keyframes sparkPop {
+  0%   { opacity: 0; transform: scale(0.2) rotate(0deg); }
+  50%  { opacity: 1; transform: scale(1) rotate(45deg); }
+  100% { opacity: 0; transform: scale(0.3) rotate(90deg); }
+}
+
+@keyframes toothTravel {
+  from { left: 100%; }
+  to   { left: 0%; }
+}
+
+@keyframes toothShow {
+  0%   { opacity: 0; }
+  10%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes toothSpin {
+  from { rotate: 0deg; }
+  to   { rotate: -450deg; }
+}
+
+@keyframes toothHop {
+  0%, 100% { translate: 0 2px; }
+  50%      { translate: 0 -5px; }
+}
+
+/* people who prefer less motion: simple colour fade, no brush */
+@media (prefers-reduced-motion: reduce) {
+  .brush-btn__fill {
+    clip-path: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .brush-btn:hover .brush-btn__fill,
+  .brush-btn:focus-visible .brush-btn__fill {
+    opacity: 1;
+  }
+
+  .brush-btn__brush,
+  .brush-btn__tooth,
+  .brush-btn__bubble,
+  .brush-btn__spark {
+    display: none;
+  }
+}
+/* tabs on tablet / phone: horizontal scroll row, buttons size to their text */
+@media (max-width: 1000px) {
+  .treat__tabs .brush-btn--tab {
+    display: inline-flex;
+    width: auto;
+    flex: none;
+  }
+}

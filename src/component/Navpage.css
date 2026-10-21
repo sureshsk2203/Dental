@@ -1,0 +1,54 @@
+/* =====================================================
+   NAV ON THE OTHER PAGES  (Doctors, Facilities, Results, Contact)
+   On Home the nav sits on the pink hero (white text).
+   The other pages have light backgrounds, so Nav.jsx adds the
+   class "nav--page" and the text turns dark here.
+   Imported in Nav.jsx right after Nav.css.
+   ===================================================== */
+.nav--page .nav__logo {
+  color: var(--ink, #2a1a24);
+}
+
+.nav--page .nav__links a {
+  color: rgba(42, 26, 36, 0.66);
+}
+
+.nav--page .nav__links a:hover,
+.nav--page .nav__links a.is-active {
+  color: var(--pink-600, #c4527f);
+}
+
+.nav--page .nav__links .nav__mobile-cta,
+.nav--page .nav__links .nav__mobile-cta:hover {
+  color: #fff;
+}
+
+.nav--page .nav__burger span {
+  background: var(--ink, #2a1a24);
+}
+
+/* the nav floats over the top of the page, so every page
+   starts a little lower (the page background still reaches the very top) */
+.doctors-page.doctors-page,
+.fc.fc,
+.rs.rs,
+.ct.ct {
+  padding-top: 110px;   /* doubled class names = stronger than each page's own CSS */
+}
+
+/* =====================================================
+   7 links need a little more room on laptop screens
+   (the mobile menu rules stay in Nav.css)
+   ===================================================== */
+@media (min-width: 1001px) {
+  .nav__links {
+    gap: clamp(12px, 1.5vw, 30px);
+  }
+}
+
+/* phone / tablet: only the burger menu, the desktop button is hidden */
+@media (max-width: 1000px) {
+  .nav > .nav__cta {
+    display: none;
+  }
+}

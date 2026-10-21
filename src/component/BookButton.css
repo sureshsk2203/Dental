@@ -1,0 +1,620 @@
+.book-wrap {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.book-btn {
+  /* ⏱️ Speed idhula maathunga */
+  --size: 56px;      /* button height = circle size */
+  --shrink: 0.5s;    /* button circle aagura speed */
+  --spin: 0.9s;      /* ring oru suthu */
+  --confetti: 1.2s;  /* sparkles blast */
+
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: var(--size);
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  background:
+    radial-gradient(120% 160% at 12% -20%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 50%),
+    linear-gradient(110deg, #ff5f9e 0%, #d35bd0 28%, #8b5cf6 62%, #5b6cf2 82%, #ff5f9e 100%);
+  background-size: 100% 100%, 220% 100%;
+  animation: flow 6s ease-in-out infinite alternate;
+  box-shadow:
+    0 16px 30px rgba(211, 91, 208, 0.4),
+    0 4px 10px rgba(91, 108, 242, 0.28),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -4px 10px rgba(60, 20, 140, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  transition:
+    width var(--shrink) cubic-bezier(0.65, 0, 0.35, 1),
+    box-shadow 0.4s, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* idle: glow breathing */
+.book-btn.idle {
+  animation:
+    flow 6s ease-in-out infinite alternate,
+    glow-breathe 3.2s ease-in-out infinite;
+}
+
+.book-btn.idle:hover {
+  transform: translateY(-3px) scale(1.01);
+  animation: flow 3s ease-in-out infinite alternate;
+  box-shadow:
+    0 24px 44px rgba(211, 91, 208, 0.55),
+    0 0 28px 2px rgba(255, 95, 158, 0.35),
+    0 4px 10px rgba(91, 108, 242, 0.3),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -4px 10px rgba(60, 20, 140, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
+.book-btn.idle:active { transform: translateY(0) scale(0.97); }
+
+.book-btn:focus-visible {
+  outline: 3px solid rgba(139, 92, 246, 0.55);
+  outline-offset: 4px;
+}
+
+/* mint layer (sent-la fade aagum) */
+.book-mint {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #3fe0ae, #14b787);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+.book-btn.sent .book-mint { opacity: 1; transition-delay: 0.35s; }
+
+/* gloss + light sweep */
+.book-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+.book-shine::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 50% 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0));
+}
+.book-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  animation: sweep 4s ease-in-out 1s infinite;
+}
+.book-btn.idle:hover .book-shine::after { animation: sweep-fast 0.8s ease-out 1; }
+.book-btn.sending .book-shine::after,
+.book-btn.sent .book-shine::after { animation: none; opacity: 0; }
+
+/* ---------- idle content ---------- */
+.book-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  gap: 6px;
+  border-radius: inherit;
+  overflow: hidden;
+  transition: opacity 0.15s;
+}
+.book-btn.sending .book-content,
+.book-btn.sent .book-content { opacity: 0; }
+
+.book-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+  font-size: clamp(11px, 3.5vw, 15px);
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 2px rgba(50, 15, 110, 0.4), 0 0 14px rgba(255, 255, 255, 0.25);
+}
+
+.book-chip {
+  position: relative;
+  flex: 0 0 36px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* glass chip */
+.book-chip-tooth {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 4px 10px rgba(60, 20, 130, 0.22);
+}
+
+/* white chip with gradient arrow */
+.book-chip-arrow {
+  background: linear-gradient(145deg, #ffffff, #f3e9ff);
+  color: #a24fd0;
+  box-shadow:
+    0 6px 14px rgba(70, 20, 130, 0.32),
+    inset 0 -2px 4px rgba(169, 124, 240, 0.25);
+}
+
+/* ping ring around arrow chip */
+.book-chip-arrow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  animation: chip-ping 2.2s ease-out infinite;
+  pointer-events: none;
+}
+
+.book-chip-arrow svg { animation: arrow-nudge 1.8s ease-in-out infinite; }
+
+.book-btn.idle:hover .book-chip-tooth { transform: rotate(-12deg) scale(1.1); }
+.book-btn.idle:hover .book-chip-arrow { transform: translateX(3px) scale(1.08); }
+
+/* ---------- width: pill -> circle -> pill ---------- */
+.book-btn.sending {
+  width: var(--size);
+  pointer-events: none;
+}
+.book-btn.sent {
+  width: 100%;
+  pointer-events: none;
+  box-shadow:
+    0 14px 28px rgba(31, 197, 142, 0.42),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -3px 8px rgba(0, 80, 60, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  /* tooth-ah konja neram circle-la kaattitu appuram pill-ah expand aagum */
+  transition:
+    width var(--shrink) cubic-bezier(0.65, 0, 0.35, 1) 0.6s,
+    box-shadow 0.4s, transform 0.2s;
+}
+
+/* ---------- sending: brushing scene ---------- */
+.tooth-stack {
+  position: absolute;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  filter: drop-shadow(0 2px 3px rgba(40, 15, 90, 0.25));
+}
+.book-btn.sending .tooth-stack { opacity: 1; transition-delay: 0.3s; }
+
+.scene { display: block; width: 100%; height: 100%; }
+.scene-tooth { fill: #ecd58f; }
+.scene-edge { fill: none; stroke: #fff; stroke-width: 1.3; stroke-linejoin: round; }
+
+.stain { fill: #a8742a; opacity: 0.6; transform-box: fill-box; transform-origin: center; }
+
+/* tooth dull -> white */
+.book-btn.sending .scene-tooth {
+  animation: tooth-clean calc(var(--clean) * 0.85) ease-in-out 0.2s forwards;
+}
+.book-btn.sent .scene-tooth { fill: #fff; }
+
+/* stains ovvonna maraiyum */
+.book-btn.sending .stain {
+  animation: stain-fade calc(var(--clean) * 0.22) ease-in forwards;
+}
+.book-btn.sending .s1 { animation-delay: calc(var(--clean) * 0.30); }
+.book-btn.sending .s2 { animation-delay: calc(var(--clean) * 0.45); }
+.book-btn.sending .s3 { animation-delay: calc(var(--clean) * 0.60); }
+.book-btn.sending .s4 { animation-delay: calc(var(--clean) * 0.75); }
+.book-btn.sent .stain { opacity: 0; }
+
+/* foam bubbles */
+.suds { position: absolute; inset: 0; pointer-events: none; }
+.suds i {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #bfe6ff;
+  opacity: 0;
+}
+.suds i:nth-child(1) { left: 20%; top: 34%; width: 6px; height: 6px; }
+.suds i:nth-child(2) { left: 62%; top: 26%; width: 5px; height: 5px; }
+.suds i:nth-child(3) { left: 42%; top: 48%; width: 7px; height: 7px; }
+.suds i:nth-child(4) { left: 72%; top: 46%; width: 4px; height: 4px; }
+.suds i:nth-child(5) { left: 30%; top: 58%; width: 5px; height: 5px; }
+.book-btn.sending .suds i { animation: suds 0.9s ease-out infinite; }
+.book-btn.sending .suds i:nth-child(1) { animation-delay: 0.5s; }
+.book-btn.sending .suds i:nth-child(2) { animation-delay: 0.65s; }
+.book-btn.sending .suds i:nth-child(3) { animation-delay: 0.8s; }
+.book-btn.sending .suds i:nth-child(4) { animation-delay: 0.95s; }
+.book-btn.sending .suds i:nth-child(5) { animation-delay: 1.1s; }
+
+/* toothbrush scrub */
+.brush-pos {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  width: 44px;
+  height: 16px;
+  margin: -3px 0 0 -4px;
+  transform-origin: 8px 8px;
+  transform: rotate(-35deg) scale(0.62);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.brush-move { display: block; }
+.book-btn.sending .brush-pos { opacity: 1; transition-delay: 0.35s; }
+.book-btn.sending .brush-move { animation: scrub 0.26s ease-in-out 0.45s infinite alternate; }
+
+/* sparkle on clean tooth */
+.t-spark {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  color: #fff7b0;
+  opacity: 0;
+}
+.book-btn.sent .t-spark { animation: spark-in 0.6s ease-out 0.15s both; }
+
+/* sent: tooth pop, appuram fade (pill expand aagumbodhu) */
+.book-btn.sent .tooth-stack {
+  opacity: 0;
+  animation:
+    tooth-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    stack-out 0.9s linear both;
+}
+
+/* ring (sending) */
+.book-btn.sending::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(224, 112, 154, 0) 0deg,
+    #e0709a 200deg,
+    #a97cf0 340deg,
+    rgba(169, 124, 240, 0) 360deg
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3.5px), #000 calc(100% - 3px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3.5px), #000 calc(100% - 3px));
+  animation: book-spin var(--spin) linear infinite;
+}
+
+/* ---------- sent: "Opening WhatsApp..." ---------- */
+.book-done {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-size: 14.5px;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0, 70, 50, 0.3);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.book-btn.sent .book-done { opacity: 1; transition: opacity 0.35s 0.95s; }
+
+.book-dots { display: inline-flex; gap: 3px; margin-left: 1px; }
+.book-dots i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+}
+.book-btn.sent .book-dots i { animation: dot-bounce 0.9s ease-in-out infinite; }
+.book-btn.sent .book-dots i:nth-child(2) { animation-delay: 0.15s; }
+.book-btn.sent .book-dots i:nth-child(3) { animation-delay: 0.3s; }
+
+/* ripple */
+.book-btn.sent::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  animation: ring-pulse 1s ease-out 2;
+}
+
+/* ---------- 😁 mascot ---------- */
+.book-mascot {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 2px);
+  width: 132px;
+  margin-left: -66px;
+  pointer-events: none;
+  z-index: 5;
+  transform-origin: 50% 100%;
+  animation:
+    mascot-in 0.7s cubic-bezier(0.34, 1.2, 0.64, 1) both,
+    mascot-out 0.3s ease-in calc(var(--sent) - 0.2s) forwards;
+}
+
+.book-mascot::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(185, 162, 232, 0.35) 55%, rgba(185, 162, 232, 0) 72%);
+  animation: halo 1.4s ease-in-out infinite alternate;
+}
+
+.mascot-svg {
+  display: block;
+  filter: drop-shadow(0 8px 10px rgba(60, 25, 120, 0.28));
+  animation: mascot-bob 0.75s ease-in-out 0.7s infinite alternate;
+}
+
+.brush {
+  transform-origin: 101px 49px;
+  animation: brush-wave 0.45s ease-in-out 0.5s infinite alternate;
+}
+
+.foam {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: foam-rise 1.1s ease-out 0.6s infinite;
+}
+.foam.f2 { animation-delay: 1.1s; }
+
+.eye-open { animation: eye-open 1.2s linear 0.9s both; }
+.eye-wink { opacity: 0; animation: eye-wink 1.2s linear 0.9s both; }
+
+.glint {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: glint 0.8s ease-in-out infinite alternate;
+}
+.glint.g2 { animation-delay: 0.35s; }
+
+/* sparkle burst */
+.book-confetti {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.book-confetti span {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  margin: -6px 0 0 -6px;
+  color: var(--c);
+  animation: book-pop var(--confetti) ease-out forwards;
+}
+
+/* ================= keyframes ================= */
+@keyframes flow {
+  from { background-position: 0% 50%, 0% 50%; }
+  to { background-position: 0% 50%, 100% 50%; }
+}
+
+@keyframes sweep {
+  0% { left: -60%; }
+  35%, 100% { left: 130%; }
+}
+@keyframes sweep-fast {
+  from { left: -60%; }
+  to { left: 130%; }
+}
+
+@keyframes book-spin { to { transform: rotate(360deg); } }
+
+@keyframes tooth-clean {
+  from { fill: #ecd58f; }
+  to { fill: #fff; }
+}
+
+@keyframes stain-fade {
+  from { opacity: 0.6; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.3); }
+}
+
+@keyframes suds {
+  0% { transform: translateY(2px) scale(0.2); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(-9px) scale(1.2); opacity: 0; }
+}
+
+@keyframes scrub {
+  from { transform: translateX(-5px) rotate(-3deg); }
+  to { transform: translateX(6px) rotate(3deg); }
+}
+
+@keyframes tooth-pop {
+  0% { transform: scale(0.7); }
+  100% { transform: scale(1); }
+}
+
+@keyframes stack-out {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes spark-in {
+  0% { transform: scale(0) rotate(0); opacity: 0; }
+  60% { transform: scale(1.3) rotate(90deg); opacity: 1; }
+  100% { transform: scale(1) rotate(180deg); opacity: 1; }
+}
+
+@keyframes dot-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-3px); opacity: 1; }
+}
+
+@keyframes ring-pulse {
+  from { box-shadow: 0 0 0 0 rgba(31, 197, 142, 0.5); }
+  to { box-shadow: 0 0 0 16px rgba(31, 197, 142, 0); }
+}
+
+/* squash and stretch pop */
+@keyframes mascot-in {
+  0% { transform: translateY(40px) scale(0.2, 0.2); opacity: 0; }
+  50% { transform: translateY(-10px) scale(0.92, 1.1); opacity: 1; }
+  72% { transform: translateY(0) scale(1.07, 0.93); }
+  100% { transform: translateY(0) scale(1, 1); opacity: 1; }
+}
+
+@keyframes mascot-out {
+  to { transform: translateY(14px) scale(0.6); opacity: 0; }
+}
+
+@keyframes mascot-bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-4px); }
+}
+
+@keyframes halo {
+  from { transform: scale(0.92); opacity: 0.8; }
+  to { transform: scale(1.06); opacity: 1; }
+}
+
+@keyframes brush-wave {
+  from { transform: rotate(-12deg); }
+  to { transform: rotate(12deg); }
+}
+
+@keyframes foam-rise {
+  0% { transform: translateY(2px) scale(0.4); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(-9px) scale(1.15); opacity: 0; }
+}
+
+@keyframes eye-open {
+  0% { opacity: 1; }
+  15% { opacity: 0; }
+  75% { opacity: 0; }
+  90% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes eye-wink {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  75% { opacity: 1; }
+  90% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes glint {
+  from { transform: scale(0.5) rotate(0); opacity: 0.6; }
+  to { transform: scale(1.2) rotate(45deg); opacity: 1; }
+}
+
+@keyframes book-pop {
+  from { transform: translate(0, 0) scale(1) rotate(0); opacity: 1; }
+  to { transform: translate(var(--x), var(--y)) scale(0.5) rotate(360deg); opacity: 0; }
+}
+
+/* premium idle animations */
+@keyframes glow-breathe {
+  0%, 100% {
+    box-shadow:
+      0 16px 30px rgba(211, 91, 208, 0.38),
+      0 4px 10px rgba(91, 108, 242, 0.26),
+      0 0 0 0 rgba(255, 95, 158, 0),
+      inset 0 1.5px 0 rgba(255, 255, 255, 0.6),
+      inset 0 -4px 10px rgba(60, 20, 140, 0.28),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 20px 38px rgba(139, 92, 246, 0.5),
+      0 4px 10px rgba(91, 108, 242, 0.3),
+      0 0 22px 3px rgba(255, 95, 158, 0.38),
+      inset 0 1.5px 0 rgba(255, 255, 255, 0.65),
+      inset 0 -4px 10px rgba(60, 20, 140, 0.28),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+  }
+}
+
+@keyframes chip-ping {
+  0% { transform: scale(1); opacity: 0.8; }
+  70%, 100% { transform: scale(1.35); opacity: 0; }
+}
+
+@keyframes arrow-nudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(2.5px); }
+}
+
+/* motion kuraivaa venum-nu setting vachirukkavangalukku */
+@media (prefers-reduced-motion: reduce) {
+  .book-btn,
+  .book-btn.idle,
+  .book-chip-arrow::after,
+  .book-chip-arrow svg,
+  .book-shine::after,
+  .mascot-svg,
+  .brush,
+  .foam,
+  .glint,
+  .book-mascot::before { animation: none; }
+}
+
+/* Mobile responsive fix - Book Appointment */
+@media (max-width: 480px) {
+  .doctor-info {
+    padding: 20px;
+  }
+
+  .book-btn {
+    height: 52px;
+  }
+
+  .book-content {
+    padding: 0 6px;
+    gap: 4px;
+  }
+
+  .book-chip {
+    flex-basis: 32px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .book-chip svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .book-text {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+}
