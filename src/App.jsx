@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -11,10 +11,10 @@ import {
 import Loader from "./component/Loader";
 import Nav from "./component/Nav";
 import Home from "./component/Home";
-import Doctors from "./component/Doctors";
-import Facilities from "./component/Facilities";
-import Results from "./component/Results";
-import Contact from "./component/Contact";
+const Doctors = lazy(() => import("./component/Doctors"));
+const Facilities = lazy(() => import("./component/Facilities"));
+const Results = lazy(() => import("./component/Results"));
+const Contact = lazy(() => import("./component/Contact"));
 import Footer from "./component/Footer";
 
 /* Handle scroll position after loading and route changes. */
@@ -105,15 +105,24 @@ function SpaLinks() {
 }
 
 function AppContent() {
-  const [loading, setLoading] = useState(true);
-  const { pathname } = useLocation();
+  // Play branded loader only once per browser tab session.
+  const [loading, setLoading] = useState(() => {
+    try { return sessionStorage.getItem("neo-loader-seen") !== "1"; }
+    catch { return true; }
+  });
+
+  const finishLoader = () => {
+    try { sessionStorage.setItem("neo-loader-seen", "1"); } catch { /* storage unavailable */ }
+    setLoading(false);
+  };
 
   return (
     <>
       {loading && (
         <Loader
           logo="/Neo_logo.png"
-          onFinish={() => setLoading(false)}
+          duration={4300}
+          onFinish={finishLoader}
         />
       )}
 
@@ -124,14 +133,16 @@ function AppContent() {
         <>
           <Nav />
 
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/doctors" element={<Doctors />} />
-            <Route path="/facilities" element={<Facilities />} />
-            <Route path="/results" element={<Results />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
+          <Suspense fallback={<div role="status" aria-live="polite" style={{ minHeight: "65vh", display: "grid", placeItems: "center", color: "#a54571" }}>Loading page...</div>}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/doctors" element={<Doctors />} />
+              <Route path="/facilities" element={<Facilities />} />
+              <Route path="/results" element={<Results />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </Suspense>
 
           <Footer />
         </>
