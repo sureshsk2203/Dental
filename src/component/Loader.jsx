@@ -6,7 +6,6 @@ const TITLE = "Neo Smiles";
 
 const INTRO_MS = 700; // logo reveal mudinjadhum progress start aagum
 const TAIL_MS = 450;  // 100% la konja neram nikkum, appuram exit
-const EXIT_MS = 1400; // curtain open aagura neram (CSS-oda match aaganum)
 
 /* ---------- title animation (video-la irundhu measure pannadhu) ---------- */
 const TITLE_DELAY = 0.25; // seconds — logo-oda sernthu start aagum
@@ -345,7 +344,6 @@ function LetterTitle({ text }) {
 }
 
 export default function Loader({ onFinish, duration = 5800, logo = LOGO }) {
-  const [hide, setHide] = useState(false);
   const [done, setDone] = useState(false);
   const rootRef = useRef(null);
   const pctRef = useRef(null);
@@ -382,20 +380,16 @@ export default function Loader({ onFinish, duration = 5800, logo = LOGO }) {
     return () => cancelAnimationFrame(raf);
   }, [duration]);
 
-  /* exit */
+  /* Finish immediately after progress: no curtain opening. */
   useEffect(() => {
-    const t1 = setTimeout(() => setHide(true), duration);
-    const t2 = setTimeout(() => finishRef.current && finishRef.current(), duration + EXIT_MS);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
+    const timer = setTimeout(() => finishRef.current?.(), duration);
+    return () => clearTimeout(timer);
   }, [duration]);
 
   return (
     <div
       ref={rootRef}
-      className={`loader ${hide ? "loader--hide" : ""} ${done ? "loader--done" : ""}`}
+      className={`loader ${done ? "loader--done" : ""}`}
       role="status"
       aria-label="Loading Neo Smiles Dental Care"
       style={{ "--logo": `url(${logo})` }}
