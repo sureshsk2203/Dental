@@ -180,10 +180,10 @@ function AboutHero() {
         </div>
       </div>
 
-      {/* image comes from  public/Neo.png  (file name is case-sensitive) */}
+      {/* image comes from  public/Neo.webp  (file name is case-sensitive) */}
       <div className="about-hero__visual">
         <div className="about-hero__photo">
-          <img className="about-hero__img" src="/Neo.png" alt="Our dental clinic" />
+          <img className="about-hero__img" src="/Neo.webp" alt="Our dental clinic" />
         </div>
       </div>
     </section>

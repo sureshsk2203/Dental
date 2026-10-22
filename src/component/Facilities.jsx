@@ -15,31 +15,31 @@ const ROOMS = [
   {
     title: "Clinic Entrance",
     tag: "Welcome",
-    img: "/facilities/entrance.jpeg",
+    img: "/facilities/entrance.webp",
     text: "Easy to find and easy to walk into, with a bright, welcoming front that tells you you are in the right place.",
   },
   {
     title: "Waiting Hall",
     tag: "Comfort",
-    img: "/facilities/waiting-hall.jpeg",
+    img: "/facilities/waiting-hall.webp",
     text: "A calm, comfortable space where you can relax before your visit, with seating for the whole family.",
   },
   {
     title: "Surgery Room",
     tag: "Procedures",
-    img: "/facilities/surgery-room.jpeg",
+    img: "/facilities/surgery-room.webp",
     text: "A clean, well-equipped operatory built for safe and precise treatments, from fillings to surgeries.",
   },
   {
     title: "Consultation Room",
     tag: "Check-ups",
-    img: "/facilities/consultation-room.jpeg",
+    img: "/facilities/consultation-room.webp",
     text: "A private room where our doctors listen, examine and explain your treatment plan clearly.",
   },
   {
     title: "Reception",
     tag: "Front desk",
-    img: "/facilities/reception.jpeg",
+    img: "/facilities/reception.webp",
     text: "A friendly front desk to help you with appointments, queries and everything in between.",
   },
 ];
@@ -49,7 +49,7 @@ const pad = (n) => String(n).padStart(2, "0");
 /* ---------- photo paths ----------
    If the exact file is not found, the same name is tried with other
    extensions (and with a capital-letter folder name, or no folder). */
-const EXTS = ["jpeg", "jpg", "png", "webp", "avif", "JPG", "JPEG", "PNG"];
+const EXTS = ["webp", "jpeg", "jpg", "png", "avif", "JPG", "JPEG", "PNG"];
 
 function buildCandidates(img) {
   const cut = img.lastIndexOf("/");

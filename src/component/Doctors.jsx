@@ -18,7 +18,7 @@ const doctors = [
     qualification: 'BDS, MDS (Pediatric Dentistry)',
     experience: '5+ years',
     speciality: 'Kids & Family Dental Care',
-    photo: '/doctors/dr-navin.jpeg',
+    photo: '/doctors/dr-navin.webp',
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const doctors = [
     qualification: 'BDS, MDS (Oral Pathology)',
     experience: '5+ years',
     speciality: 'Oral Cancer & Lesion Diagnosis',
-    photo: '/doctors/dr-Deepika.jpeg',
+    photo: '/doctors/dr-Deepika.webp',
   },
   {
     id: 3,
@@ -36,7 +36,7 @@ const doctors = [
     qualification: 'BDS, MDS',
     experience: '', // years not known yet, add the real number later
     speciality: 'Dental & Maxillofacial Implants',
-    photo: '/doctors/dr-Sai Adithya Narayanan.jpeg',
+    photo: '/doctors/dr-Sai Adithya Narayanan.webp',
   },
 ]
 
@@ -106,6 +106,7 @@ function DoctorPhoto({ doc }) {
       src={encodeURI(list[i])}          // file names with spaces are fine
       alt={doc.name}
       loading="lazy"
+      decoding="async"
       style={{ objectPosition: doc.focus || FOCUS[doc.id] || 'center top' }}
       onError={next}
     />

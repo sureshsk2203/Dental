@@ -147,7 +147,7 @@ const ASSET_CASES = buildAssetCases();
    The browser cannot list a folder, so the page simply tries the file
    names (01-before.jpg, 02-before.jpg ...) and keeps the ones that exist. */
 const PUBLIC_DIRS = ["/results", "/Results", ""];
-const EXTS = ["jpg", "jpeg", "png", "webp", "avif", "JPG", "JPEG", "PNG"];
+const EXTS = ["webp", "jpg", "jpeg", "png", "avif", "JPG", "JPEG", "PNG"];
 const SEPS = ["-", "_"];
 const MAX_CASES = 40;
 

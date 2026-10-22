@@ -26,7 +26,7 @@ const CLINIC = {
 const TREATMENTS = [
   {
     id: "whitening",
-    image: "Teethwhitening.png",
+    image: "Teethwhitening.webp",
     name: "Teeth Whitening",
     icon: "sparkle",
     text: "Professional scaling and polishing removes plaque, tartar and stains. Whitening then brightens your smile several shades in a single sitting.",
@@ -37,7 +37,7 @@ const TREATMENTS = [
   },
   {
     id: "veneers",
-    image: "SmileDesigningVeneers.png",
+    image: "SmileDesigningVeneers.webp",
     name: "Smile Designing & Veneers",
     icon: "star",
     text: "Veneers, bonding and smile design reshape the colour, size and shape of your teeth for a natural, confident smile.",
@@ -48,7 +48,7 @@ const TREATMENTS = [
   },
   {
     id: "fillings",
-    image: "Tooth-ColouredFillings.png",
+    image: "Tooth-ColouredFillings.webp",
     name: "Tooth-Coloured Fillings",
     icon: "tooth",
     text: "Cavities are repaired with tooth-coloured composite that blends with your natural teeth and bonds firmly to the tooth.",
@@ -59,7 +59,7 @@ const TREATMENTS = [
   },
   {
     id: "rootcanal",
-    image: "RootCanalTreatment.png",
+    image: "RootCanalTreatment.webp",
     name: "Root Canal Treatment",
     icon: "shield",
     text: "Saves a badly infected or decayed tooth. With modern rotary tools and good anaesthesia, it feels like getting a normal filling.",
@@ -70,7 +70,7 @@ const TREATMENTS = [
   },
   {
     id: "crowns",
-    image: "CrownsBridges.png",
+    image: "CrownsBridges.webp",
     name: "Crowns & Bridges",
     icon: "crown",
     text: "Crowns cover and strengthen a damaged tooth. Bridges replace one or more missing teeth using the neighbouring teeth for support.",
@@ -81,7 +81,7 @@ const TREATMENTS = [
   },
   {
     id: "kids",
-    image: "KidsDentistry.png",
+    image: "KidsDentistry.webp",
     name: "Kids Dentistry",
     icon: "smile",
     text: "Gentle, friendly care for children: check-ups, fluoride, sealants and fillings in a calm, play-friendly environment.",
@@ -92,7 +92,7 @@ const TREATMENTS = [
   },
   {
     id: "aligners",
-    image: "InvisibleAligners.png",
+    image: "InvisibleAligners.webp",
     name: "Invisible Aligners",
     icon: "align",
     text: "Clear, removable aligners gradually straighten crowded, gapped or crooked teeth without metal wires, so treatment is almost unnoticeable.",
@@ -103,7 +103,7 @@ const TREATMENTS = [
   },
   {
     id: "implants",
-    image: "DentalImplants.png",
+    image: "DentalImplants.webp",
     name: "Dental Implants",
     icon: "implant",
     text: "A permanent replacement for a missing tooth. A titanium post is placed in the jaw and topped with a natural-looking crown.",
@@ -114,7 +114,7 @@ const TREATMENTS = [
   },
   {
     id: "extraction",
-    image: "PainlessToothRemoval.png",
+    image: "PainlessToothRemoval.webp",
     name: "Painless Tooth Removal",
     icon: "extract",
     text: "When a tooth cannot be saved, it is removed gently with good anaesthesia, so you feel pressure but no pain, and heal quickly.",
@@ -125,7 +125,7 @@ const TREATMENTS = [
   },
   {
     id: "emergency",
-    image: "EmergencyPainManagement.png",
+    image: "EmergencyPainManagement.webp",
     name: "Emergency Pain Management",
     icon: "bolt",
     text: "Sudden toothache, swelling or a broken tooth? We see you quickly, find the cause and relieve the pain on the same day.",
@@ -136,7 +136,7 @@ const TREATMENTS = [
   },
   {
     id: "scanning",
-    image: "Advanced3DDigitalIntra-oralScanningX-rays.png",
+    image: "Advanced3DDigitalIntra-oralScanningX-rays.webp",
     name: "Advanced 3D Digital Intra-oral Scanning & X-rays",
     icon: "scan",
     text: "A small digital camera scans your teeth in 3D, with no messy impression trays. Low-dose digital X-rays give a clear picture in seconds for accurate diagnosis.",
