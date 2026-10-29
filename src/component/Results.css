@@ -211,7 +211,7 @@
 }
 
 /* =========================================
-   MAIN COMPARISON
+   BEFORE / AFTER CASES
 ========================================= */
 
 .rs-stage {
@@ -219,6 +219,11 @@
   max-width: 1240px;
   margin: 0 auto;
   animation: rsRise 0.9s var(--ease) 0.4s both;
+}
+
+/* Space between the big before/after cases */
+.rs-case {
+  margin-bottom: clamp(44px, 6vw, 80px);
 }
 
 @keyframes rsRise {
@@ -293,13 +298,8 @@
 }
 
 /* Reveals the "after" photo to the right of the handle */
-
 .rs-img--after {
   clip-path: inset(0 0 0 var(--pos, 50%));
-}
-
-.rs-card-media .rs-img--after {
-  clip-path: inset(0 0 0 50%);
 }
 
 .rs-tag {
@@ -331,7 +331,20 @@
   box-shadow: 0 10px 24px -10px rgba(224, 86, 159, 0.8);
 }
 
-/* Handle */
+/* Canvas that paints the foam bubbles + sparkles (sits under the brush) */
+.rs-foam {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* =========================================
+   HANDLE
+========================================= */
 
 .rs-handle {
   position: absolute;
@@ -360,6 +373,25 @@
   box-shadow: 0 0 22px rgba(255, 255, 255, 0.55);
 }
 
+/* foam / shine glow around the handle line (only while brushing) */
+.rs-handle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -80px;
+  width: 160px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
 .rs-knob {
   position: absolute;
   top: 50%;
@@ -374,7 +406,8 @@
   background: #fff;
   box-shadow: 0 16px 36px -10px rgba(90, 20, 70, 0.45),
     0 0 0 6px rgba(255, 255, 255, 0.5);
-  transition: transform 0.25s var(--ease), box-shadow 0.25s ease;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s ease,
+    opacity 0.2s ease;
 }
 
 /* Breathing ring so people notice the handle */
@@ -413,7 +446,113 @@
     0 16px 36px -10px rgba(90, 20, 70, 0.45);
 }
 
-/* Caption + navigation */
+/* =========================================
+   BRUSH EFFECT (while dragging)
+   Everything that MOVES (position, angle, stroke, bristle bend,
+   foam, sparkles) is driven by the animation loop in Results.jsx.
+   This CSS only places the brush and fades it in / out.
+========================================= */
+
+/* anchor = exactly where the bristles touch the teeth.
+   JS sets transform: translate3d(strokeOffset, pointerY, 0) */
+.rs-brush {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transition: opacity 0.18s ease;
+}
+
+/* holds the brush at its natural holding angle (JS adds drag lean + rocking) */
+.rs-brush-tilt {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+  transform: rotate(-38deg);
+  will-change: transform;
+}
+
+.rs-brush-tilt svg {
+  position: absolute;
+  top: -48px;
+  left: -34px;
+  display: block;
+  width: 200px;
+  height: 60px;
+  overflow: visible;
+  filter: drop-shadow(-3px 9px 8px rgba(60, 10, 45, 0.45));
+}
+
+/* the brush replaces the cursor while dragging */
+.rs-compare.is-brushing {
+  cursor: none;
+}
+
+/* knob steps aside, the toothbrush takes over */
+.rs-compare.is-brushing .rs-knob {
+  transform: scale(0.5);
+  opacity: 0;
+}
+
+.rs-compare.is-brushing .rs-brush {
+  opacity: 1;
+}
+
+/* bristles bend with every stroke (--bend) and squash under pressure (--press) */
+.rs-bristles {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  transform: skewX(calc(var(--bend, 0) * 1deg)) scaleY(var(--press, 1));
+}
+
+/* toothpaste foam clump squishes under the head */
+.rs-paste {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.rs-compare.is-brushing .rs-paste {
+  animation: rsPaste 0.2s ease-in-out infinite alternate;
+}
+
+@keyframes rsPaste {
+  from {
+    transform: scale(0.9, 1.05);
+  }
+
+  to {
+    transform: scale(1.1, 0.92);
+  }
+}
+
+/* shine strip around the handle line */
+.rs-compare.is-brushing .rs-handle::after {
+  opacity: 1;
+  animation: rsFoam 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes rsFoam {
+  from {
+    transform: scaleX(0.7);
+    opacity: 0.6;
+  }
+
+  to {
+    transform: scaleX(1.1);
+    opacity: 1;
+  }
+}
+
+/* =========================================
+   CAPTION
+========================================= */
 
 .rs-caption {
   display: flex;
@@ -437,272 +576,6 @@
   margin: 0;
   color: var(--muted);
   font-size: 0.95rem;
-}
-
-.rs-nav {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-
-.rs-nav button {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  padding: 0;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  color: var(--ink);
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  cursor: pointer;
-  transition: background 0.25s ease, border-color 0.25s ease,
-    color 0.25s ease, transform 0.25s var(--ease), box-shadow 0.25s ease;
-}
-
-.rs-nav button:hover {
-  border-color: transparent;
-  color: #fff;
-  background: var(--gradient);
-  box-shadow: 0 14px 26px -12px rgba(224, 86, 159, 0.9);
-  transform: translateY(-3px);
-}
-
-.rs-nav button:active {
-  transform: scale(0.92);
-}
-
-/* =========================================
-   GALLERY
-========================================= */
-
-.rs-gallery {
-  width: 100%;
-  max-width: 1240px;
-  margin: clamp(44px, 6vw, 80px) auto 0;
-}
-
-.rs-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 26px;
-}
-
-.rs-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 42px;
-  padding: 9px 17px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--ink);
-  background: rgba(255, 255, 255, 0.6);
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.25s ease, border-color 0.25s ease,
-    transform 0.25s var(--ease);
-}
-
-.rs-chip b {
-  min-width: 22px;
-  padding: 2px 7px;
-  border-radius: 999px;
-  background: rgba(224, 86, 159, 0.15);
-  font-size: 0.74rem;
-  text-align: center;
-}
-
-.rs-chip:hover {
-  border-color: rgba(224, 86, 159, 0.5);
-  transform: translateY(-2px);
-}
-
-.rs-chip.is-on {
-  border-color: transparent;
-  color: #fff;
-  background: var(--gradient);
-  box-shadow: 0 12px 26px -14px rgba(224, 86, 159, 0.9);
-}
-
-.rs-chip.is-on b {
-  background: rgba(255, 255, 255, 0.28);
-}
-
-.rs-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.rs-card {
-  display: block;
-  min-width: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  color: inherit;
-  background: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 14px 30px -22px rgba(160, 40, 110, 0.4);
-  text-align: left;
-  cursor: pointer;
-  transition: border-color 0.3s ease, box-shadow 0.35s ease,
-    transform 0.4s var(--ease);
-  animation: rsRise 0.8s var(--ease) both;
-}
-
-/* Cards pop in row by row (4 columns) */
-.rs-card:nth-child(4n + 1) {
-  animation-delay: 0s;
-}
-
-.rs-card:nth-child(4n + 2) {
-  animation-delay: 0.08s;
-}
-
-.rs-card:nth-child(4n + 3) {
-  animation-delay: 0.16s;
-}
-
-.rs-card:nth-child(4n + 4) {
-  animation-delay: 0.24s;
-}
-
-.rs-card:hover {
-  border-color: rgba(224, 86, 159, 0.55);
-}
-
-.rs-card.is-active {
-  border-color: var(--pink);
-  animation: rsRise 0.8s var(--ease) both, rsGlow 2.6s ease-in-out infinite;
-}
-
-@keyframes rsGlow {
-  0%,
-  100% {
-    box-shadow: 0 0 0 4px rgba(224, 86, 159, 0.2),
-      0 20px 40px -24px rgba(224, 86, 159, 0.5);
-  }
-
-  50% {
-    box-shadow: 0 0 0 7px rgba(224, 86, 159, 0.12),
-      0 24px 50px -22px rgba(224, 86, 159, 0.8);
-  }
-}
-
-.rs-card-media {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
-  background: #ffe6f2;
-}
-
-.rs-card-media img {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.9s var(--ease);
-}
-
-/* Glossy light sweep on hover */
-.rs-card-media::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: linear-gradient(
-    105deg,
-    transparent 35%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 65%
-  );
-  transform: translateX(-130%);
-  transition: transform 0.9s var(--ease);
-  pointer-events: none;
-}
-
-.rs-card-media::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  bottom: 0;
-  left: calc(50% - 1px);
-  width: 2px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 14px rgba(255, 255, 255, 0.6);
-}
-
-.rs-card-meta {
-  display: grid;
-  gap: 2px;
-  padding: 13px 15px 15px;
-}
-
-.rs-card-meta strong {
-  overflow: hidden;
-  font-size: 0.95rem;
-  font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.rs-card-meta small {
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
-@media (hover: hover) {
-  .rs-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 30px 46px -26px rgba(160, 40, 110, 0.55),
-      0 0 0 1px rgba(224, 86, 159, 0.2);
-  }
-
-  .rs-card:hover .rs-card-media img {
-    transform: scale(1.08);
-  }
-
-  .rs-card:hover .rs-card-media::before {
-    transform: translateX(130%);
-  }
-}
-
-.rs-more {
-  display: block;
-  min-height: 50px;
-  margin: 30px auto 0;
-  padding: 13px 28px;
-  border: 1px solid rgba(224, 86, 159, 0.4);
-  border-radius: 999px;
-  color: #b02a73;
-  background: rgba(255, 255, 255, 0.65);
-  font-size: 0.94rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.25s ease, border-color 0.25s ease,
-    color 0.25s ease, transform 0.3s var(--ease), box-shadow 0.3s ease;
-}
-
-.rs-more:hover {
-  border-color: transparent;
-  color: #fff;
-  background: var(--gradient);
-  box-shadow: 0 18px 32px -16px rgba(224, 86, 159, 0.9);
-  transform: translateY(-3px);
 }
 
 /* =========================================
@@ -785,56 +658,7 @@
   opacity: 0.94;
 }
 
-.rs-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 52px;
-  padding: 14px 28px;
-  overflow: hidden;
-  border-radius: 999px;
-  color: var(--pink);
-  background: #fff;
-  font-size: 0.97rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: transform 0.3s var(--ease), box-shadow 0.3s ease;
-}
-
-.rs-btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 35%,
-    rgba(224, 86, 159, 0.22) 50%,
-    transparent 65%
-  );
-  transform: translateX(-130%);
-  transition: transform 0.8s var(--ease);
-}
-
-.rs-btn svg {
-  transition: transform 0.3s var(--ease);
-}
-
-.rs-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 32px -14px rgba(60, 10, 70, 0.55);
-}
-
-.rs-btn:hover::after {
-  transform: translateX(130%);
-}
-
-.rs-btn:hover svg {
-  transform: translateX(5px);
-}
-
-/* Gallery + CTA fade in as you scroll (Chrome / Edge / Safari) */
+/* CTA fades in as you scroll (Chrome / Edge / Safari) */
 @supports (animation-timeline: view()) {
   .rs-cta {
     animation: rsSlide 9s ease-in-out infinite alternate,
@@ -860,99 +684,6 @@
   color: #b02a73;
   background: rgba(224, 86, 159, 0.15);
   font-size: 0.9em;
-}
-
-/* =========================================
-   LAPTOP / TABLET / MOBILE
-========================================= */
-
-@media (max-width: 1100px) {
-  .rs-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 760px) {
-  .rs-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-  }
-
-  .rs-compare {
-    aspect-ratio: 4 / 3;
-    border-radius: 26px;
-  }
-
-  .rs-knob {
-    width: 58px;
-    height: 58px;
-    margin: -29px 0 0 -29px;
-  }
-}
-
-@media (max-width: 560px) {
-  .rs {
-    padding: 36px 14px 48px;
-  }
-
-  /* Mobile: one case per row */
-  .rs-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .rs-compare {
-    border-radius: 22px;
-    box-shadow: 0 30px 60px -30px rgba(160, 40, 110, 0.5);
-  }
-
-  .rs-tag {
-    top: 12px;
-    left: 12px;
-    padding: 8px 13px;
-    font-size: 0.68rem;
-  }
-
-  .rs-tag--after {
-    right: 12px;
-    left: auto;
-  }
-
-  .rs-card {
-    border-radius: 18px;
-  }
-
-  .rs-card-meta {
-    padding: 12px 14px 14px;
-  }
-
-  .rs-card-meta strong {
-    font-size: 0.95rem;
-  }
-
-  .rs-cta {
-    justify-content: center;
-    padding: 28px 18px;
-    border-radius: 26px;
-    text-align: center;
-  }
-
-  .rs-btn {
-    width: 100%;
-  }
-}
-
-/* =========================================
-   ACCESSIBILITY
-========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-  .rs *,
-  .rs *::before,
-  .rs *::after {
-    animation: none !important;
-    transition: none !important;
-  }
 }
 
 /* =========================================
@@ -1099,7 +830,60 @@
   font-size: 0.8rem;
 }
 
+/* =========================================
+   TABLET / MOBILE
+========================================= */
+
+@media (max-width: 760px) {
+  .rs-compare {
+    aspect-ratio: 4 / 3;
+    border-radius: 26px;
+  }
+
+  .rs-knob {
+    width: 58px;
+    height: 58px;
+    margin: -29px 0 0 -29px;
+  }
+
+  /* brush is drawn at 70% size on phones (contact point scales with it) */
+  .rs-brush-tilt svg {
+    top: -34px;
+    left: -24px;
+    width: 140px;
+    height: 42px;
+  }
+}
+
 @media (max-width: 560px) {
+  .rs {
+    padding: 36px 14px 48px;
+  }
+
+  .rs-compare {
+    border-radius: 22px;
+    box-shadow: 0 30px 60px -30px rgba(160, 40, 110, 0.5);
+  }
+
+  .rs-tag {
+    top: 12px;
+    left: 12px;
+    padding: 8px 13px;
+    font-size: 0.68rem;
+  }
+
+  .rs-tag--after {
+    right: 12px;
+    left: auto;
+  }
+
+  .rs-cta {
+    justify-content: center;
+    padding: 28px 18px;
+    border-radius: 26px;
+    text-align: center;
+  }
+
   .rs-review {
     width: 82vw;
     padding: 20px;
@@ -1114,8 +898,25 @@
   }
 }
 
-/* Reduced motion: no auto-scroll, let people swipe instead */
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
 @media (prefers-reduced-motion: reduce) {
+  .rs *,
+  .rs *::before,
+  .rs *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* no brush / foam at all, the slider still works */
+  .rs-brush,
+  .rs-foam {
+    display: none;
+  }
+
+  /* no auto-scroll, let people swipe instead */
   .rs-marquee {
     overflow-x: auto;
     -webkit-mask-image: none;

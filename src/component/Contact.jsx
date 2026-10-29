@@ -1,6 +1,5 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import "./Contact.css";
-import CarJourney from "./CarJourney";
 import BrushButton from "./BrushButton";
 
 const CLINIC = {
@@ -89,10 +88,6 @@ const today = () => {
 };
 
 export default function Contact() {
-  const rootRef = useRef(null);
-  const titleRef = useRef(null);
-  const mapRef = useRef(null);
-
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -146,12 +141,9 @@ export default function Contact() {
   };
 
   return (
-    <main className="ct" ref={rootRef}>
+    <main className="ct">
       <div className="ct-orb ct-orb--a" aria-hidden="true" />
       <div className="ct-orb ct-orb--b" aria-hidden="true" />
-
-      {/* Scroll-driven car and winding route */}
-      <CarJourney rootRef={rootRef} titleRef={titleRef} mapRef={mapRef} />
 
       {/* Hero */}
       <section className="ct-hero">
@@ -159,11 +151,7 @@ export default function Contact() {
           <i className="ct-dot" /> CONTACT · SALEM
         </span>
 
-        <h1
-          ref={titleRef}
-          className="ct-title ct-rise"
-          style={{ "--d": "0.08s" }}
-        >
+        <h1 className="ct-title ct-rise" style={{ "--d": "0.08s" }}>
           Let&rsquo;s talk about your <span>smile.</span>
         </h1>
 
@@ -336,7 +324,7 @@ export default function Contact() {
       </section>
 
       {/* Map */}
-      <section ref={mapRef} className="ct-map ct-rise">
+      <section className="ct-map ct-rise">
         <iframe
           title="Neo Smiles Dental Care location"
           src={`https://maps.google.com/maps?q=${encodeURIComponent(CLINIC.mapQuery)}&output=embed`}

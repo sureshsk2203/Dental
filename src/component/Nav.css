@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@800&family=Sora:wght@500;600;700;800&display=swap");
 
 /* =====================================================
    THEME  (change colours / fonts here, used by all files)
@@ -12,7 +12,7 @@
   --pink-500: #dc6f9a;
   --pink-600: #c4527f;
   --pink-700: #a63b69; /* dark pink: nav text */
-  --pink-800: #7f2650; /* darkest pink: nav hover / logo */
+  --pink-800: #7f2650; /* darkest pink: nav hover */
 
   --ink: #231f20;
   --muted: #6f666b;
@@ -60,8 +60,9 @@ body {
   display: block;
 }
 
+/* nav is fixed now, so anchor sections need an offset or the heading hides under it */
 section[id] {
-  scroll-margin-top: 0;
+  scroll-margin-top: 90px;
 }
 
 a {
@@ -83,26 +84,42 @@ a {
 }
 
 /* =====================================================
-   NAV  (dark pink text on the light hero.
-   It sits on top of the hero and scrolls away with the page.)
+   NAV  (fixed on every page.
+   Transparent at the top, white blurred bar after you scroll.)
    ===================================================== */
 .nav {
   --pad: clamp(20px, 6vw, 64px);
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 50;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: auto 1fr auto; /* brand | links (centred) | button */
   align-items: center;
   column-gap: 24px;
-  padding: 26px var(--pad);
+  padding: 18px var(--pad);
   font-family: "Inter", system-ui, sans-serif;
   color: var(--pink-800);
+  background: transparent;
+  transition: background 0.3s, box-shadow 0.3s, padding 0.3s;
   /* page load: nav slides down from the top */
   animation: navDown 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* after scrolling: slim white bar */
+.nav.is-scrolled {
+  padding: 12px var(--pad);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px -16px rgba(120, 30, 70, 0.35);
+}
+
+/* mobile menu open: solid bar so the dropdown looks clean */
+.nav.is-open {
+  background: rgba(255, 255, 255, 0.95);
 }
 
 @keyframes navDown {
@@ -110,18 +127,31 @@ a {
   to   { opacity: 1; transform: none; }
 }
 
+/* ---------- brand logo ----------
+   One inline SVG. Only the WIDTH below controls the logo size (height follows automatically),
+   so the logo keeps the same proportions on desktop, tablet and phone. */
 .nav__logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: max-content;
-  font-size: 21px;
-  font-weight: 600;
-  color: var(--pink-800);
+  display: block;
+  width: clamp(175px, 17.5vw, 250px);
+  line-height: 0;
   text-decoration: none;
 }
 
+.nav__logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.nav__logo-text {
+  font-family: "Plus Jakarta Sans", "Sora", "Inter", system-ui, sans-serif;
+  font-weight: 800;
+}
+
+/* ---------- nav links ---------- */
 .nav__links {
+  justify-self: center;
   display: flex;
   align-items: center;
   gap: clamp(18px, 2.6vw, 40px);
@@ -197,15 +227,18 @@ a {
 .nav.is-open .nav__burger span:nth-child(2) { opacity: 0; }
 .nav.is-open .nav__burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+/* ---------- tablet + phone ---------- */
 @media (max-width: 1000px) {
-  .nav { grid-template-columns: 1fr auto; }
+  .nav { grid-template-columns: 1fr auto; column-gap: 12px; padding: 12px var(--pad); }
+  .nav.is-scrolled { padding: 10px var(--pad); }
   .nav > .brush-btn.nav__cta { display: none; }
   .nav__burger { display: flex; }
+  .nav__logo { width: clamp(170px, 46vw, 230px); } /* smaller logo on mobile */
 
   /* dropdown panel */
   .nav__links {
     position: absolute;
-    top: 82px;
+    top: 76px;
     left: var(--pad);
     right: var(--pad);
     flex-direction: column;
@@ -260,27 +293,15 @@ a {
   }
 }
 
+/* ---------- phones ---------- */
+@media (max-width: 420px) {
+  .nav__logo { width: clamp(160px, 52vw, 200px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
   }
-}
-
-.nav__logo {
-  gap: 12px;                  /* space between logo and name */
-}
-
-.nav__logo-img {
-  display: block;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;        /* use 50% for a round logo */
-  object-fit: contain;
-  flex: none;
-}
-
-@media (max-width: 1000px) {
-  .nav__logo-img { width: 38px; height: 38px; }
 }

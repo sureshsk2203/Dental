@@ -9,7 +9,7 @@ import "./About.css";
    one shared file like clinic.js and import in both)
    ===================================================== */
 const CLINIC = {
-  name: "Your Clinic",
+  name: "Neo Smiles",
   city: "Salem",
   whatsapp: "919876543210", // country code + number, no + or spaces
   phone: "+91 98765 43210",
@@ -19,8 +19,8 @@ const CLINIC = {
    ABOUT DATA  (change the text / numbers to real ones)
    ===================================================== */
 const STATS = [
-  { value: "12+", label: "Years of experience" },
-  { value: "15,000+", label: "Happy patients" },
+  { value: "6+", label: "Years of experience" },
+  { value: "6000+", label: "Happy patients" },
   { value: "4.9", label: "Average Google rating" },
   { value: "6", label: "Treatment specialities" },
 ];
@@ -48,11 +48,38 @@ const VALUES = [
   },
 ];
 
+/* Journey content (from the design image).
+   `img` is optional - when you add the photo files in /public,
+   put the path here, e.g. img: "/journey-1.jpg" */
 const JOURNEY = [
-  { year: "2012", title: "Clinic opened", text: "Started as a small two-chair clinic in Salem with a focus on family dentistry." },
-  { year: "2016", title: "Moved to a bigger space", text: "Added a digital X-ray room and a dedicated children's area." },
-  { year: "2020", title: "Implants and aligners", text: "Brought in 3D scanning, so implants and aligners can be planned accurately." },
-  { year: "2024", title: "15,000 smiles", text: "Crossed 15,000 patients, most of them through family and friends' recommendations." },
+  {
+    label: "August 2026",
+    title: "Where Our Story Began",
+    tagline: "A vision to care for every smile.",
+    text: "Neo Smiles was established in Salem with a vision to provide dental care for children and families in a welcoming, patient-friendly environment. Our goal is to make every visit comfortable and every patient feel cared for.",
+    img: null,
+  },
+  {
+    label: "Growing with our community",
+    title: "Every Patient Matters",
+    tagline: "Built around trust, one visit at a time.",
+    text: "We believe good dentistry begins with listening. Understanding your concerns and explaining treatment options clearly help you make informed decisions about your oral health.",
+    img: null,
+  },
+  {
+    label: "Our commitment",
+    title: "Care With Clarity and Compassion",
+    tagline: "Your comfort is part of your care.",
+    text: "From routine dental check-ups to treatment for dental problems, we strive to make your experience informative, respectful and as comfortable as possible.",
+    img: null,
+  },
+  {
+    label: "Today & beyond",
+    title: "Your Smile Is Our Motivation",
+    tagline: "One smile at a time.",
+    text: "As we begin this journey in Salem, we look forward to building lasting relationships with our patients, encouraging preventive dental care and helping families work towards healthier smiles.",
+    img: null,
+  },
 ];
 
 /* =====================================================
@@ -183,7 +210,7 @@ function AboutHero() {
       {/* image comes from  public/Neo.webp  (file name is case-sensitive) */}
       <div className="about-hero__visual">
         <div className="about-hero__photo">
-          <img className="about-hero__img" src="/Neo.webp" alt="Our dental clinic" />
+          <img className="about-hero__img" src="/Neo.jpeg" alt="Our dental clinic" />
         </div>
       </div>
     </section>
@@ -255,16 +282,25 @@ function Journey() {
     <section className="section">
       <div className="section__head reveal">
         <span className="eyebrow"><i /> Our journey</span>
-        <h2>How we <em>grew</em></h2>
-        <p>From a small two-chair clinic to a full-service dental centre.</p>
+        <h2>Our <em>Journey</em></h2>
+        <p>Every smile has a story. Ours began with a simple belief — everyone deserves to smile with confidence.</p>
       </div>
 
       <ol ref={ref} className={`about-journey ${inView ? "is-in" : ""}`}>
         {JOURNEY.map((j, i) => (
-          <li key={j.year} style={{ "--i": i }}>
-            <span className="about-journey__year">{j.year}</span>
+          <li key={j.title} style={{ "--i": i }}>
+            <span className="about-journey__year">{j.label}</span>
             <h3>{j.title}</h3>
+            <p><strong>{j.tagline}</strong></p>
             <p>{j.text}</p>
+            {j.img && (
+              <img
+                className="about-journey__img"
+                src={j.img}
+                alt={j.title}
+                loading="lazy"
+              />
+            )}
           </li>
         ))}
       </ol>
@@ -277,8 +313,11 @@ function AboutCta() {
 
   return (
     <section ref={ref} className={`about-cta ${inView ? "is-in" : ""}`}>
-      <h2>Ready for a check-up?</h2>
-      <p>Message us on WhatsApp or call {CLINIC.phone}, and we will find a time that suits you.</p>
+      <h2>You Deserve Your Neo Smile.</h2>
+      <p>
+        Thank you for being a part of our journey. We look forward to caring for you and your
+        family's smiles. Message us on WhatsApp or call {CLINIC.phone} to book a check-up.
+      </p>
       <div className="about-cta__btns">
         <BrushButton
           variant="light"

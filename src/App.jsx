@@ -1,5 +1,5 @@
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -7,8 +7,8 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import { useEffect } from "react";
 
-import Loader from "./component/Loader";
 import Nav from "./component/Nav";
 import Home from "./component/Home";
 const Doctors = lazy(() => import("./component/Doctors"));
@@ -17,13 +17,10 @@ const Results = lazy(() => import("./component/Results"));
 const Contact = lazy(() => import("./component/Contact"));
 import Footer from "./component/Footer";
 
-/* Handle scroll position after loading and route changes. */
-function ScrollManager({ loading }) {
+function ScrollManager() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    if (loading) return;
-
     if (hash) {
       const id = decodeURIComponent(hash.slice(1));
 
@@ -46,12 +43,11 @@ function ScrollManager({ loading }) {
       left: 0,
       behavior: "instant",
     });
-  }, [pathname, hash, loading]);
+  }, [pathname, hash]);
 
   return null;
 }
 
-/* Handle internal navigation without reloading the website. */
 function SpaLinks() {
   const navigate = useNavigate();
 
@@ -68,9 +64,7 @@ function SpaLinks() {
         return;
       }
 
-      const link =
-        event.target.closest &&
-        event.target.closest("a");
+      const link = event.target.closest?.("a");
 
       if (
         !link ||
@@ -82,11 +76,7 @@ function SpaLinks() {
 
       const href = link.getAttribute("href");
 
-      if (
-        !href ||
-        !href.startsWith("/") ||
-        href.startsWith("//")
-      ) {
+      if (!href || !href.startsWith("/") || href.startsWith("//")) {
         return;
       }
 
@@ -105,48 +95,40 @@ function SpaLinks() {
 }
 
 function AppContent() {
-  // Play branded loader only once per browser tab session.
-  const [loading, setLoading] = useState(() => {
-    try { return sessionStorage.getItem("neo-loader-seen") !== "1"; }
-    catch { return true; }
-  });
-
-  const finishLoader = () => {
-    try { sessionStorage.setItem("neo-loader-seen", "1"); } catch { /* storage unavailable */ }
-    setLoading(false);
-  };
-
   return (
     <>
-      {loading && (
-        <Loader
-          logo="/Neo_logo.png"
-          duration={4300}
-          onFinish={finishLoader}
-        />
-      )}
-
-      <ScrollManager loading={loading} />
+      <ScrollManager />
       <SpaLinks />
 
-      {!loading && (
-        <>
-          <Nav />
+      <Nav />
 
-          <Suspense fallback={<div role="status" aria-live="polite" style={{ minHeight: "65vh", display: "grid", placeItems: "center", color: "#a54571" }}>Loading page...</div>}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/doctors" element={<Doctors />} />
-              <Route path="/facilities" element={<Facilities />} />
-              <Route path="/results" element={<Results />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="*" element={<Home />} />
-            </Routes>
-          </Suspense>
+      <Suspense
+        fallback={
+          <div
+            role="status"
+            aria-live="polite"
+            style={{
+              minHeight: "65vh",
+              display: "grid",
+              placeItems: "center",
+              color: "#a54571",
+            }}
+          >
+            Loading page...
+          </div>
+        }
+      >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/doctors" element={<Doctors />} />
+          <Route path="/facilities" element={<Facilities />} />
+          <Route path="/results" element={<Results />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </Suspense>
 
-          <Footer />
-        </>
-      )}
+      <Footer />
     </>
   );
 }

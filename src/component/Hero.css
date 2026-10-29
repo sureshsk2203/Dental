@@ -1,38 +1,87 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,600&family=Sora:wght@500;600;700;800&display=swap");
 
 /* ================= VARIABLES ================= */
-
 .hero {
-  --rose-1: #de7ba3;
-  --rose-2: #cf5c89;
-  --white: #fff;
+  --pink-300: #f4b3cd;
+  --pink-400: #ec8fb0;
+  --pink-500: #de7ba3;
+  --pink-600: #c4527f;
+  --pink-700: #a63b69;
+  --pink-800: #7f2650;
+  --plum: #4a1230;
+  --muted: #6f666b;
 
-  --pad: clamp(20px, 6vw, 64px); /* left / right gutter */
-  --nav-space: 120px;            /* space kept for the nav at the top */
+  --metal-top: #ec8fb0;
+  --metal-mid: #cf5c89;
+  --metal-low: #9c3462;
+
+  --pad: clamp(20px, 6vw, 64px);
+  --nav-space: 120px;
+
+  /* >>> PHOTO SIZE: perusa venumna ithai maathunga (820px, 900px...) <<< */
+  --photo-max: 900px;
 }
 
 /* ================= HERO ================= */
-/* two equal columns: text on the left, tooth on the right,
-   both centred vertically so they look balanced */
-
 .hero {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   align-items: center;
   gap: clamp(16px, 3vw, 48px);
-  min-height: 100vh;
   min-height: max(100vh, 640px);
   padding: var(--nav-space) var(--pad) clamp(32px, 6vh, 64px);
   overflow: hidden;
   text-align: left;
   font-family: "Inter", system-ui, sans-serif;
-  color: var(--ink, #231f20);
-  /* same background as the About photo card */
+  color: var(--plum);
   background:
-    radial-gradient(50% 45% at 78% 40%, rgba(255, 255, 255, 0.7), transparent 70%),
-    linear-gradient(145deg, var(--pink-100, #fdebf2), var(--pink-200, #f9d3e2));
+    radial-gradient(ellipse 60% 55% at 85% 55%, rgba(244, 179, 205, 0.28), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(244, 179, 205, 0.22), transparent 70%),
+    linear-gradient(180deg, #fff 0%, #fff8fb 100%);
+  visibility: visible !important;
 }
+
+/* thin circle on the right edge */
+.hero::before {
+  content: "";
+  position: absolute;
+  right: -260px;
+  top: 18%;
+  width: 520px;
+  height: 520px;
+  border: 1.5px solid rgba(236, 143, 176, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* soft blob bottom right */
+.hero::after {
+  content: "";
+  position: absolute;
+  right: -120px;
+  bottom: -160px;
+  width: 520px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 179, 205, 0.35), transparent 70%);
+  pointer-events: none;
+}
+
+/* leaves bottom-left */
+.leaf {
+  position: absolute;
+  left: -30px;
+  z-index: 1;
+  width: 90px;
+  height: 150px;
+  border-radius: 0 100% 0 100%;
+  background: linear-gradient(160deg, #f7c6da, #de7ba3);
+  opacity: 0.75;
+  pointer-events: none;
+}
+.leaf--1 { bottom: 40px; transform: rotate(-20deg); }
+.leaf--2 { bottom: -30px; left: 10px; width: 80px; height: 130px; transform: rotate(10deg); opacity: 0.55; }
 
 .hero h1,
 .hero p {
@@ -40,28 +89,44 @@
   text-align: left;
 }
 
-/* ================= LEFT TEXT ================= */
-
+/* ================= LEFT ================= */
 .hero__content {
   position: relative;
   z-index: 4;
+  align-self: start;                    /* stick to top instead of vertical centre */
+  margin-top: 0;                        /* <- increase to push down, decrease to push up */
   max-width: 680px;
-  /* page load: text comes in from the left */
   animation: slideFromLeft 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s both;
 }
 
-/* ---- headline: 3 type styles, glossy rose metal ---- */
-.hero {
-  --metal-top: #ec8fb0;    /* light edge  */
-  --metal-mid: #cf5c89;    /* main colour */
-  --metal-low: #9c3462;    /* shadow edge */
+/* pill above heading */
+.hero__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px 8px 10px;
+  font-size: 14.5px;
+  color: var(--pink-800);
+  background: linear-gradient(90deg, #fde9f1, #fff4f8);
+  border-radius: 999px;
+  animation: fadeUp 0.8s ease 0.5s backwards;
 }
+.hero__pill b { font-weight: 600; color: var(--plum); }
+.hero__pill-icon {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  color: var(--pink-600);
+}
+.hero__pill-icon svg { width: 18px; height: 18px; }
 
+/* ---- headline ---- */
 .hero .hero__title {
   position: relative;
-  --t: clamp(44px, min(7vw, 10.5vh), 100px); /* base size, everything scales from this */
-  margin: 0;
-  font-family: "Inter", system-ui, sans-serif;
+  --t: clamp(44px, min(7vw, 10.5vh), 100px);
+  margin: clamp(20px, 3vh, 32px) 0 0;
+  font-family: "Playfair Display", Georgia, serif;
   font-weight: 700;
   line-height: 1;
 }
@@ -70,32 +135,33 @@
   display: block;
   width: fit-content;
   white-space: nowrap;
-  filter:
-    drop-shadow(0 6px 10px rgba(156, 52, 98, 0.28))
-    drop-shadow(0 0 22px rgba(236, 143, 176, 0.35));
+  filter: drop-shadow(0 5px 8px rgba(156, 52, 98, 0.18));
 }
 
 .t-row--1 {
-  font-size: calc(var(--t) * 0.9);
-  font-style: normal;
-  letter-spacing: -0.01em;
+  font-size: calc(var(--t) * 1.05);
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .t-row--3 {
   position: relative;
-  font-size: calc(var(--t) * 1.5);
+  margin-bottom: calc(var(--t) * 0.8);
+  font-size: calc(var(--t) * 1.35);
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
+  transform: translateX(28px);
 }
 
-/* one letter */
+
+/* one letter (pink metal) */
 .ch {
   display: inline-block;
   padding: 0 0.04em 0.06em;
   color: transparent;
   cursor: default;
   background-image:
-    linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.95) 50%, transparent 62%),
+    linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.55) 50%, transparent 62%),
     linear-gradient(180deg, var(--metal-top) 0%, var(--metal-mid) 50%, var(--metal-low) 100%);
   background-size: 260% 100%, 100% 100%;
   background-repeat: no-repeat;
@@ -103,7 +169,6 @@
   -webkit-background-clip: text;
   background-clip: text;
   transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
-  /* 1) fade + un-blur in, letter by letter   2) shine wave runs across the letters */
   animation:
     chIn 0.9s cubic-bezier(0.2, 0.9, 0.2, 1) backwards,
     metalShine 5s ease-in-out infinite;
@@ -116,10 +181,21 @@
   transform: translateY(-8px) scale(1.06);
 }
 
-/* solid-colour letters for the small line */
+/* dark plum letters ("Healthy Teeth") */
+.ch--dark {
+  padding: 0 0.01em 0.06em;
+  color: var(--plum);
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  animation: chIn 0.9s cubic-bezier(0.2, 0.9, 0.2, 1) backwards;
+  animation-delay: calc(1.5s + var(--i) * 0.04s);
+}
+
+/* small letters ("for a lifetime of") */
 .ch--plain {
   padding: 0;
-  color: var(--pink-700, #a63b69);
+  color: var(--plum);
   background: none;
   -webkit-background-clip: border-box;
   background-clip: border-box;
@@ -133,17 +209,15 @@
   align-items: center;
   gap: 0.75em;
   width: fit-content;
-  margin: clamp(8px, 1.6vh, 16px) 0 clamp(2px, 0.6vh, 8px) 0.1em;
-  font-size: calc(var(--t) * 0.36);
+  margin: clamp(10px, 1.6vh, 18px) 0 clamp(4px, 0.8vh, 10px) 0.1em;
+  font-size: calc(var(--t) * 0.4);
   font-weight: 500;
   letter-spacing: 0.01em;
   white-space: nowrap;
-  color: var(--pink-700, #a63b69);
+  color: var(--plum);
 }
 
-.t-sub__text {
-  display: inline-block;
-}
+.t-sub__text { display: inline-block; }
 
 .t-sub::before,
 .t-sub::after {
@@ -157,11 +231,11 @@
 }
 
 .t-sub::before {
-  background: linear-gradient(90deg, var(--pink-400, #ec8fb0), var(--pink-600, #c4527f));
+  background: linear-gradient(90deg, var(--pink-400), var(--pink-600));
 }
 
 .t-sub::after {
-  background: linear-gradient(90deg, var(--pink-600, #c4527f), rgba(236, 143, 176, 0));
+  background: linear-gradient(90deg, var(--pink-600), rgba(236, 143, 176, 0));
   animation-delay: 2.4s;
 }
 
@@ -218,79 +292,57 @@
   animation: sparkOut 0.7s ease-out 1.35s both;
 }
 
-/* the smile curve under the last word */
+/* the smile (curve + 2 dimples) under the last word */
 .t-smile {
+  position: absolute;
+  left: 50%;
+  top: 100%;
   display: block;
-  width: 94%;
-  height: clamp(16px, 3.2vh, 30px);
-  margin-top: -0.02em;
+  width: 72%;
+  height: auto;
+  transform: translateX(-50%);
   overflow: visible;
 }
 
 .t-smile path {
   fill: none;
   stroke: url(#smileGrad);
-  stroke-width: 7;
   stroke-linecap: round;
-  stroke-dasharray: 330;
-  stroke-dashoffset: 330;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+.t-smile__curve {
+  stroke-width: 6.5;
   animation: drawSmile 1.1s cubic-bezier(0.5, 0, 0.2, 1) 3.3s forwards;
 }
 
-/* ---- glass card for the paragraph ---- */
-.hero__text {
-  position: relative;
-  max-width: 440px;
-  margin: clamp(16px, 3vh, 28px) 0 0;
-  padding: 18px 22px;
-  overflow: hidden;
-  font-size: 15.5px;
-  line-height: 1.65;
-  color: #4a3f45;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.35));
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  border-radius: 22px;
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
-  box-shadow:
-    inset 0 1px 0 #fff,
-    0 18px 40px -20px rgba(196, 82, 127, 0.5);
-  animation: fadeUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 2.5s backwards;
+.t-smile__dimple {
+  stroke-width: 4.5;
+  animation: drawSmile 0.35s ease-out 4.35s forwards;
 }
 
-/* light that glides across the glass */
-.hero__text::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
-  background-size: 300% 100%;
-  background-repeat: no-repeat;
-  background-position: 150% 0;
-  animation: glassSweep 6s ease-in-out 1.5s infinite;
+/* ================= BUTTONS ================= */
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin-top: clamp(90px, 12vh, 130px);  /* gap between smile curve and buttons */
 }
-
-.hero__text b {
-  font-weight: 600;
-  color: var(--pink-600, #c4527f);
-}
-
-/* ================= EXPLORE BUTTON (BrushButton) ================= */
-/* look + hover animation live in BrushButton.css, here only the position */
 
 .hero .hero__btn {
-  margin-top: clamp(22px, 4vh, 38px);
+  margin-top: 0;
   animation: popIn 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.4) 2.9s backwards;
 }
 
-/* the second button (after the picture) is hidden on laptop */
-.hero .hero__btn--mobile {
-  display: none;
-}
+.hero .hero__btn--mobile { display: none; }
 
-/* ================= TOOTH SCENE (right) ================= */
+/* mobile-only wrapper (both buttons, after the photo) */
+.hero__actions-mobile { display: none; }
 
+
+/* ================= FAMILY PHOTO (right) ================= */
 .scene {
   position: relative;
   z-index: 2;
@@ -298,176 +350,127 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  /* page load: image comes in from the right */
   animation: slideFromRight 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s both;
 }
 
-.scene::before {
-  content: "";
-  position: absolute;
-  inset: -6% -4%;
-  z-index: -1;
-  background: radial-gradient(circle at 55% 55%, var(--pink-300, #f4b3cd) 0%, rgba(244, 179, 205, 0) 62%);
-  opacity: 0.8;
-  pointer-events: none;
-}
-
-.tooth {
+/* width is now controlled by --photo-max (no more 100vh limit) */
+.photo {
   position: relative;
-  /* limited by column width AND by the screen height, so it never overflows */
-  width: min(100%, calc((max(100vh, 640px) - var(--nav-space) - 56px) * 1.064));
-  aspect-ratio: 515 / 484;
-  animation: toothBob 6s ease-in-out infinite;
+  width: 100%;
+  max-width: var(--photo-max);
+  aspect-ratio: 1.3 / 1;      /* width athigam, height kammi */
+  animation: photoBob 6s ease-in-out infinite;
 }
 
-.tooth__img,
-.tooth__layer {
-  position: absolute;
-  inset: 0;
+.photo__frame {
+  position: relative;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  overflow: hidden;
+  background: #fff;
+  border: 6px solid #fff;
+  border-radius: 40px;
+  box-shadow: 0 30px 60px -24px rgba(156, 52, 98, 0.45);
+}
+
+.photo__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  filter: saturate(0.85) brightness(1.1) contrast(0.98);
   user-select: none;
   -webkit-user-drag: none;
 }
 
-.tooth__img {
-  filter: drop-shadow(0 24px 30px rgba(156, 52, 98, 0.28));
-}
-
-/* clipped copies: each one moves only its own tool */
-.tooth__layer {
-  pointer-events: none;
-}
-
-/* inset(top right bottom left) = the tool area of tooth.png */
-.layer--brush {
-  clip-path: inset(26.4% 58.3% 64.5% 29.1%);
-  animation: scrub 0.35s ease-in-out infinite alternate;
-}
-
-.layer--vac-top {
-  clip-path: inset(8.7% 42.1% 74.4% 44.3%);
-  animation: buzz 0.22s ease-in-out infinite alternate;
-}
-
-.layer--cloth {
-  clip-path: inset(22.3% 24.7% 71.5% 67%);
-  animation: wipe 0.45s ease-in-out infinite alternate;
-}
-
-.layer--mirror {
-  clip-path: inset(34.3% 12.2% 48.3% 77.7%);
-  transform-origin: 84% 49%;
-  animation: swing 0.8s ease-in-out infinite alternate;
-}
-
-.layer--vac-bottom {
-  clip-path: inset(59.5% 48.5% 28.1% 33.4%);
-  transform-origin: 34.6% 70%;
-  animation: sweepVac 0.7s ease-in-out infinite alternate;
-}
-
-/* ---- smooth sway for every worker ----
-   clip-path = the worker's upper body, the bottom edge (waist) fades out and is
-   the pivot, so the cut line never "tears". inset(top right bottom left) in % of tooth.png */
-.layer--w1, .layer--w2, .layer--w3, .layer--w4, .layer--w5 {
-  will-change: transform;
-  animation: sway 0.9s ease-in-out infinite alternate;
-}
-
-/* top vacuum worker */
-.layer--w1 {
-  --amp: 1.2deg;
-  clip-path: inset(1.3% 43.2% 85.8% 44.2%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 8%, transparent 14.2%);
-  mask-image: linear-gradient(to bottom, #000 8%, transparent 14.2%);
-  transform-origin: 50.5% 14.2%;
-  animation-duration: 0.85s;
-}
-
-/* top right worker with the cloth */
-.layer--w2 {
-  --amp: 1.6deg;
-  clip-path: inset(13.5% 15.3% 72.6% 67.5%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 21%, transparent 27.4%);
-  mask-image: linear-gradient(to bottom, #000 21%, transparent 27.4%);
-  transform-origin: 76% 27.4%;
-  animation-duration: 0.7s;
-  animation-delay: -0.3s;
-}
-
-/* scaffold worker with the brush */
-.layer--w3 {
-  --amp: 1.4deg;
-  clip-path: inset(22.3% 63.4% 58.7% 16.6%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 34%, transparent 41.3%);
-  mask-image: linear-gradient(to bottom, #000 34%, transparent 41.3%);
-  transform-origin: 26.6% 41.3%;
-  animation-duration: 0.6s;
-  animation-delay: -0.15s;
-}
-
-/* ladder worker with the mirror */
-.layer--w4 {
-  --amp: 1.5deg;
-  clip-path: inset(45.7% 3.6% 32% 82%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 61%, transparent 68%);
-  mask-image: linear-gradient(to bottom, #000 61%, transparent 68%);
-  transform-origin: 89.2% 68%;
-  animation-duration: 0.75s;
-  animation-delay: -0.4s;
-}
-
-/* bottom worker with the vacuum */
-.layer--w5 {
-  --amp: 1.3deg;
-  clip-path: inset(63.2% 63.4% 14.1% 19.4%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 85.9%);
-  mask-image: linear-gradient(to bottom, #000 78%, transparent 85.9%);
-  transform-origin: 28% 85.9%;
-  animation-duration: 0.65s;
-  animation-delay: -0.2s;
-}
-
-/* moving shine, masked to the shape of tooth.png */
-.tooth__shine {
+.photo__frame::before {
+  content: "";
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    105deg,
-    transparent 38%,
-    rgba(255, 255, 255, 0.75) 50%,
-    transparent 62%
-  );
-  background-size: 300% 100%;
-  background-repeat: no-repeat;
-  background-position: 120% 0;
+  z-index: 1;
+  background: rgba(244, 179, 205, 0.3);
   mix-blend-mode: soft-light;
-  -webkit-mask: url("/tooth.png") center / 100% 100% no-repeat;
-  mask: url("/tooth.png") center / 100% 100% no-repeat;
-  animation: shine 4.5s ease-in-out infinite;
-}
-
-.spark {
-  position: absolute;
-  transform: translate(-50%, -50%);
   pointer-events: none;
-  animation: twinkle 0.7s ease-in-out infinite;
 }
 
-.drop {
+.photo__frame::after {
+  content: "";
   position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(200deg, rgba(255, 235, 243, 0.3), transparent 40%),
+    linear-gradient(to top, rgba(156, 52, 98, 0.16), transparent 40%);
+  pointer-events: none;
+}
+
+/* ---- floating glass badges ---- */
+.badge {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 22px 12px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.75));
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: 0 22px 44px -18px rgba(156, 52, 98, 0.55);
+  animation:
+    fadeUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 3.2s backwards,
+    badgeFloat 5s ease-in-out 4.1s infinite;
+}
+
+.badge__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #fff, rgba(255, 255, 255, 0.55));
-  opacity: 0;
-  pointer-events: none;
-  animation: drift 3s ease-in-out infinite;
+  color: #fff;
+  background: linear-gradient(145deg, var(--pink-400), var(--pink-700));
+  box-shadow: 0 8px 16px -6px rgba(166, 59, 105, 0.6);
+}
+
+.badge__icon svg { width: 22px; height: 22px; }
+
+.badge__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.badge__big {
+  font-family: "Sora", "Inter", system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--pink-800);
+}
+
+.badge__small {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.badge--rating {
+  left: -70px;
+  bottom: 10%;
+}
+
+.badge--years {
+  right: -14px;
+  top: 5%;
+  animation-delay: 3.4s, 6s;
 }
 
 /* ================= KEYFRAMES ================= */
-
 @keyframes slideFromLeft {
   from { opacity: 0; transform: translateX(-120px); }
   to   { opacity: 1; transform: none; }
@@ -483,14 +486,9 @@
   to   { opacity: 1; transform: none; filter: blur(0); }
 }
 
-@keyframes pillIn {
-  from { opacity: 0; transform: translateX(-50px) scale(0.9); }
-  to   { opacity: 1; transform: none; }
-}
-
 @keyframes runAcross {
   from { transform: translateX(-34vw); }
-  to   { transform: translateX(calc(var(--t) * 5.4)); }
+  to   { transform: translateX(calc(var(--t) * 7)); }
 }
 
 @keyframes hop {
@@ -521,11 +519,6 @@
   }
 }
 
-@keyframes sway {
-  from { transform: rotate(calc(var(--amp, 1.3deg) * -1)) scale(1); }
-  to   { transform: rotate(var(--amp, 1.3deg)) scale(1.008); }
-}
-
 @keyframes growLine {
   from { transform: scaleX(0); }
   to   { transform: none; }
@@ -551,62 +544,17 @@
   100% { background-position: -60% 0, 0 0; }
 }
 
-@keyframes glassSweep {
-  0%   { background-position: 150% 0; }
-  40%  { background-position: -50% 0; }
-  100% { background-position: -50% 0; }
-}
-
-@keyframes toothBob {
+@keyframes badgeFloat {
   0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-5px); }
+  50%      { transform: translateY(-8px); }
 }
 
-@keyframes scrub {
-  from { transform: translate(-3px, 0); }
-  to   { transform: translate(3px, 1px); }
-}
-
-@keyframes buzz {
-  from { transform: translate(-1px, -0.5px); }
-  to   { transform: translate(1px, 1px); }
-}
-
-@keyframes wipe {
-  from { transform: translate(-4px, 0); }
-  to   { transform: translate(4px, 1px); }
-}
-
-@keyframes swing {
-  from { transform: rotate(-4deg); }
-  to   { transform: rotate(4deg); }
-}
-
-@keyframes sweepVac {
-  from { transform: rotate(-2.5deg); }
-  to   { transform: rotate(2.5deg); }
-}
-
-@keyframes shine {
-  0%   { background-position: 120% 0; }
-  55%  { background-position: -20% 0; }
-  100% { background-position: -20% 0; }
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.2) rotate(0); }
-  50%      { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(45deg); }
-}
-
-@keyframes drift {
-  0%   { opacity: 0; transform: translate(0, 10px) scale(0.6); }
-  30%  { opacity: 0.95; }
-  100% { opacity: 0; transform: translate(10px, -34px) scale(1.1); }
+@keyframes photoBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
 }
 
 /* ================= RESPONSIVE ================= */
-
-/* tablet + phone: text on top, tooth below */
 @media (max-width: 900px) {
   .hero {
     --nav-space: 100px;
@@ -616,17 +564,44 @@
     padding-bottom: 48px;
   }
 
-  .hero .hero__title { --t: clamp(40px, 11vw, 80px); }
+  .hero::before { display: none; }
+
+  .hero .hero__title { --t: clamp(30px, 8.4vw, 68px); }
+
+  .hero__content { margin-inline: auto; margin-top: 0; text-align: center; }
+  .hero h1,
+  .hero p { text-align: center; }
+  .hero__pill { font-size: 13px; }
+  .t-row,
+  .t-sub { margin-left: auto; margin-right: auto; }
 
   .scene { justify-self: center; justify-content: center; }
-  .tooth { width: min(100%, 560px); }
+  .photo { width: min(100%, 480px); aspect-ratio: 1.2 / 1; }   /* mobile: wider frame so doctor + patient both fit */
+  .photo__img { object-position: 70% center; }                 /* shift crop to the right (doctor side) */
 
-  /* mobile / tablet order: heading, paragraph, picture, THEN the button */
-  .hero .hero__btn--desktop { display: none; }
+  .badge { gap: 9px; padding: 8px 14px 8px 8px; border-radius: 18px; }
+  .badge__icon { width: 34px; height: 34px; }
+  .badge__icon svg { width: 17px; height: 17px; }
+  .badge__big { font-size: 18px; }
+  .badge__small { font-size: 10.5px; }
+  .badge--rating { left: -8px; bottom: 8%; }
+  .badge--years { right: 6px; top: 4%; }
+  .badge--rating, .badge--years { max-width: 70%; }
+
+  /* desktop buttons hidden, mobile wrapper shown after the photo */
+  .hero__actions { display: none; }
+
+  .hero__actions-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    gap: 14px;
+  }
 
   .hero .hero__btn--mobile {
     display: inline-flex;
-    justify-self: center;
     margin-top: 0;
   }
 }
@@ -638,17 +613,29 @@
   }
 }
 
-/* ================= LOADER / HERO ANIMATION SYNC =================
-   Add "hero--ready" to the .hero element after Loader finishes.
-   Before that, hero is hidden and animations are disabled, so they
-   begin from the start when the loader finishes.
-=================================================================== */
-.hero {
-  visibility: visible !important;
-  opacity: 1;
-}
+/* Mobile Hero Improvements */
+@media (max-width: 600px) {
+  .hero {
+    --nav-space: 90px;
+    gap: 20px;
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-bottom: 32px;
+  }
 
-.hero__content,
-.scene {
-  opacity: 1;
+  .hero .hero__title {
+    --t: clamp(28px, 8vw, 34px);
+    margin-top: 14px;
+  }
+
+  .t-row--3 {
+    transform: translateX(0);
+    font-size: calc(var(--t) * 1.35);
+    margin-bottom: calc(var(--t) * 0.75);
+  }
+
+  .t-sub {
+    gap: 0.5em;
+    font-size: calc(var(--t) * 0.4);
+  }
 }
