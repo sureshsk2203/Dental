@@ -6,7 +6,7 @@ import "./Footer.css";
    EDIT YOUR CLINIC DETAILS HERE
    ===================================================== */
 const CLINIC = {
-  name: "Neo Dental Care",
+  name: "Neo Smiles",
   about: "Gentle, honest dental care for the whole family in Salem.",
   address: "93, Greenways Rd, near Soodamani Hospital, Sinthampalayam, Fairlands, Alagapuram Pudur, Salem, Tamil Nadu 636016",
   phone: "+91 97505 05044",

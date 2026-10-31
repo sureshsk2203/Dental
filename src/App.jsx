@@ -1,5 +1,5 @@
 
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -7,16 +7,18 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { useEffect } from "react";
 
 import Nav from "./component/Nav";
 import Home from "./component/Home";
+import Footer from "./component/Footer";
+import FloatingContact from "./component/FloatingContact";
+
 const Doctors = lazy(() => import("./component/Doctors"));
 const Facilities = lazy(() => import("./component/Facilities"));
 const Results = lazy(() => import("./component/Results"));
 const Contact = lazy(() => import("./component/Contact"));
-import Footer from "./component/Footer";
 
+// Scroll manager for page navigation and section links
 function ScrollManager() {
   const { pathname, hash } = useLocation();
 
@@ -48,6 +50,7 @@ function ScrollManager() {
   return null;
 }
 
+// Handle internal links using React Router
 function SpaLinks() {
   const navigate = useNavigate();
 
@@ -94,6 +97,7 @@ function SpaLinks() {
   return null;
 }
 
+// Main application content
 function AppContent() {
   return (
     <>
@@ -129,10 +133,14 @@ function AppContent() {
       </Suspense>
 
       <Footer />
+
+      {/* Floating WhatsApp / Contact button */}
+      <FloatingContact />
     </>
   );
 }
 
+// Application entry component
 export default function App() {
   return (
     <BrowserRouter>

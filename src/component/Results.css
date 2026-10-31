@@ -1,3 +1,4 @@
+
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap");
 
 /* =========================================
@@ -56,7 +57,6 @@
    BACKGROUND
 ========================================= */
 
-/* Soft dotted texture that fades downward */
 .rs::before {
   content: "";
   position: absolute;
@@ -148,7 +148,8 @@
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8),
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
     0 14px 30px -18px rgba(224, 86, 159, 0.6);
   font-size: 0.78rem;
   font-weight: 700;
@@ -212,17 +213,23 @@
 
 /* =========================================
    BEFORE / AFTER CASES
+
+   Mobile / tablet: 1 case per row
+   Laptop (1024px+): 3 cases per row
 ========================================= */
 
-.rs-stage {
+.rs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(44px, 6vw, 80px) 28px;
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
   animation: rsRise 0.9s var(--ease) 0.4s both;
 }
 
-/* Space between the big before/after cases */
 .rs-case {
+  min-width: 0;
   margin-bottom: clamp(44px, 6vw, 80px);
 }
 
@@ -239,6 +246,7 @@
 }
 
 /* Rotating gradient border + glow */
+
 .rs-compare {
   position: relative;
   width: 100%;
@@ -246,16 +254,17 @@
   overflow: hidden;
   border: 2px solid transparent;
   border-radius: 34px;
-  background: linear-gradient(#ffe6f2, #ffe6f2) padding-box,
+  background:
+    linear-gradient(#ffe6f2, #ffe6f2) padding-box,
     conic-gradient(
       from var(--rs-angle),
       #e45a9f,
       #9d6be0,
       #ffffff,
       #e45a9f
-    )
-    border-box;
-  box-shadow: 0 50px 90px -45px rgba(224, 86, 159, 0.55),
+    ) border-box;
+  box-shadow:
+    0 50px 90px -45px rgba(224, 86, 159, 0.55),
     0 30px 60px -40px rgba(90, 20, 70, 0.35),
     0 0 0 8px rgba(255, 255, 255, 0.5);
   cursor: ew-resize;
@@ -297,7 +306,8 @@
   }
 }
 
-/* Reveals the "after" photo to the right of the handle */
+/* Reveals the after photo to the right of the handle */
+
 .rs-img--after {
   clip-path: inset(0 0 0 var(--pos, 50%));
 }
@@ -331,7 +341,8 @@
   box-shadow: 0 10px 24px -10px rgba(224, 86, 159, 0.8);
 }
 
-/* Canvas that paints the foam bubbles + sparkles (sits under the brush) */
+/* Foam canvas */
+
 .rs-foam {
   position: absolute;
   z-index: 2;
@@ -373,7 +384,8 @@
   box-shadow: 0 0 22px rgba(255, 255, 255, 0.55);
 }
 
-/* foam / shine glow around the handle line (only while brushing) */
+/* Shine glow around the handle */
+
 .rs-handle::after {
   content: "";
   position: absolute;
@@ -404,13 +416,17 @@
   border-radius: 50%;
   color: var(--pink);
   background: #fff;
-  box-shadow: 0 16px 36px -10px rgba(90, 20, 70, 0.45),
+  box-shadow:
+    0 16px 36px -10px rgba(90, 20, 70, 0.45),
     0 0 0 6px rgba(255, 255, 255, 0.5);
-  transition: transform 0.25s var(--ease), box-shadow 0.25s ease,
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s ease,
     opacity 0.2s ease;
 }
 
-/* Breathing ring so people notice the handle */
+/* Breathing ring */
+
 .rs-knob::before {
   content: "";
   position: absolute;
@@ -442,19 +458,15 @@
 }
 
 .rs-handle:focus-visible .rs-knob {
-  box-shadow: 0 0 0 5px rgba(255, 143, 200, 0.7),
+  box-shadow:
+    0 0 0 5px rgba(255, 143, 200, 0.7),
     0 16px 36px -10px rgba(90, 20, 70, 0.45);
 }
 
 /* =========================================
-   BRUSH EFFECT (while dragging)
-   Everything that MOVES (position, angle, stroke, bristle bend,
-   foam, sparkles) is driven by the animation loop in Results.jsx.
-   This CSS only places the brush and fades it in / out.
+   BRUSH EFFECT
 ========================================= */
 
-/* anchor = exactly where the bristles touch the teeth.
-   JS sets transform: translate3d(strokeOffset, pointerY, 0) */
 .rs-brush {
   position: absolute;
   top: 0;
@@ -467,7 +479,6 @@
   transition: opacity 0.18s ease;
 }
 
-/* holds the brush at its natural holding angle (JS adds drag lean + rocking) */
 .rs-brush-tilt {
   position: absolute;
   top: 0;
@@ -490,12 +501,10 @@
   filter: drop-shadow(-3px 9px 8px rgba(60, 10, 45, 0.45));
 }
 
-/* the brush replaces the cursor while dragging */
 .rs-compare.is-brushing {
   cursor: none;
 }
 
-/* knob steps aside, the toothbrush takes over */
 .rs-compare.is-brushing .rs-knob {
   transform: scale(0.5);
   opacity: 0;
@@ -505,14 +514,12 @@
   opacity: 1;
 }
 
-/* bristles bend with every stroke (--bend) and squash under pressure (--press) */
 .rs-bristles {
   transform-box: fill-box;
   transform-origin: 50% 0%;
   transform: skewX(calc(var(--bend, 0) * 1deg)) scaleY(var(--press, 1));
 }
 
-/* toothpaste foam clump squishes under the head */
 .rs-paste {
   transform-box: fill-box;
   transform-origin: 50% 50%;
@@ -532,7 +539,6 @@
   }
 }
 
-/* shine strip around the handle line */
 .rs-compare.is-brushing .rs-handle::after {
   opacity: 1;
   animation: rsFoam 0.5s ease-in-out infinite alternate;
@@ -598,7 +604,8 @@
   color: #fff;
   background: linear-gradient(120deg, #d9468f, #a05fe0, #d9468f);
   background-size: 200% 100%;
-  box-shadow: 0 38px 72px -35px rgba(224, 86, 159, 0.65),
+  box-shadow:
+    0 38px 72px -35px rgba(224, 86, 159, 0.65),
     inset 0 1px 0 rgba(255, 255, 255, 0.25);
   animation: rsSlide 9s ease-in-out infinite alternate;
 }
@@ -658,10 +665,10 @@
   opacity: 0.94;
 }
 
-/* CTA fades in as you scroll (Chrome / Edge / Safari) */
 @supports (animation-timeline: view()) {
   .rs-cta {
-    animation: rsSlide 9s ease-in-out infinite alternate,
+    animation:
+      rsSlide 9s ease-in-out infinite alternate,
       rsRise linear both;
     animation-timeline: auto, view();
     animation-range: normal, entry 0% entry 55%;
@@ -687,7 +694,7 @@
 }
 
 /* =========================================
-   REVIEWS — auto-scrolling marquee
+   REVIEWS — AUTO-SCROLLING MARQUEE
 ========================================= */
 
 .rs-reviews {
@@ -716,7 +723,6 @@
   line-height: 1.7;
 }
 
-/* Rows bleed to the screen edges and fade out at both ends */
 .rs-marquee-wrap {
   display: grid;
   gap: 18px;
@@ -753,7 +759,6 @@
   animation-duration: 55s;
 }
 
-/* Pause when someone hovers or focuses a review */
 .rs-marquee:hover .rs-track,
 .rs-marquee:focus-within .rs-track {
   animation-play-state: paused;
@@ -831,7 +836,65 @@
 }
 
 /* =========================================
+   LAPTOP / DESKTOP (1024px and up)
+   3 before/after sliders per row.
+========================================= */
+
+@media (min-width: 1024px) {
+  .rs-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(40px, 4vw, 64px) 28px;
+  }
+
+  .rs-compare {
+    aspect-ratio: 4 / 3;
+    border-radius: 24px;
+    box-shadow:
+      0 30px 60px -35px rgba(224, 86, 159, 0.55),
+      0 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+
+  .rs-tag {
+    top: 14px;
+    left: 14px;
+    padding: 8px 14px;
+    font-size: 0.68rem;
+  }
+
+  .rs-tag--after {
+    right: 14px;
+    left: auto;
+  }
+
+  .rs-knob {
+    width: 54px;
+    height: 54px;
+    margin: -27px 0 0 -27px;
+  }
+
+  .rs-caption {
+    margin-top: 18px;
+  }
+
+  .rs-caption-text h2 {
+    font-size: 1.2rem;
+  }
+
+  .rs-caption-text p {
+    font-size: 0.88rem;
+  }
+
+  .rs-brush-tilt svg {
+    top: -34px;
+    left: -24px;
+    width: 140px;
+    height: 42px;
+  }
+}
+
+/* =========================================
    TABLET / MOBILE
+   1 case per row
 ========================================= */
 
 @media (max-width: 760px) {
@@ -846,7 +909,6 @@
     margin: -29px 0 0 -29px;
   }
 
-  /* brush is drawn at 70% size on phones (contact point scales with it) */
   .rs-brush-tilt svg {
     top: -34px;
     left: -24px;
@@ -910,13 +972,11 @@
     transition: none !important;
   }
 
-  /* no brush / foam at all, the slider still works */
   .rs-brush,
   .rs-foam {
     display: none;
   }
 
-  /* no auto-scroll, let people swipe instead */
   .rs-marquee {
     overflow-x: auto;
     -webkit-mask-image: none;

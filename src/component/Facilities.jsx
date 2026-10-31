@@ -25,7 +25,7 @@ const ROOMS = [
     text: "A calm, comfortable space where you can relax before your visit, with seating for the whole family.",
   },
   {
-    title: "Surgery Room",
+    title: "Operatory",
     tag: "Procedures",
     img: "/facilities/surgery-room.webp",
     text: "A clean, well-equipped operatory built for safe and precise treatments, from fillings to surgeries.",
@@ -33,7 +33,7 @@ const ROOMS = [
   {
     title: "Consultation Room",
     tag: "Check-ups",
-    img: "/facilities/consultation-room.webp",
+    img: "/facilities/consultation-room.jpeg",
     text: "A private room where our doctors listen, examine and explain your treatment plan clearly.",
   },
   {

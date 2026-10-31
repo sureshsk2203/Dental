@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import Hero from "./Hero";
 import About from "./About";
 import BrushButton from "./BrushButton"; // toothbrush hover button (BrushButton.jsx + BrushButton.css)
 import "./Home.css";
-
+const Doctors = lazy(() => import("./Doctors"));
+const Facilities = lazy(() => import("./Facilities"));
+const Results = lazy(() => import("./Results"));
+const Contact = lazy(() => import("./Contact"));
 /* =====================================================
    EDIT YOUR CLINIC DETAILS HERE
    ===================================================== */
@@ -41,7 +44,7 @@ const TREATMENTS = [
     name: "Smile Designing & Veneers",
     icon: "star",
     text: "Veneers, bonding and smile design reshape the colour, size and shape of your teeth for a natural, confident smile.",
-    duration: "2 – 3 sittings",
+    duration: "30-45 min",
     visits: "2 – 3 visits",
     best: "Chipped, discoloured or uneven teeth",
     steps: ["Smile consultation", "Digital smile design preview", "Preparation and fitting", "Final polish and review"],
@@ -74,7 +77,7 @@ const TREATMENTS = [
     name: "Crowns & Bridges",
     icon: "crown",
     text: "Crowns cover and strengthen a damaged tooth. Bridges replace one or more missing teeth using the neighbouring teeth for support.",
-    duration: "2 sittings",
+    duration: "30-40 min",
     visits: "2 visits",
     best: "Broken teeth, large fillings, missing teeth",
     steps: ["Examination and planning", "Tooth preparation and impression", "Temporary crown or bridge", "Final fitting and bite check"],
@@ -275,9 +278,33 @@ function Treatments() {
 export default function Home() {
   return (
     <main className="home">
-      <Hero />
-      <About />
+      <div id="home">
+        <Hero />
+      </div>
+
+      <div id="about">
+        <About />
+      </div>
+
+      <Suspense fallback={null}>
+        <div id="doctors">
+          <Doctors />
+        </div>
+      </Suspense>
+
       <Treatments />
+
+      <Suspense fallback={null}>
+        <div id="facilities">
+          <Facilities />
+        </div>
+        <div id="results">
+          <Results />
+        </div>
+        <div id="contact">
+          <Contact />
+        </div>
+      </Suspense>
     </main>
   );
 }
