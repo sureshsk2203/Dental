@@ -9,9 +9,24 @@ import "./Results.css";
  * A) public/results/
  * B) src/assets/results/
  *
+<<<<<<< HEAD
  * File naming:
  * 01-before.jpg   01-after.jpg
  * 02-before.jpg   02-after.jpg
+=======
+ * Pair the photos by file name:
+ *
+ *   01-before.jpg   01-after.jpg
+ *   02-before.jpg   02-after.jpg
+ *   ...
+ *
+ * Any number of pairs works (jpg, jpeg, png, webp, avif). Cases are
+ * sorted by the number in the file name.
+ * Gaps are allowed (for example 05 then 07): the PUBLIC way only stops
+ * after 3 missing numbers in a row.
+ * For the PUBLIC way the folder can be  public/results/ , public/Results/
+ * or directly inside public/ , and the number can be 01 or 1.
+>>>>>>> dad1141 (new)
  */
 
 const FILES = import.meta.glob("../assets/results/*.{jpg,jpeg,png,webp,avif}", {
@@ -43,6 +58,10 @@ const CASE_INFO = {
     title: "Yellow teeth brightened",
     treatment: "Teeth Whitening",
   },
+<<<<<<< HEAD
+=======
+
+>>>>>>> dad1141 (new)
   7: {
     title: "Fixed teeth replacement",
     treatment: "Crowns & Bridges",
@@ -139,7 +158,11 @@ const PUBLIC_DIRS = ["/results", "/Results", ""];
 const EXTS = ["webp", "jpg", "jpeg", "png", "avif", "JPG", "JPEG", "PNG"];
 const SEPS = ["-", "_"];
 const MAX_CASES = 40;
+<<<<<<< HEAD
 const MAX_GAP = 3;
+=======
+const MAX_GAP = 3; // stop after this many missing numbers in a row
+>>>>>>> dad1141 (new)
 
 const probe = (url) =>
   new Promise((resolve) => {
@@ -184,6 +207,7 @@ function discoverPublicCases() {
 
     if (!style) return [];
 
+<<<<<<< HEAD
     const out = [];
     let misses = 0;
 
@@ -207,14 +231,36 @@ function discoverPublicCases() {
 
         if (misses >= MAX_GAP) break;
 
+=======
+    // 2) go through 1, 2, 3 ... skip gaps, stop after MAX_GAP missing in a row
+    const out = [];
+    let misses = 0;
+    for (let n = 1; n <= MAX_CASES; n += 1) {
+      const id = style.padded ? String(n).padStart(2, "0") : String(n);
+      const find = (side) =>
+        firstFound(
+          EXTS.map((ext) => `${style.dir}/${id}${style.sep}${side}.${ext}`)
+        );
+
+      // eslint-disable-next-line no-await-in-loop
+      const [before, after] = await Promise.all([find("before"), find("after")]);
+
+      if (!before && !after) {
+        misses += 1;
+        if (misses >= MAX_GAP) break;
+>>>>>>> dad1141 (new)
         continue;
       }
 
       misses = 0;
+<<<<<<< HEAD
 
       if (before && after) {
         out.push(withInfo({ id, before, after }));
       }
+=======
+      if (before && after) out.push(withInfo({ id, before, after }));
+>>>>>>> dad1141 (new)
     }
 
     return out;
@@ -252,10 +298,20 @@ const SwapIcon = () => (
   </Icon>
 );
 
+<<<<<<< HEAD
 /* =====================================================
    REALISTIC TOOTHBRUSH
    ===================================================== */
 
+=======
+/* ---------------------------------------------------------------
+ * REALISTIC TOOTHBRUSH (drawn sideways, bristles point DOWN).
+ * The contact point (bristle tips) is x=34, y=48 in the 200x60 box.
+ * Bristles are a dense row of thin tufts with uneven (trimmed) lengths,
+ * a few coloured indicator tufts, a tapered neck and a contoured handle
+ * with a thumb rest and rubber grip.
+ * ------------------------------------------------------------- */
+>>>>>>> dad1141 (new)
 const TUFT_COLORS = [
   "#ffffff",
   "#a77cf0",
@@ -267,6 +323,7 @@ const TUFT_COLORS = [
   "#ff7fba",
   "#ffffff",
 ];
+<<<<<<< HEAD
 
 const BRISTLES = Array.from({ length: 27 }, (_, i) => {
   const x = 10.8 + i * 1.78;
@@ -449,11 +506,171 @@ function Compare({ before, after, label }) {
   const [pos, setPos] = useState(50);
   const [brushing, setBrushing] = useState(false);
 
+=======
+
+const BRISTLES = Array.from({ length: 27 }, (_, i) => {
+  const x = 10.8 + i * 1.78;
+  const mid = 1 - Math.abs(i - 13) / 13; // 0 at the edges, 1 in the middle
+  const tip = 46.6 + mid * 1.6 + (i % 3 === 1 ? 0.7 : 0) + (i % 2) * 0.3;
+  return { x, tip, color: TUFT_COLORS[Math.floor(i / 3)] };
+});
+
+const BrushIcon = () => (
+  <svg
+    viewBox="0 0 200 60"
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient id="rsHandleGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stopColor="#ffa8d4" />
+        <stop offset="0.42" stopColor="#e0569f" />
+        <stop offset="1" stopColor="#a82b72" />
+      </linearGradient>
+      <linearGradient id="rsGripGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stopColor="#cf4a92" />
+        <stop offset="1" stopColor="#7d2158" />
+      </linearGradient>
+      <linearGradient id="rsHeadGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stopColor="#ffffff" />
+        <stop offset="1" stopColor="#efd3e3" />
+      </linearGradient>
+    </defs>
+
+    {/* bristles (they bend while scrubbing) */}
+    <g className="rs-bristles">
+      {/* soft outline so white bristles stay visible on light photos */}
+      {BRISTLES.map((b) => (
+        <line
+          key={`o-${b.x}`}
+          x1={b.x}
+          y1="35"
+          x2={b.x}
+          y2={b.tip}
+          stroke="#d99bbd"
+          strokeWidth="2.7"
+          opacity="0.55"
+        />
+      ))}
+      {BRISTLES.map((b) => (
+        <line
+          key={`b-${b.x}`}
+          x1={b.x}
+          y1="35"
+          x2={b.x}
+          y2={b.tip}
+          stroke={b.color}
+          strokeWidth="1.45"
+        />
+      ))}
+    </g>
+
+    {/* head */}
+    <rect
+      x="8"
+      y="21"
+      width="57"
+      height="15.5"
+      rx="7.7"
+      fill="url(#rsHeadGrad)"
+      stroke="#e0569f"
+      strokeWidth="1.3"
+    />
+    <line x1="15" y1="25" x2="56" y2="25" stroke="#fff" strokeWidth="2" opacity="0.85" />
+    {/* tiny tuft holes along the base of the head */}
+    <g fill="#e0569f" opacity="0.3">
+      {Array.from({ length: 9 }, (_, i) => (
+        <circle key={i} cx={13.5 + i * 5.2} cy="32.6" r="0.9" />
+      ))}
+    </g>
+
+    {/* tapered neck */}
+    <path
+      d="M58 23.4 C69 23.4 77 21.6 91 21 L91 32.8 C77 32.4 69 34 58 33.6 Z"
+      fill="url(#rsHandleGrad)"
+    />
+
+    {/* contoured handle: slim waist + thumb-rest bump */}
+    <path
+      d="M88 21.2 C100 20 112 19.4 124 19.8 C140 20.3 150 22.6 168 20.4 C182 18.7 193 21.6 193 27 C193 32.4 182 35.2 168 33.6 C150 31.8 140 34.4 124 34.6 C112 34.8 100 33.6 88 32.6 Z"
+      fill="url(#rsHandleGrad)"
+    />
+
+    {/* rubber grip with dimples */}
+    <path
+      d="M120 22.6 C134 22 150 24 166 22.6 C174 22 178 24.6 178 27 C178 29.6 174 32 166 31.4 C150 30 134 32.2 120 31.6 C116 31.4 116 22.8 120 22.6 Z"
+      fill="url(#rsGripGrad)"
+    />
+    <g fill="#fff" opacity="0.3">
+      {Array.from({ length: 9 }, (_, i) => (
+        <circle key={i} cx={125 + i * 6} cy="27" r="1.15" />
+      ))}
+    </g>
+
+    {/* thumb rest ridges */}
+    <g stroke="#fff" strokeWidth="1" opacity="0.35">
+      {[0, 1, 2, 3].map((i) => (
+        <line key={i} x1={100 + i * 4} y1="24.2" x2={100 + i * 4} y2="29.8" />
+      ))}
+    </g>
+
+    {/* gloss + hang hole */}
+    <path
+      d="M94 22.4 C112 21.6 130 22 150 23.6"
+      stroke="#fff"
+      strokeWidth="1.8"
+      opacity="0.6"
+    />
+    <circle cx="186" cy="27" r="2.3" fill="#fff" opacity="0.85" />
+
+    {/* toothpaste foam clump at the contact point */}
+    <g className="rs-paste">
+      <circle cx="34" cy="48" r="5.5" fill="#fff" stroke="#f7a8d4" strokeWidth="1.1" />
+      <circle cx="24" cy="47" r="3.8" fill="#fff" stroke="#f7a8d4" strokeWidth="1.1" />
+      <circle cx="45" cy="47.5" r="4.4" fill="#fff" stroke="#f7a8d4" strokeWidth="1.1" />
+      <circle cx="54" cy="46.5" r="3" fill="#fff" stroke="#f7a8d4" strokeWidth="1" />
+      <circle cx="31" cy="45.4" r="1.6" fill="#fff" />
+    </g>
+  </svg>
+);
+
+/* ---------------------------------------------------------------
+ * Drag-to-compare slider. Owns its own state so dragging never
+ * re-renders the other sliders. Every slider plays its own
+ * hint sweep once, when it scrolls into view.
+ *
+ * BRUSH PHYSICS (all in one requestAnimationFrame loop, no React renders):
+ *  - the brush sits on the handle line, its height follows the pointer
+ *    with a little lag (like a hand)
+ *  - short quick strokes (~5 per second) along the teeth, plus a tiny
+ *    up / down bob, rocking and bristle bend in step with each stroke
+ *  - pressing harder = bristles squash a little
+ *  - a canvas leaves a trail of foam bubbles and sparkles that fade out
+ * Tweak the numbers in the "BRUSH TUNING" block below.
+ * ------------------------------------------------------------- */
+const BRUSH = {
+  baseAngle: -38, // holding angle (deg)
+  strokesPerSec: 5.2, // scrub speed
+  strokeLength: 12, // how far the brush travels each way (px)
+  bend: 13, // bristle bend (deg)
+  foamPerSec: 110, // foam bubbles created per second
+  maxParticles: 170,
+};
+
+function Compare({ before, after, label }) {
+  const [pos, setPos] = useState(50);
+  const [brushing, setBrushing] = useState(false);
+>>>>>>> dad1141 (new)
   const boxRef = useRef(null);
   const brushRef = useRef(null);
   const tiltRef = useRef(null);
   const canvasRef = useRef(null);
+<<<<<<< HEAD
 
+=======
+>>>>>>> dad1141 (new)
   const kickRef = useRef(() => {});
   const brushingRef = useRef(false);
   const dragging = useRef(false);
@@ -464,11 +681,20 @@ function Compare({ before, after, label }) {
   const vel = useRef(0);
   const idle = useRef(0);
 
+<<<<<<< HEAD
   const fx = useRef({
     px: 0,
     ty: 0,
     y: 0,
     amp: 0,
+=======
+  /* live brush state (never causes a re-render) */
+  const fx = useRef({
+    px: 0, // pointer x inside the box (px)
+    ty: 0, // target y
+    y: 0, // smoothed y
+    amp: 0, // 0..1 stroke strength
+>>>>>>> dad1141 (new)
     phase: 0,
     tilt: 0,
     tiltTarget: 0,
@@ -486,25 +712,37 @@ function Compare({ before, after, label }) {
   const setBrush = (value) => {
     brushingRef.current = value;
     setBrushing(value);
+<<<<<<< HEAD
 
     if (value) kickRef.current();
   };
 
   /* Brush and foam animation loop */
 
+=======
+    if (value) kickRef.current();
+  };
+
+  /* ---------- brush + foam animation loop ---------- */
+>>>>>>> dad1141 (new)
   useEffect(() => {
     const s = fx.current;
     const box = boxRef.current;
     const canvas = canvasRef.current;
     const brush = brushRef.current;
     const tiltEl = tiltRef.current;
+<<<<<<< HEAD
 
     if (!box || !canvas || !brush || !tiltEl) return undefined;
 
+=======
+    if (!box || !canvas || !brush || !tiltEl) return undefined;
+>>>>>>> dad1141 (new)
     const ctx = canvas.getContext("2d");
 
     const resize = () => {
       const r = box.getBoundingClientRect();
+<<<<<<< HEAD
 
       s.dpr = Math.min(2, window.devicePixelRatio || 1);
       s.w = r.width;
@@ -520,16 +758,32 @@ function Compare({ before, after, label }) {
 
     resize();
 
+=======
+      s.dpr = Math.min(2, window.devicePixelRatio || 1);
+      s.w = r.width;
+      s.h = r.height;
+      // brush is smaller on phones AND on laptop (3 sliders per row = small cards)
+      s.scale = window.innerWidth <= 760 || window.innerWidth >= 1024 ? 0.7 : 1;
+      canvas.width = Math.round(r.width * s.dpr);
+      canvas.height = Math.round(r.height * s.dpr);
+    };
+    resize();
+>>>>>>> dad1141 (new)
     const ro = new ResizeObserver(resize);
     ro.observe(box);
 
     const addFoam = (cx, cy, angle) => {
       const dirX = Math.cos(angle);
       const dirY = Math.sin(angle);
+<<<<<<< HEAD
 
       const along = (Math.random() * 38 - 14) * s.scale;
       const r = (2.4 + Math.random() * 6.6) * s.scale;
 
+=======
+      const along = (Math.random() * 38 - 14) * s.scale; // spread along the head
+      const r = (2.4 + Math.random() * 6.6) * s.scale;
+>>>>>>> dad1141 (new)
       s.parts.push({
         k: 0,
         x: cx + dirX * along + (Math.random() - 0.5) * 6,
@@ -545,7 +799,11 @@ function Compare({ before, after, label }) {
     const addSpark = (cy) => {
       s.parts.push({
         k: 1,
+<<<<<<< HEAD
         x: s.px + 6 + Math.random() * 56 * s.scale,
+=======
+        x: s.px + 6 + Math.random() * 56 * s.scale, // on the freshly cleaned side
+>>>>>>> dad1141 (new)
         y: cy + (Math.random() - 0.5) * 90 * s.scale,
         vx: 0,
         vy: 0,
@@ -558,13 +816,18 @@ function Compare({ before, after, label }) {
     const drawFoam = (p, t) => {
       const rad = p.r * (1 + t * 0.28);
       const fadeIn = t < 0.08 ? t / 0.08 : 1;
+<<<<<<< HEAD
 
       ctx.globalAlpha = (1 - t) * fadeIn;
 
+=======
+      ctx.globalAlpha = (1 - t) * fadeIn;
+>>>>>>> dad1141 (new)
       ctx.beginPath();
       ctx.arc(p.x, p.y, rad, 0, Math.PI * 2);
       ctx.fillStyle = "rgba(255,255,255,0.84)";
       ctx.fill();
+<<<<<<< HEAD
 
       ctx.lineWidth = 1;
       ctx.strokeStyle = "rgba(247,150,205,0.9)";
@@ -579,12 +842,20 @@ function Compare({ before, after, label }) {
         Math.PI * 2
       );
 
+=======
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(247,150,205,0.9)";
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(p.x - rad * 0.3, p.y - rad * 0.3, Math.max(0.8, rad * 0.26), 0, Math.PI * 2);
+>>>>>>> dad1141 (new)
       ctx.fillStyle = "#fff";
       ctx.fill();
     };
 
     const drawSpark = (p, t) => {
       const size = p.r * Math.sin(t * Math.PI);
+<<<<<<< HEAD
 
       if (size < 0.5) return;
 
@@ -604,6 +875,20 @@ function Compare({ before, after, label }) {
         else ctx.lineTo(x, y);
       }
 
+=======
+      if (size < 0.5) return;
+      const inner = size * 0.28;
+      ctx.globalAlpha = 1;
+      ctx.beginPath();
+      for (let i = 0; i < 8; i += 1) {
+        const a = (i * Math.PI) / 4 - Math.PI / 2 + t * 0.9;
+        const d = i % 2 === 0 ? size : inner;
+        const x = p.x + Math.cos(a) * d;
+        const y = p.y + Math.sin(a) * d;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+>>>>>>> dad1141 (new)
       ctx.closePath();
       ctx.shadowColor = "#ff6fb1";
       ctx.shadowBlur = 8;
@@ -615,6 +900,7 @@ function Compare({ before, after, label }) {
     const tick = (now) => {
       const dt = Math.min(0.05, (now - s.last) / 1000 || 0.016);
       s.last = now;
+<<<<<<< HEAD
 
       const on = brushingRef.current;
 
@@ -624,18 +910,35 @@ function Compare({ before, after, label }) {
         ((on ? 1 : 0) - s.amp) *
         (1 - Math.exp(-dt * (on ? 14 : 9)));
 
+=======
+      const on = brushingRef.current;
+
+      // brush height follows the pointer with a little lag
+      s.y += (s.ty - s.y) * (1 - Math.exp(-dt * 20));
+
+      // stroke strength eases in / out
+      s.amp += ((on ? 1 : 0) - s.amp) * (1 - Math.exp(-dt * (on ? 14 : 9)));
+>>>>>>> dad1141 (new)
       s.phase += dt * Math.PI * 2 * BRUSH.strokesPerSec;
 
       const sw = Math.sin(s.phase);
       const cw = Math.cos(s.phase);
+<<<<<<< HEAD
 
       const off = sw * BRUSH.strokeLength * s.scale * s.amp;
       const bob = Math.sin(s.phase * 2) * 1.5 * s.amp;
 
+=======
+      const off = sw * BRUSH.strokeLength * s.scale * s.amp;
+      const bob = Math.sin(s.phase * 2) * 1.5 * s.amp;
+
+      // lean follows the drag direction, then settles
+>>>>>>> dad1141 (new)
       s.tiltTarget *= 0.92;
       s.tilt += (s.tiltTarget - s.tilt) * (1 - Math.exp(-dt * 12));
 
       brush.style.transform = `translate3d(${off.toFixed(2)}px, ${(s.y + bob).toFixed(2)}px, 0)`;
+<<<<<<< HEAD
 
       const angle = BRUSH.baseAngle + s.tilt + sw * 2.5 * s.amp;
 
@@ -648,25 +951,42 @@ function Compare({ before, after, label }) {
 
       brush.style.setProperty("--press", (1 - 0.08 * s.amp).toFixed(3));
 
+=======
+      const angle = BRUSH.baseAngle + s.tilt + sw * 2.5 * s.amp;
+      tiltEl.style.transform = `rotate(${angle.toFixed(2)}deg)`;
+      brush.style.setProperty("--bend", (cw * BRUSH.bend * s.amp).toFixed(2));
+      brush.style.setProperty("--press", (1 - 0.08 * s.amp).toFixed(3));
+
+      // foam + sparkles while scrubbing
+>>>>>>> dad1141 (new)
       if (s.amp > 0.2) {
         const cx = s.px + off;
         const cy = s.y + bob;
         const rad = (angle * Math.PI) / 180;
+<<<<<<< HEAD
 
         s.spawn += dt * BRUSH.foamPerSec * s.amp;
 
+=======
+        s.spawn += dt * BRUSH.foamPerSec * s.amp;
+>>>>>>> dad1141 (new)
         while (s.spawn >= 1) {
           s.spawn -= 1;
           addFoam(cx, cy, rad);
         }
+<<<<<<< HEAD
 
         if (Math.random() < dt * 8) addSpark(cy);
 
+=======
+        if (Math.random() < dt * 8) addSpark(cy);
+>>>>>>> dad1141 (new)
         if (s.parts.length > BRUSH.maxParticles) {
           s.parts.splice(0, s.parts.length - BRUSH.maxParticles);
         }
       }
 
+<<<<<<< HEAD
       ctx.setTransform(s.dpr, 0, 0, s.dpr, 0, 0);
       ctx.clearRect(0, 0, s.w, s.h);
 
@@ -675,21 +995,39 @@ function Compare({ before, after, label }) {
 
         p.life += dt;
 
+=======
+      // update + draw particles
+      ctx.setTransform(s.dpr, 0, 0, s.dpr, 0, 0);
+      ctx.clearRect(0, 0, s.w, s.h);
+      for (let i = s.parts.length - 1; i >= 0; i -= 1) {
+        const p = s.parts[i];
+        p.life += dt;
+>>>>>>> dad1141 (new)
         if (p.life >= p.max) {
           s.parts.splice(i, 1);
         } else {
           const t = p.life / p.max;
+<<<<<<< HEAD
 
           p.x += p.vx * dt;
           p.y += p.vy * dt;
           p.vy += 26 * dt;
           p.vx *= 0.98;
 
+=======
+          p.x += p.vx * dt;
+          p.y += p.vy * dt;
+          p.vy += 26 * dt; // foam slowly sinks
+          p.vx *= 0.98;
+>>>>>>> dad1141 (new)
           if (p.k === 0) drawFoam(p, t);
           else drawSpark(p, t);
         }
       }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dad1141 (new)
       ctx.globalAlpha = 1;
 
       if (dragging.current || s.parts.length > 0 || s.amp > 0.01) {
@@ -702,7 +1040,10 @@ function Compare({ before, after, label }) {
 
     kickRef.current = () => {
       if (s.running) return;
+<<<<<<< HEAD
 
+=======
+>>>>>>> dad1141 (new)
       s.running = true;
       s.last = performance.now();
       s.raf = requestAnimationFrame(tick);
@@ -719,6 +1060,7 @@ function Compare({ before, after, label }) {
     const box = boxRef.current;
     const rect = box.getBoundingClientRect();
     const s = fx.current;
+<<<<<<< HEAD
 
     setPos(
       clamp(((clientX - rect.left) / rect.width) * 100, 3, 97)
@@ -736,10 +1078,21 @@ function Compare({ before, after, label }) {
       s.ty = y;
 
       if (lastX.current === null) s.y = y;
+=======
+    setPos(clamp(((clientX - rect.left) / rect.width) * 100, 3, 97));
+    s.px = clamp(clientX - rect.left, rect.width * 0.03, rect.width * 0.97);
+
+    // brush follows the pointer up / down too
+    if (clientY !== undefined) {
+      const y = clamp(clientY - rect.top, 40, rect.height - 40);
+      s.ty = y;
+      if (lastX.current === null) s.y = y; // first touch: start right under the finger
+>>>>>>> dad1141 (new)
     }
 
     if (lastX.current !== null) {
       const dx = clientX - lastX.current;
+<<<<<<< HEAD
 
       s.tiltTarget = clamp(dx * 0.6, -10, 10);
 
@@ -762,6 +1115,20 @@ function Compare({ before, after, label }) {
       }, 140);
     }
 
+=======
+      s.tiltTarget = clamp(dx * 0.6, -10, 10);
+
+      // brush only shows while moving LEFT (that reveals the "After" photo)
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      vel.current = vel.current * 0.6 + dx * 0.4;
+      if (!reduce && vel.current < -0.6) setBrush(true);
+      else if (vel.current > 0.6) setBrush(false);
+
+      // pointer stopped moving -> brush stops too
+      window.clearTimeout(idle.current);
+      idle.current = window.setTimeout(() => setBrush(false), 140);
+    }
+>>>>>>> dad1141 (new)
     lastX.current = clientX;
   };
 
@@ -770,6 +1137,7 @@ function Compare({ before, after, label }) {
     cancelAnimationFrame(frame.current);
   };
 
+<<<<<<< HEAD
   // One gentle automatic comparison sweep.
 
   useEffect(() => {
@@ -779,14 +1147,24 @@ function Compare({ before, after, label }) {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
+=======
+  // One gentle sweep the first time this slider scrolls into view.
+  useEffect(() => {
+    const box = boxRef.current;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+>>>>>>> dad1141 (new)
     if (!box || reduce) return undefined;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+<<<<<<< HEAD
         if (!entry.isIntersecting || played.current || touched.current) {
           return;
         }
 
+=======
+        if (!entry.isIntersecting || played.current || touched.current) return;
+>>>>>>> dad1141 (new)
         played.current = true;
         observer.disconnect();
 
@@ -827,9 +1205,13 @@ function Compare({ before, after, label }) {
     };
   }, []);
 
+<<<<<<< HEAD
   useEffect(() => {
     return () => window.clearTimeout(idle.current);
   }, []);
+=======
+  useEffect(() => () => window.clearTimeout(idle.current), []);
+>>>>>>> dad1141 (new)
 
   const onKeyDown = (event) => {
     const keys = {
@@ -857,9 +1239,13 @@ function Compare({ before, after, label }) {
     lastX.current = null;
     vel.current = 0;
     fx.current.tiltTarget = 0;
+<<<<<<< HEAD
 
     window.clearTimeout(idle.current);
 
+=======
+    window.clearTimeout(idle.current);
+>>>>>>> dad1141 (new)
     setBrush(false);
   };
 
@@ -874,18 +1260,27 @@ function Compare({ before, after, label }) {
         dragging.current = true;
         lastX.current = null;
         vel.current = 0;
+<<<<<<< HEAD
 
         if (navigator.vibrate) navigator.vibrate(12);
 
         event.currentTarget.setPointerCapture(event.pointerId);
 
+=======
+        if (navigator.vibrate) navigator.vibrate(12); // tiny buzz on phones
+        event.currentTarget.setPointerCapture(event.pointerId);
+>>>>>>> dad1141 (new)
         kickRef.current();
         moveTo(event.clientX, event.clientY);
       }}
       onPointerMove={(event) => {
+<<<<<<< HEAD
         if (dragging.current) {
           moveTo(event.clientX, event.clientY);
         }
+=======
+        if (dragging.current) moveTo(event.clientX, event.clientY);
+>>>>>>> dad1141 (new)
       }}
       onPointerUp={stopDrag}
       onPointerCancel={stopDrag}
@@ -911,11 +1306,16 @@ function Compare({ before, after, label }) {
       <span className="rs-tag">Before</span>
       <span className="rs-tag rs-tag--after">After</span>
 
+<<<<<<< HEAD
       <canvas
         ref={canvasRef}
         className="rs-foam"
         aria-hidden="true"
       />
+=======
+      {/* foam bubbles + sparkles are painted here (under the brush) */}
+      <canvas ref={canvasRef} className="rs-foam" aria-hidden="true" />
+>>>>>>> dad1141 (new)
 
       <div
         className="rs-handle"
@@ -933,11 +1333,16 @@ function Compare({ before, after, label }) {
           </span>
         </span>
 
+<<<<<<< HEAD
         <span
           ref={brushRef}
           className="rs-brush"
           aria-hidden="true"
         >
+=======
+        {/* real toothbrush: position / angle / bristle bend are driven by the loop above */}
+        <span ref={brushRef} className="rs-brush" aria-hidden="true">
+>>>>>>> dad1141 (new)
           <span ref={tiltRef} className="rs-brush-tilt">
             <BrushIcon />
           </span>
@@ -1068,9 +1473,14 @@ export default function Results({ contactHref = "/contact" }) {
             <p>Loading photos…</p>
           ) : (
             <p>
+<<<<<<< HEAD
               No photo pairs found yet. Add files to{" "}
               <code>public/results/</code> named like{" "}
               <code>01-before.jpg</code> and{" "}
+=======
+              No photo pairs found yet. Add files to <code>public/results/</code>{" "}
+              named like <code>01-before.jpg</code> and{" "}
+>>>>>>> dad1141 (new)
               <code>01-after.jpg</code>.
             </p>
           )}
@@ -1087,6 +1497,10 @@ export default function Results({ contactHref = "/contact" }) {
       {/* Hero */}
 
       <header className="rs-hero">
+<<<<<<< HEAD
+=======
+        
+>>>>>>> dad1141 (new)
         <h1 className="rs-title">
           Real smiles. <span>Real results.</span>
         </h1>
@@ -1097,6 +1511,7 @@ export default function Results({ contactHref = "/contact" }) {
         </p>
       </header>
 
+<<<<<<< HEAD
       {/* Responsive results grid:
           Mobile / tablet: 1 per row.
           Laptop: 3 per row. */}
@@ -1133,6 +1548,31 @@ export default function Results({ contactHref = "/contact" }) {
             justifyContent: "center",
             marginTop: 28,
           }}
+=======
+      {/* Every case gets its own before / after slider.
+          Mobile / tablet: 1 per row. Laptop (1024px+): 3 per row. */}
+      <div className="rs-grid">
+        {cases.slice(0, visible).map((item) => (
+          <section className="rs-case" key={item.id}>
+            <Compare before={item.before} after={item.after} label={item.title} />
+
+            <div className="rs-caption">
+              <div className="rs-caption-text">
+                <h2>{item.title}</h2>
+                <p>
+                  {item.treatment}
+                  {item.note ? ` · ${item.note}` : ""}
+                </p>
+              </div>
+            </div>
+          </section>
+        ))}
+      </div>
+
+      {visible < cases.length && (
+        <div
+          style={{ display: "flex", justifyContent: "center", marginTop: 28 }}
+>>>>>>> dad1141 (new)
         >
           <BrushButton
             as="button"
@@ -1145,8 +1585,12 @@ export default function Results({ contactHref = "/contact" }) {
         </div>
       )}
 
+<<<<<<< HEAD
       {/* Patient reviews */}
 
+=======
+      {/* Reviews (auto-scrolling) */}
+>>>>>>> dad1141 (new)
       <Reviews />
 
       {/* Call to action */}

@@ -4,9 +4,9 @@ import BrushButton from "./BrushButton";
 
 const CLINIC = {
   name: "Neo Smiles Dental Care",
-  phone: "+91 93449 45044",
-  tel: "+919344945044",
-  whatsapp: "919344945044",
+  phone: "+91 97505 05044",
+  tel: "+919750505044",
+  whatsapp: "919750505044",
   address: "Salem, Tamil Nadu",
   mapQuery: "Neo Smiles Dental Care, Salem, Tamil Nadu",
 };

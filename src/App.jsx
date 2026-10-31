@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 
 import { lazy, Suspense, useEffect } from "react";
+=======
+import { lazy, Suspense } from "react";
+>>>>>>> dad1141 (new)
 import {
   BrowserRouter,
   Routes,
@@ -7,6 +11,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import { useEffect } from "react";
 
 import Nav from "./component/Nav";
 import Home from "./component/Home";
@@ -17,8 +22,14 @@ const Doctors = lazy(() => import("./component/Doctors"));
 const Facilities = lazy(() => import("./component/Facilities"));
 const Results = lazy(() => import("./component/Results"));
 const Contact = lazy(() => import("./component/Contact"));
+<<<<<<< HEAD
 
 // Scroll manager for page navigation and section links
+=======
+import Footer from "./component/Footer";
+import FloatingContact from "./component/FloatingContact";
+
+>>>>>>> dad1141 (new)
 function ScrollManager() {
   const { pathname, hash } = useLocation();
 
@@ -50,7 +61,10 @@ function ScrollManager() {
   return null;
 }
 
+<<<<<<< HEAD
 // Handle internal links using React Router
+=======
+>>>>>>> dad1141 (new)
 function SpaLinks() {
   const navigate = useNavigate();
 
@@ -133,8 +147,11 @@ function AppContent() {
       </Suspense>
 
       <Footer />
+<<<<<<< HEAD
 
       {/* Floating WhatsApp / Contact button */}
+=======
+>>>>>>> dad1141 (new)
       <FloatingContact />
     </>
   );
