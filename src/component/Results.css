@@ -1,4 +1,3 @@
-
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap");
 
 /* =========================================
@@ -213,14 +212,8 @@
 
 /* =========================================
    BEFORE / AFTER CASES
-<<<<<<< HEAD
-
-   Mobile / tablet: 1 case per row
-   Laptop (1024px+): 3 cases per row
-=======
    Mobile / tablet : 1 case per row
    Laptop (1024px+) : 3 cases per row
->>>>>>> dad1141 (new)
 ========================================= */
 
 .rs-grid {
@@ -234,12 +227,7 @@
 }
 
 .rs-case {
-<<<<<<< HEAD
-  min-width: 0;
-  margin-bottom: clamp(44px, 6vw, 80px);
-=======
   min-width: 0; /* stops the images from stretching the grid column */
->>>>>>> dad1141 (new)
 }
 
 @keyframes rsRise {
@@ -315,12 +303,7 @@
   }
 }
 
-<<<<<<< HEAD
-/* Reveals the after photo to the right of the handle */
-
-=======
 /* Reveals the "after" photo to the right of the handle */
->>>>>>> dad1141 (new)
 .rs-img--after {
   clip-path: inset(0 0 0 var(--pos, 50%));
 }
@@ -354,12 +337,7 @@
   box-shadow: 0 10px 24px -10px rgba(224, 86, 159, 0.8);
 }
 
-<<<<<<< HEAD
-/* Foam canvas */
-
-=======
 /* Canvas that paints the foam bubbles + sparkles (sits under the brush) */
->>>>>>> dad1141 (new)
 .rs-foam {
   position: absolute;
   z-index: 2;
@@ -401,12 +379,7 @@
   box-shadow: 0 0 22px rgba(255, 255, 255, 0.55);
 }
 
-<<<<<<< HEAD
-/* Shine glow around the handle */
-
-=======
 /* foam / shine glow around the handle line (only while brushing) */
->>>>>>> dad1141 (new)
 .rs-handle::after {
   content: "";
   position: absolute;
@@ -440,13 +413,9 @@
   box-shadow:
     0 16px 36px -10px rgba(90, 20, 70, 0.45),
     0 0 0 6px rgba(255, 255, 255, 0.5);
-<<<<<<< HEAD
   transition:
     transform 0.25s var(--ease),
     box-shadow 0.25s ease,
-=======
-  transition: transform 0.25s var(--ease), box-shadow 0.25s ease,
->>>>>>> dad1141 (new)
     opacity 0.2s ease;
 }
 
@@ -489,11 +458,6 @@
 }
 
 /* =========================================
-<<<<<<< HEAD
-   BRUSH EFFECT
-========================================= */
-
-=======
    BRUSH EFFECT (while dragging)
    Everything that MOVES (position, angle, stroke, bristle bend,
    foam, sparkles) is driven by the animation loop in Results.jsx.
@@ -502,7 +466,6 @@
 
 /* anchor = exactly where the bristles touch the teeth.
    JS sets transform: translate3d(strokeOffset, pointerY, 0) */
->>>>>>> dad1141 (new)
 .rs-brush {
   position: absolute;
   top: 0;
@@ -515,10 +478,7 @@
   transition: opacity 0.18s ease;
 }
 
-<<<<<<< HEAD
-=======
 /* holds the brush at its natural holding angle (JS adds drag lean + rocking) */
->>>>>>> dad1141 (new)
 .rs-brush-tilt {
   position: absolute;
   top: 0;
@@ -541,18 +501,12 @@
   filter: drop-shadow(-3px 9px 8px rgba(60, 10, 45, 0.45));
 }
 
-<<<<<<< HEAD
-=======
 /* the brush replaces the cursor while dragging */
->>>>>>> dad1141 (new)
 .rs-compare.is-brushing {
   cursor: none;
 }
 
-<<<<<<< HEAD
-=======
 /* knob steps aside, the toothbrush takes over */
->>>>>>> dad1141 (new)
 .rs-compare.is-brushing .rs-knob {
   transform: scale(0.5);
   opacity: 0;
@@ -562,20 +516,14 @@
   opacity: 1;
 }
 
-<<<<<<< HEAD
-=======
 /* bristles bend with every stroke (--bend) and squash under pressure (--press) */
->>>>>>> dad1141 (new)
 .rs-bristles {
   transform-box: fill-box;
   transform-origin: 50% 0%;
   transform: skewX(calc(var(--bend, 0) * 1deg)) scaleY(var(--press, 1));
 }
 
-<<<<<<< HEAD
-=======
 /* toothpaste foam clump squishes under the head */
->>>>>>> dad1141 (new)
 .rs-paste {
   transform-box: fill-box;
   transform-origin: 50% 50%;
@@ -595,10 +543,7 @@
   }
 }
 
-<<<<<<< HEAD
-=======
 /* shine strip around the handle line */
->>>>>>> dad1141 (new)
 .rs-compare.is-brushing .rs-handle::after {
   opacity: 1;
   animation: rsFoam 0.5s ease-in-out infinite alternate;
@@ -725,10 +670,7 @@
   opacity: 0.94;
 }
 
-<<<<<<< HEAD
-=======
 /* CTA fades in as you scroll (Chrome / Edge / Safari) */
->>>>>>> dad1141 (new)
 @supports (animation-timeline: view()) {
   .rs-cta {
     animation:
@@ -758,11 +700,7 @@
 }
 
 /* =========================================
-<<<<<<< HEAD
-   REVIEWS — AUTO-SCROLLING MARQUEE
-=======
    REVIEWS — auto-scrolling marquee
->>>>>>> dad1141 (new)
 ========================================= */
 
 .rs-reviews {
@@ -906,11 +844,8 @@
 /* =========================================
    LAPTOP / DESKTOP (1024px and up)
    3 before/after sliders per row.
-<<<<<<< HEAD
-=======
    Each slider is smaller now, so everything inside
    it is scaled down a little (same as on phones).
->>>>>>> dad1141 (new)
 ========================================= */
 
 @media (min-width: 1024px) {
@@ -922,12 +857,8 @@
   .rs-compare {
     aspect-ratio: 4 / 3;
     border-radius: 24px;
-<<<<<<< HEAD
     box-shadow:
       0 30px 60px -35px rgba(224, 86, 159, 0.55),
-=======
-    box-shadow: 0 30px 60px -35px rgba(224, 86, 159, 0.55),
->>>>>>> dad1141 (new)
       0 0 0 5px rgba(255, 255, 255, 0.5);
   }
 
@@ -961,10 +892,7 @@
     font-size: 0.88rem;
   }
 
-<<<<<<< HEAD
-=======
   /* brush drawn at 70% size (contact point scales with it) */
->>>>>>> dad1141 (new)
   .rs-brush-tilt svg {
     top: -34px;
     left: -24px;
@@ -974,12 +902,7 @@
 }
 
 /* =========================================
-<<<<<<< HEAD
-   TABLET / MOBILE
-   1 case per row
-=======
-   TABLET / MOBILE (unchanged, 1 per row)
->>>>>>> dad1141 (new)
+   TABLET / MOBILE (1 per row)
 ========================================= */
 
 @media (max-width: 760px) {
@@ -994,10 +917,7 @@
     margin: -29px 0 0 -29px;
   }
 
-<<<<<<< HEAD
-=======
   /* brush is drawn at 70% size on phones (contact point scales with it) */
->>>>>>> dad1141 (new)
   .rs-brush-tilt svg {
     top: -34px;
     left: -24px;
@@ -1061,19 +981,13 @@
     transition: none !important;
   }
 
-<<<<<<< HEAD
-=======
   /* no brush / foam at all, the slider still works */
->>>>>>> dad1141 (new)
   .rs-brush,
   .rs-foam {
     display: none;
   }
 
-<<<<<<< HEAD
-=======
   /* no auto-scroll, let people swipe instead */
->>>>>>> dad1141 (new)
   .rs-marquee {
     overflow-x: auto;
     -webkit-mask-image: none;
