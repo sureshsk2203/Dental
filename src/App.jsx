@@ -12,7 +12,7 @@ import Nav from "./component/Nav";
 import Home from "./component/Home";
 import Footer from "./component/Footer";
 import FloatingContact from "./component/FloatingContact";
-
+import SEO from "./component/SEO";
 const Doctors = lazy(() => import("./component/Doctors"));
 const Facilities = lazy(() => import("./component/Facilities"));
 const Results = lazy(() => import("./component/Results"));
@@ -20,7 +20,7 @@ const Contact = lazy(() => import("./component/Contact"));
 
 // Scroll manager for page navigation and section links
 function ScrollManager() {
-  const { pathname, hash } = useLocation();
+   const { pathname, hash } = useLocation();
 
   useEffect(() => {
     if (hash) {
@@ -102,6 +102,7 @@ function AppContent() {
   return (
     <>
       <ScrollManager />
+        <SEO />
       <SpaLinks />
 
       <Nav />
