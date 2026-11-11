@@ -33,7 +33,7 @@ const ROOMS = [
   {
     title: "Consultation Room",
     tag: "Check-ups",
-  img: "/facilities/consultation-room.webp",
+  img: "/facilities/dental-clinic-room.webp",
     text: "A private room where our doctors listen, examine and explain your treatment plan clearly.",
   },
   {
