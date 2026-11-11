@@ -33,7 +33,7 @@ const ROOMS = [
   {
     title: "Consultation Room",
     tag: "Check-ups",
-  img: "/facilities/dental-clinic-room.webp",
+  img: "/facilities/consultation-room.jpeg",
     text: "A private room where our doctors listen, examine and explain your treatment plan clearly.",
   },
   {
@@ -49,7 +49,7 @@ const pad = (n) => String(n).padStart(2, "0");
 /* ---------- photo paths ----------
    If the exact file is not found, the same name is tried with other
    extensions (and with a capital-letter folder name, or no folder). */
-const EXTS = ["webp"];
+const EXTS = ["webp", "jpeg", "jpg", "png", "avif", "JPG", "JPEG", "PNG"];
 
 function buildCandidates(img) {
   const cut = img.lastIndexOf("/");
