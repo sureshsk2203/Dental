@@ -22,7 +22,7 @@ import "./Results.css";
  * or directly inside public/ , and the number can be 01 or 1.
  */
 
-const FILES = import.meta.glob("../assets/results/*.{jpg,jpeg,png,webp,avif}", {
+const FILES = import.meta.glob("../assets/results/*.webp", {
   eager: true,
   query: "?url",
   import: "default",
@@ -145,7 +145,7 @@ const ASSET_CASES = buildAssetCases();
 /* Load photos from public folder */
 
 const PUBLIC_DIRS = ["/results", "/Results", ""];
-const EXTS = ["webp", "jpg", "jpeg", "png", "avif", "JPG", "JPEG", "PNG"];
+const EXTS = ["webp"];
 const SEPS = ["-", "_"];
 const MAX_CASES = 40;
 const MAX_GAP = 3; // stop after this many missing numbers in a row
