@@ -12,9 +12,9 @@ const Contact = lazy(() => import("./Contact"));
    ===================================================== */
 const CLINIC = {
   city: "Salem",
-  phone: "+91 98765 43210",
-  whatsapp: "919876543210", // country code + number, no + or spaces
-  email: "hello@yourclinic.com",
+  phone: "+91 97505 05044",
+  whatsapp: "919750505044", // country code + number, no + or spaces
+  email: "neosmilessalem@gmail.com",
   address: "93, Greenways Rd, near Soodamani Hospital, Sinthampalayam, Fairlands, Alagapuram Pudur, Salem, Tamil Nadu 636016",
   hours: [
     ["Mon – Sat", "9:30 AM – 8:30 PM"],
