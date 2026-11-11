@@ -12,7 +12,7 @@ export const doctors = [
     qualification: "BDS, MDS (Pediatric Dentistry)",
     experience: "5+ years",
     speciality: "Kids & Family Dental Care",
-    photo: "/doctors/dr-navin.jpeg",
+    photo: "/doctors/dr-navin.webp",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ export const doctors = [
     qualification: "BDS, MDS (Oral Pathology)",
     experience: "5+ years",
     speciality: "Oral Cancer & Lesion Diagnosis",
-    photo: "/doctors/dr-Deepika.jpeg",
+    photo: "/doctors/dr-Deepika.webp",
   },
   {
     id: 3,
@@ -30,6 +30,6 @@ export const doctors = [
     qualification: "BDS, MDS",
     experience: "", // years not known yet, add the real number later (badge is hidden while empty)
     speciality: "Dental & Maxillofacial Implants",
-    photo: "/doctors/dr-Sai Adithya Narayanan.jpeg",
+    photo: "/doctors/dr-Sai Adithya Narayanan.webp",
   },
 ];
