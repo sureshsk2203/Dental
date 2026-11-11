@@ -11,8 +11,8 @@ import "./About.css";
 const CLINIC = {
   name: "Neo Smiles",
   city: "Salem",
-  whatsapp: "919876543210", // country code + number, no + or spaces
-  phone: "+91 98765 43210",
+  whatsapp: "919750505044", // country code + number, no + or spaces
+  phone: "+91 97505 05044",
 };
 
 /* =====================================================
