@@ -12,7 +12,7 @@ const CLINIC = {
   name: "Neo Smiles",
   city: "Salem",
   whatsapp: "919750505044", // country code + number, no + or spaces
-  phone: "+91 97505 05044",
+  phone: "+919750505044",
 };
 
 /* =====================================================
