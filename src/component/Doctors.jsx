@@ -57,7 +57,7 @@ const initials = (name) => {
 
 /* If the exact file is not found, other extensions and folders are tried
    (for example  public/doctors/doctors/  when a zip was extracted twice). */
-const EXTS = ['jpeg', 'jpg', 'png', 'webp', 'JPG', 'JPEG', 'PNG']
+const EXTS = ['webp']
 
 function photoCandidates(photo) {
   const cut = photo.lastIndexOf('/')
