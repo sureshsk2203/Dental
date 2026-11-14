@@ -188,7 +188,7 @@
   background: none;
   -webkit-background-clip: border-box;
   background-clip: border-box;
- animation: chIn 0.9s cubic-bezier(0.2, 0.9, 0.2, 1) backwards;
+ animation: none;
 animation-delay: 0s;
 }
 
