@@ -20,21 +20,54 @@
     <meta name="robots" content="index, follow" />
 
     <link rel="canonical" href="https://neosmilesdentalcare.in/" />
-    <link rel="icon" type="image/png" href="/neosmiles-tooth-favicon-exact.png" />
 
+    <link
+      rel="icon"
+      type="image/png"
+      href="/neosmiles-tooth-favicon-exact.png"
+    />
+
+    <!-- Open Graph SEO -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="NEO SMILES Dental Care | Fairlands, Salem" />
+    <meta
+      property="og:title"
+      content="NEO SMILES Dental Care | Fairlands, Salem"
+    />
     <meta
       property="og:description"
       content="Quality dental care in Fairlands, Salem. Contact NEO SMILES Dental Care to book your appointment."
     />
-    <meta property="og:url" content="https://neosmilesdentalcare.in/" />
+    <meta
+      property="og:url"
+      content="https://neosmilesdentalcare.in/"
+    />
 
+    <!-- Twitter SEO -->
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Local Business Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Dentist",
+        "name": "NEO SMILES Dental Care",
+        "url": "https://neosmilesdentalcare.in/",
+        "image": "https://neosmilesdentalcare.in/neosmiles-tooth-favicon-exact.png",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "93, Greenways Rd, near Soodamani Hospital, Sinthampalayam, Fairlands",
+          "addressLocality": "Salem",
+          "addressRegion": "Tamil Nadu",
+          "postalCode": "636016",
+          "addressCountry": "IN"
+        }
+      }
+    </script>
   </head>
 
   <body>
     <div id="root"></div>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
