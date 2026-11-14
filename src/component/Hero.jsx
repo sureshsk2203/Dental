@@ -146,7 +146,7 @@ export default function Hero() {
         <div className="photo">
           <div className="photo__frame">
             <img
-              src="home1-optimized.webp
+              src="home1-optimized.webp"
               alt="A happy family smiling together on the grass"
               className="photo__img"
               width="1100"
