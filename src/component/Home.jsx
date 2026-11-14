@@ -62,7 +62,7 @@ const TREATMENTS = [
   },
   {
     id: "rootcanal",
-    image: "RootCanalTreatment.webp",
+    image: "RootCanalTreatment-optimized.webp",
     name: "Root Canal Treatment",
     icon: "shield",
     text: "Saves a badly infected or decayed tooth. With modern rotary tools and good anaesthesia, it feels like getting a normal filling.",
