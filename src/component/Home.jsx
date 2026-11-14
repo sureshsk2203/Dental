@@ -29,7 +29,7 @@ const CLINIC = {
 const TREATMENTS = [
   {
     id: "whitening",
-    image: "Teethwhitening.webp",
+    image: "Teethwhitening-optimized.webp",
     name: "Teeth Whitening",
     icon: "sparkle",
     text: "Professional scaling and polishing removes plaque, tartar and stains. Whitening then brightens your smile several shades in a single sitting.",
