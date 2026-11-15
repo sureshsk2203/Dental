@@ -60,42 +60,61 @@ const CASE_INFO = {
 
 /* Patient reviews - replace placeholders with approved real reviews */
 
+
 const REVIEWS = [
   {
-    name: "Patient Name",
-    treatment: "Teeth Whitening",
+    name: "Prabakaran Baluswamy",
+    treatment: "Patient Review",
     stars: 5,
-    text: "Replace this with a real patient review. Keep it to 2–3 lines so the cards stay even.",
+    text: "Excellent treatment and nice hospitality.",
   },
   {
-    name: "Patient Name",
-    treatment: "Crowns & Bridges",
+    name: "Sowmya Jayakumar",
+    treatment: "Patient Review",
     stars: 5,
-    text: "Replace this with a real patient review. Keep it to 2–3 lines so the cards stay even.",
+    text: "Great One!",
   },
   {
-    name: "Patient Name",
-    treatment: "Smile Design",
+    name: "thoppu karan",
+    treatment: "Patient Review",
     stars: 5,
-    text: "Replace this with a real patient review. Keep it to 2–3 lines so the cards stay even.",
+    text: "Nice doctor....ur wrk good...",
   },
   {
-    name: "Patient Name",
-    treatment: "Cosmetic Bonding",
+    name: "Madan Ponnuvel",
+    treatment: "Crown Placement",
     stars: 5,
-    text: "Replace this with a real patient review. Keep it to 2–3 lines so the cards stay even.",
+    text: "Went for crown placement. Best place to get your teeth fixed.",
   },
   {
-    name: "Patient Name",
-    treatment: "Tooth Restoration",
+    name: "Vasukisrinivasan Vasuki",
+    treatment: "Patient Review",
     stars: 5,
-    text: "Replace this with a real patient review. Keep it to 2–3 lines so the cards stay even.",
+    text: "I feel bad about my smile before..now I feel confident smile..thanks for bringing my smile back 🥰",
   },
   {
-    name: "Patient Name",
-    treatment: "Crown & Gum Care",
+    name: "Bala krishnan",
+    treatment: "Patient Review",
     stars: 5,
-    text: "Replace this with a real patient review. Keep it to 2–3 lines so the cards stay even.",
+    text: "Good treatment and low fee.",
+  },
+  {
+    name: "Nagarjun S",
+    treatment: "Patient Review",
+    stars: 5,
+    text: "I had a very good experience. The doctor explained everything clearly and made me feel comfortable.",
+  },
+  {
+    name: "Shanmugapriya Vijayakumar",
+    treatment: "Patient Review",
+    stars: 5,
+    text: "Too good treatment and responsible doctor.",
+  },
+  {
+    name: "Kishore",
+    treatment: "Patient Review",
+    stars: 5,
+    text: "Best treatment and care ❤️",
   },
 ];
 
